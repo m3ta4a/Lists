@@ -18,12 +18,15 @@
 
 @implementation LLViewController
 
+@synthesize headerName = _headerName;
 @synthesize dataSrc = _dataSrc;
+@synthesize header = _header;
 
 - (void)viewDidLoad
 {
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
     [super viewDidLoad];
+    self.headerName = @"HEADER";
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -51,49 +54,57 @@
     assert(indexPath != nil);
 
     NSString *identifier = @"Cell";
-    if (indexPath.row == 0)
-        identifier = @"Header";
 
     cell = [self.tableView dequeueReusableCellWithIdentifier:identifier];
 
     if (cell == nil) {
-        if (indexPath.row == 0)
-            cell = [[LLTableViewCell alloc] initWithStyle:CustomStyleHeader reuseIdentifier:identifier];
-        else
-            cell = [[LLTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell = [[LLTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     assert(cell != nil);
-    
-    
+
     cell.textLabel.text = @"Hello, World!";
 
     return cell;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    // create the parent view that will hold header Label
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
-    //CGFloat screenHeight = screenRect.size.height;
-    
-	UIView* customView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, screenWidth, 44.0)];
-	
-	UILabel * headerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-	headerLabel.backgroundColor = [UIColor redColor];
-	headerLabel.opaque = YES;
-	headerLabel.textColor = [UIColor blackColor];
-	headerLabel.highlightedTextColor = [UIColor whiteColor];
-	headerLabel.font = [UIFont boldSystemFontOfSize:20];
-	headerLabel.frame = CGRectMake(0.0, 0.0, screenWidth, 44.0);
-    
-	headerLabel.text = @"HEADER";
-	[customView addSubview:headerLabel];
-    
-	return customView;
+
+    if (!self.header)
+    {
+        LLTableViewHeaderControl* customView = [[LLTableViewHeaderControl alloc] initWithFrame:CGRectMake(0.0, 0.0, screenWidth, 44.0) andDelegate:self];
+        self.header = customView;
+    }
+
+    return self.header;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 44.0;
+}
+-(void)handleTouchUpInsideHeader:(id)sender event:(id)event
+{
+    for (UIView *view in self.header.subviews) {
+        [view removeFromSuperview];
+    }
+
+    UILabel* headerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    headerLabel.backgroundColor = [UIColor redColor];
+    headerLabel.opaque = YES;
+    headerLabel.textColor = [UIColor blackColor];
+    headerLabel.highlightedTextColor = [UIColor whiteColor];
+    headerLabel.font = [UIFont boldSystemFontOfSize:20];
+
+    headerLabel.text = self.headerName;
+
+    CGFloat width =  [headerLabel.text sizeWithFont:headerLabel.font].width;
+
+    headerLabel.frame = CGRectMake( (self.header.frame.size.width - width)/2, 0, width, 44);
+
+    [self.header addSubview:headerLabel];
+
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
 }
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -101,7 +112,6 @@
                                            green: .866
                                             blue: .866
                                            alpha: 1.0];
-    
 }
 
 @end
