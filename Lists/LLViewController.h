@@ -9,9 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "LLDataSource.h"
 #import "LLTableViewCell.h"
+#import "LLTableViewHeaderControl.h"
 
 @interface LLViewController : UITableViewController <UITableViewDelegate>
 
 @property (nonatomic, strong) LLDataSource *dataSrc;
+@property (nonatomic, copy) NSString *headerName;
+@property (nonatomic, strong) UIControl *header;
+
+-(void)handleTouchUpInsideHeader:(id)sender event:(id)event;
 
 @end
+
