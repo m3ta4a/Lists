@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LLDataSource.h"
+#import "LLTableViewCell.h"
 
-@interface LLViewController : UIViewController
+@interface LLViewController : UITableViewController <UITableViewDelegate>
+
+@property (nonatomic, strong) LLDataSource *dataSrc;
 
 @end
