@@ -7,9 +7,20 @@
 
 #import <Foundation/Foundation.h>
 
+#define HEADER_TITLE_MARGIN 5
+
+@class LLViewController;
 
 @interface LLTableViewHeaderControl : UIControl
 
--(LLTableViewHeaderControl*)initWithFrame:(CGRect)frame andDelegate:(NSObject*)delegate;
+@property(nonatomic, strong) UITextField *headerLabel;
+@property(nonatomic) CGPoint startLocation;
+@property(nonatomic) CGPoint lastLocation;
+
+- (LLTableViewHeaderControl *)initWithFrame:(CGRect)frame andDelegate:(LLViewController *)delegate;
+
+- (void)textFieldDidChange:(id)sender;
+
+- (void)oneFingerSwipeLeft:(UIPanGestureRecognizer *)recognizer;
 
 @end

@@ -11,13 +11,10 @@
 #import "LLTableViewCell.h"
 #import "LLTableViewHeaderControl.h"
 
-@interface LLViewController : UITableViewController <UITableViewDelegate>
+@interface LLViewController : UITableViewController <UITableViewDelegate, UITextFieldDelegate>
 
-@property (nonatomic, strong) LLDataSource *dataSrc;
-@property (nonatomic, copy) NSString *headerName;
-@property (nonatomic, strong) UIControl *header;
-
--(void)handleTouchUpInsideHeader:(id)sender event:(id)event;
+@property(nonatomic, strong) LLDataSource *dataSrc;
+@property(nonatomic, strong) UIControl *header;
 
 @end
 

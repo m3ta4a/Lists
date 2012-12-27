@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		231CF7888BD4E44E2C22D3C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 231CF392E816FFBBCE3E4D42 /* Localizable.strings */; };
 		231CF7B72A12F2DD8D1B0058 /* LLTableViewHeaderControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 231CF1AE46206AFA9C2B9810 /* LLTableViewHeaderControl.m */; };
 		23496BBD168B9AEA0082E3DF /* LLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23496BBC168B9AEA0082E3DF /* LLTableViewCell.m */; };
 		23496BBE168B9AEA0082E3DF /* LLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23496BBC168B9AEA0082E3DF /* LLTableViewCell.m */; };
@@ -45,6 +46,7 @@
 
 /* Begin PBXFileReference section */
 		231CF1AE46206AFA9C2B9810 /* LLTableViewHeaderControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLTableViewHeaderControl.m; sourceTree = "<group>"; };
+		231CF392E816FFBBCE3E4D42 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		231CFAE0AA0FB071E06A7AFD /* LLTableViewHeaderControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLTableViewHeaderControl.h; sourceTree = "<group>"; };
 		23496BBB168B9AEA0082E3DF /* LLTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLTableViewCell.h; sourceTree = "<group>"; };
 		23496BBC168B9AEA0082E3DF /* LLTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLTableViewCell.m; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				23FEBBC9168B87A600872565 /* MainStoryboard_iPhone.storyboard */,
 				231CF1AE46206AFA9C2B9810 /* LLTableViewHeaderControl.m */,
 				231CFAE0AA0FB071E06A7AFD /* LLTableViewHeaderControl.h */,
+				231CF392E816FFBBCE3E4D42 /* Localizable.strings */,
 			);
 			path = Lists;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 				23FEBBC8168B87A600872565 /* Default-568h@2x.png in Resources */,
 				23FEBBCB168B87A600872565 /* MainStoryboard_iPhone.storyboard in Resources */,
 				23FEBBCE168B87A600872565 /* MainStoryboard_iPad.storyboard in Resources */,
+				231CF7888BD4E44E2C22D3C8 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
