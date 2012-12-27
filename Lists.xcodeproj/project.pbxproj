@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		231CF3A39A763B9CE0C66138 /* LLHeaderTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 231CF48C1787BE2A6F261124 /* LLHeaderTextField.m */; };
+		231CF56845F6ED852A05E484 /* LLHeaderTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 231CF48C1787BE2A6F261124 /* LLHeaderTextField.m */; };
 		231CF7888BD4E44E2C22D3C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 231CF392E816FFBBCE3E4D42 /* Localizable.strings */; };
 		231CF7B72A12F2DD8D1B0058 /* LLTableViewHeaderControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 231CF1AE46206AFA9C2B9810 /* LLTableViewHeaderControl.m */; };
 		23496BBD168B9AEA0082E3DF /* LLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23496BBC168B9AEA0082E3DF /* LLTableViewCell.m */; };
@@ -46,7 +48,9 @@
 
 /* Begin PBXFileReference section */
 		231CF1AE46206AFA9C2B9810 /* LLTableViewHeaderControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLTableViewHeaderControl.m; sourceTree = "<group>"; };
+		231CF29E5109A814B92E9B47 /* LLHeaderTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLHeaderTextField.h; sourceTree = "<group>"; };
 		231CF392E816FFBBCE3E4D42 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		231CF48C1787BE2A6F261124 /* LLHeaderTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLHeaderTextField.m; sourceTree = "<group>"; };
 		231CFAE0AA0FB071E06A7AFD /* LLTableViewHeaderControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLTableViewHeaderControl.h; sourceTree = "<group>"; };
 		23496BBB168B9AEA0082E3DF /* LLTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLTableViewCell.h; sourceTree = "<group>"; };
 		23496BBC168B9AEA0082E3DF /* LLTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLTableViewCell.m; sourceTree = "<group>"; };
@@ -139,6 +143,7 @@
 				23FEBBC0168B87A600872565 /* LLAppDelegate.h */,
 				23FEBBC1168B87A600872565 /* LLAppDelegate.m */,
 				23FEBBCC168B87A600872565 /* MainStoryboard_iPad.storyboard */,
+				23FEBBC9168B87A600872565 /* MainStoryboard_iPhone.storyboard */,
 				23496BBB168B9AEA0082E3DF /* LLTableViewCell.h */,
 				23496BBC168B9AEA0082E3DF /* LLTableViewCell.m */,
 				23FEBBCF168B87A600872565 /* LLViewController.h */,
@@ -148,10 +153,11 @@
 				23FEBC2C168B92A200872565 /* LLList.h */,
 				23FEBC2D168B92A200872565 /* LLList.m */,
 				23FEBBB8168B87A600872565 /* Supporting Files */,
-				23FEBBC9168B87A600872565 /* MainStoryboard_iPhone.storyboard */,
 				231CF1AE46206AFA9C2B9810 /* LLTableViewHeaderControl.m */,
 				231CFAE0AA0FB071E06A7AFD /* LLTableViewHeaderControl.h */,
 				231CF392E816FFBBCE3E4D42 /* Localizable.strings */,
+				231CF48C1787BE2A6F261124 /* LLHeaderTextField.m */,
+				231CF29E5109A814B92E9B47 /* LLHeaderTextField.h */,
 			);
 			path = Lists;
 			sourceTree = "<group>";
@@ -309,6 +315,7 @@
 				23FEBC2E168B92A200872565 /* LLList.m in Sources */,
 				23496BBD168B9AEA0082E3DF /* LLTableViewCell.m in Sources */,
 				231CF7B72A12F2DD8D1B0058 /* LLTableViewHeaderControl.m in Sources */,
+				231CF3A39A763B9CE0C66138 /* LLHeaderTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,6 +327,7 @@
 				23FEBC2B168B921100872565 /* LLDataSource.m in Sources */,
 				23FEBC2F168B92A200872565 /* LLList.m in Sources */,
 				23496BBE168B9AEA0082E3DF /* LLTableViewCell.m in Sources */,
+				231CF56845F6ED852A05E484 /* LLHeaderTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -4,13 +4,11 @@
 // To change the template use AppCode | Preferences | File Templates.
 //
 
-
 #import "LLTableViewHeaderControl.h"
-
+#import "LLHeaderTextField.h"
 
 @implementation LLTableViewHeaderControl
 
-@synthesize headerLabel = _headerLabel;
 @synthesize startLocation = _startLocation;
 
 - (LLTableViewHeaderControl *)initWithFrame:(CGRect)frame andDelegate:(LLViewController *)delegate {
@@ -19,40 +17,46 @@
     if (self == nil)
         return nil;
 
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
+
     self.backgroundColor = [UIColor blackColor];
 
-    self.headerLabel = [[UITextField alloc] initWithFrame:CGRectZero];
-    self.headerLabel.backgroundColor = [UIColor redColor];
-    self.headerLabel.opaque = YES;
-    self.headerLabel.textColor = [UIColor blackColor];
-    self.headerLabel.font = [UIFont boldSystemFontOfSize:20];
-    self.headerLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    self.headerLabel.textAlignment = NSTextAlignmentCenter;
+    LLHeaderTextField *headerLabel = [[LLHeaderTextField alloc] initWithFrame:CGRectZero];
+    headerLabel.backgroundColor = [UIColor redColor];
+    headerLabel.opaque = YES;
+    headerLabel.textColor = [UIColor blackColor];
+    headerLabel.font = [UIFont boldSystemFontOfSize:20];
+    headerLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    headerLabel.textAlignment = NSTextAlignmentCenter;
 
-    self.headerLabel.text = @"New List";
-    CGFloat width = [self.headerLabel.text sizeWithFont:self.headerLabel.font].width;
+    headerLabel.text = @"New List";
+    CGFloat width = [headerLabel.text sizeWithFont:headerLabel.font].width;
 
-    self.headerLabel.frame = CGRectMake((frame.size.width - width) / 2 - HEADER_TITLE_MARGIN,
+    CGRect newFrame = CGRectMake((frame.size.width - width) / 2 - HEADER_TITLE_MARGIN,
             0, width + 2 * HEADER_TITLE_MARGIN, 44);
+    headerLabel.frame = newFrame;
+    headerLabel.centerFrame = newFrame;
+    headerLabel.delegate = (id) delegate;
+    [headerLabel addTarget:self action:@selector(textFieldDidChange:)
+          forControlEvents:UIControlEventEditingChanged];
 
-    self.headerLabel.delegate = (id) delegate;
-    [self.headerLabel addTarget:self action:@selector(textFieldDidChange:)
-               forControlEvents:UIControlEventEditingChanged];
+    self.Tags = [[NSArray alloc] initWithObjects:headerLabel, nil];
+
+    [self addSubview:headerLabel];
 
     UIPanGestureRecognizer *oneFingerSwipeLeft;
     oneFingerSwipeLeft = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(oneFingerSwipeLeft:)];
-
     [self addGestureRecognizer:oneFingerSwipeLeft];
 
-    [self addSubview:self.headerLabel];
 
     return self;
 }
 
-- (void)textFieldDidChange:(id)sender {
+- (void)textFieldDidChange:(UITextField *)sender {
     CGFloat width;
-    width = [self.headerLabel.text sizeWithFont:self.headerLabel.font].width;
-    self.headerLabel.frame = CGRectMake((self.frame.size.width - width) / 2 - HEADER_TITLE_MARGIN,
+    width = [sender.text sizeWithFont:sender.font].width;
+    sender.frame = CGRectMake((self.frame.size.width - width) / 2 - HEADER_TITLE_MARGIN,
             0, width + 2 * HEADER_TITLE_MARGIN, 44);
 }
 
@@ -66,14 +70,43 @@
         CGFloat dx = nextLocation.x - self.lastLocation.x;
         CGFloat dy = nextLocation.y - self.lastLocation.y;
 
-        CGRect frame_ = self.frame;
-        frame_.origin.x = self.frame.origin.x + dx;
-        self.frame = frame_;
+        for (int i = 0; i < [self.Tags count]; i++) {
+            UITextField *tf = [self.Tags objectAtIndex:(NSUInteger) i];
+            CGRect frame_ = tf.frame;
+            frame_.origin.x = frame_.origin.x + dx;
+            tf.frame = frame_;
+        }
 
         self.lastLocation = nextLocation;
-
-
-        NSLog(@"Start, Stop: %f %f, %f %f", self.startLocation.x, self.startLocation.y, nextLocation.x, nextLocation.y);
+        //NSLog(@"Start, Stop: %f %f, %f %f", self.startLocation.x, self.startLocation.y, nextLocation.x, nextLocation.y);
     }
+    else if (recognizer.state == UIGestureRecognizerStateEnded) {
+        [self resetTabs];
+    }
+}
+
+- (void)resetTabs {
+    [UIView beginAnimations:nil context:NULL];
+
+    for (int i = 0; i < [self.Tags count]; i++) {
+        LLHeaderTextField *tf = [self.Tags objectAtIndex:i];
+        tf.frame = tf.centerFrame;
+    }
+
+
+    [UIView commitAnimations];
+}
+
+- (void)deviceOrientationDidChange:(id)sender {
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    self.frame = CGRectMake(0.0, 0.0, screenWidth, 44.0);
+    for (int i = 0; i < [self.Tags count]; i++) {
+        LLHeaderTextField *tf = [self.Tags objectAtIndex:i];
+        CGFloat width = [tf.text sizeWithFont:tf.font].width;
+        tf.centerFrame = CGRectMake((screenWidth - width) / 2 - HEADER_TITLE_MARGIN,
+                0, width + 2 * HEADER_TITLE_MARGIN, 44);
+    }
+    [self resetTabs];
 }
 @end

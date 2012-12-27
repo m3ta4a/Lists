@@ -13,14 +13,18 @@
 
 @interface LLTableViewHeaderControl : UIControl
 
-@property(nonatomic, strong) UITextField *headerLabel;
+@property(nonatomic, strong) NSArray *Tags;
 @property(nonatomic) CGPoint startLocation;
 @property(nonatomic) CGPoint lastLocation;
 
 - (LLTableViewHeaderControl *)initWithFrame:(CGRect)frame andDelegate:(LLViewController *)delegate;
 
-- (void)textFieldDidChange:(id)sender;
+- (void)textFieldDidChange:(UITextField *)sender;
 
 - (void)oneFingerSwipeLeft:(UIPanGestureRecognizer *)recognizer;
+
+- (void)resetTabs;
+
+- (void)deviceOrientationDidChange:(id)sender;
 
 @end
