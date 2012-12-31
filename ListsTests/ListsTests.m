@@ -14,7 +14,6 @@
 {
     [super setUp];
     
-    // Set-up code here.
 }
 
 - (void)tearDown
@@ -24,9 +23,9 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testNothing
 {
-    STFail(@"Unit tests are not implemented yet in ListsTests");
+
 }
 
 @end

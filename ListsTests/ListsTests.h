@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 EggDevil. All rights reserved.
 //
 
+#import <CoreGraphics/CoreGraphics.h>
+#import <CoreData/CoreData.h>
 #import <SenTestingKit/SenTestingKit.h>
 
 @interface ListsTests : SenTestCase

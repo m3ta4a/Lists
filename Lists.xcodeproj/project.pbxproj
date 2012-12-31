@@ -11,8 +11,18 @@
 		231CF56845F6ED852A05E484 /* LLHeaderTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 231CF48C1787BE2A6F261124 /* LLHeaderTextField.m */; };
 		231CF7888BD4E44E2C22D3C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 231CF392E816FFBBCE3E4D42 /* Localizable.strings */; };
 		231CF7B72A12F2DD8D1B0058 /* LLTableViewHeaderControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 231CF1AE46206AFA9C2B9810 /* LLTableViewHeaderControl.m */; };
+		23378F3D1690ECB400EDE48D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23378F3C1690ECB400EDE48D /* CoreData.framework */; };
+		23378F3F1690ED0F00EDE48D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23378F3C1690ECB400EDE48D /* CoreData.framework */; };
+		23378F421690F69300EDE48D /* ListDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 23378F401690F69300EDE48D /* ListDataModel.xcdatamodeld */; };
+		23378F45169111F500EDE48D /* CoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 23378F44169111F500EDE48D /* CoreDataHelper.m */; };
+		23378F9616914C5600EDE48D /* List.m in Sources */ = {isa = PBXBuildFile; fileRef = 23378F9516914C5600EDE48D /* List.m */; };
+		23378F991691530300EDE48D /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 23378F981691530300EDE48D /* Settings.m */; };
 		23496BBD168B9AEA0082E3DF /* LLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23496BBC168B9AEA0082E3DF /* LLTableViewCell.m */; };
 		23496BBE168B9AEA0082E3DF /* LLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23496BBC168B9AEA0082E3DF /* LLTableViewCell.m */; };
+		2369394C168D6F1C00FA576F /* ListItemTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2369394B168D6F1C00FA576F /* ListItemTests.m */; };
+		236BF7F3168D2C7C006EAC69 /* ListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 236BF7F2168D2C7C006EAC69 /* ListItem.m */; };
+		236BF7F4168D2C7C006EAC69 /* ListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 236BF7F2168D2C7C006EAC69 /* ListItem.m */; };
+		23A4F562168D5C38003D7DCC /* AddRow.png in Resources */ = {isa = PBXBuildFile; fileRef = 23A4F561168D5C38003D7DCC /* AddRow.png */; };
 		23FEBBB2168B87A600872565 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FEBBB1168B87A600872565 /* UIKit.framework */; };
 		23FEBBB4168B87A600872565 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FEBBB3168B87A600872565 /* Foundation.framework */; };
 		23FEBBB6168B87A600872565 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FEBBB5168B87A600872565 /* CoreGraphics.framework */; };
@@ -30,10 +40,6 @@
 		23FEBBDB168B87A600872565 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FEBBB3168B87A600872565 /* Foundation.framework */; };
 		23FEBBE3168B87A600872565 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 23FEBBE1168B87A600872565 /* InfoPlist.strings */; };
 		23FEBBE6168B87A600872565 /* ListsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FEBBE5168B87A600872565 /* ListsTests.m */; };
-		23FEBC2A168B921100872565 /* LLDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FEBC29168B921100872565 /* LLDataSource.m */; };
-		23FEBC2B168B921100872565 /* LLDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FEBC29168B921100872565 /* LLDataSource.m */; };
-		23FEBC2E168B92A200872565 /* LLList.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FEBC2D168B92A200872565 /* LLList.m */; };
-		23FEBC2F168B92A200872565 /* LLList.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FEBC2D168B92A200872565 /* LLList.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,8 +58,22 @@
 		231CF392E816FFBBCE3E4D42 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		231CF48C1787BE2A6F261124 /* LLHeaderTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLHeaderTextField.m; sourceTree = "<group>"; };
 		231CFAE0AA0FB071E06A7AFD /* LLTableViewHeaderControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLTableViewHeaderControl.h; sourceTree = "<group>"; };
+		23378F3C1690ECB400EDE48D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		23378F411690F69300EDE48D /* ListDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ListDataModel.xcdatamodel; sourceTree = "<group>"; };
+		23378F43169111F500EDE48D /* CoreDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataHelper.h; sourceTree = "<group>"; };
+		23378F44169111F500EDE48D /* CoreDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataHelper.m; sourceTree = "<group>"; };
+		23378F461691171200EDE48D /* ListDataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ListDataModel 2.xcdatamodel"; sourceTree = "<group>"; };
+		23378F9416914C5600EDE48D /* List.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = List.h; path = ../List.h; sourceTree = "<group>"; };
+		23378F9516914C5600EDE48D /* List.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = List.m; path = ../List.m; sourceTree = "<group>"; };
+		23378F971691530300EDE48D /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
+		23378F981691530300EDE48D /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
 		23496BBB168B9AEA0082E3DF /* LLTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLTableViewCell.h; sourceTree = "<group>"; };
 		23496BBC168B9AEA0082E3DF /* LLTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLTableViewCell.m; sourceTree = "<group>"; };
+		2369394A168D6F1C00FA576F /* ListItemTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListItemTests.h; sourceTree = "<group>"; };
+		2369394B168D6F1C00FA576F /* ListItemTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListItemTests.m; sourceTree = "<group>"; };
+		236BF7F1168D2C7C006EAC69 /* ListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListItem.h; sourceTree = "<group>"; };
+		236BF7F2168D2C7C006EAC69 /* ListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListItem.m; sourceTree = "<group>"; };
+		23A4F561168D5C38003D7DCC /* AddRow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddRow.png; sourceTree = "<group>"; };
 		23FEBBAD168B87A600872565 /* Lists.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lists.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23FEBBB1168B87A600872565 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		23FEBBB3168B87A600872565 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -77,10 +97,6 @@
 		23FEBBE2168B87A600872565 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		23FEBBE4168B87A600872565 /* ListsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListsTests.h; sourceTree = "<group>"; };
 		23FEBBE5168B87A600872565 /* ListsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListsTests.m; sourceTree = "<group>"; };
-		23FEBC28168B921100872565 /* LLDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLDataSource.h; sourceTree = "<group>"; };
-		23FEBC29168B921100872565 /* LLDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLDataSource.m; sourceTree = "<group>"; };
-		23FEBC2C168B92A200872565 /* LLList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLList.h; sourceTree = "<group>"; };
-		23FEBC2D168B92A200872565 /* LLList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLList.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23378F3D1690ECB400EDE48D /* CoreData.framework in Frameworks */,
 				23FEBBB2168B87A600872565 /* UIKit.framework in Frameworks */,
 				23FEBBB4168B87A600872565 /* Foundation.framework in Frameworks */,
 				23FEBBB6168B87A600872565 /* CoreGraphics.framework in Frameworks */,
@@ -98,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23378F3F1690ED0F00EDE48D /* CoreData.framework in Frameworks */,
 				23FEBBD9168B87A600872565 /* SenTestingKit.framework in Frameworks */,
 				23FEBBDA168B87A600872565 /* UIKit.framework in Frameworks */,
 				23FEBBDB168B87A600872565 /* Foundation.framework in Frameworks */,
@@ -129,6 +147,7 @@
 		23FEBBB0168B87A600872565 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				23378F3C1690ECB400EDE48D /* CoreData.framework */,
 				23FEBBB1168B87A600872565 /* UIKit.framework */,
 				23FEBBB3168B87A600872565 /* Foundation.framework */,
 				23FEBBB5168B87A600872565 /* CoreGraphics.framework */,
@@ -140,21 +159,27 @@
 		23FEBBB7168B87A600872565 /* Lists */ = {
 			isa = PBXGroup;
 			children = (
+				23378F9416914C5600EDE48D /* List.h */,
+				23378F9516914C5600EDE48D /* List.m */,
+				236BF7F1168D2C7C006EAC69 /* ListItem.h */,
+				236BF7F2168D2C7C006EAC69 /* ListItem.m */,
+				23378F971691530300EDE48D /* Settings.h */,
+				23378F981691530300EDE48D /* Settings.m */,
 				23FEBBC0168B87A600872565 /* LLAppDelegate.h */,
 				23FEBBC1168B87A600872565 /* LLAppDelegate.m */,
 				23FEBBCC168B87A600872565 /* MainStoryboard_iPad.storyboard */,
 				23FEBBC9168B87A600872565 /* MainStoryboard_iPhone.storyboard */,
+				23A4F561168D5C38003D7DCC /* AddRow.png */,
 				23496BBB168B9AEA0082E3DF /* LLTableViewCell.h */,
 				23496BBC168B9AEA0082E3DF /* LLTableViewCell.m */,
 				23FEBBCF168B87A600872565 /* LLViewController.h */,
 				23FEBBD0168B87A600872565 /* LLViewController.m */,
-				23FEBC28168B921100872565 /* LLDataSource.h */,
-				23FEBC29168B921100872565 /* LLDataSource.m */,
-				23FEBC2C168B92A200872565 /* LLList.h */,
-				23FEBC2D168B92A200872565 /* LLList.m */,
-				23FEBBB8168B87A600872565 /* Supporting Files */,
+				23378F43169111F500EDE48D /* CoreDataHelper.h */,
+				23378F44169111F500EDE48D /* CoreDataHelper.m */,
+				23378F401690F69300EDE48D /* ListDataModel.xcdatamodeld */,
 				231CF1AE46206AFA9C2B9810 /* LLTableViewHeaderControl.m */,
 				231CFAE0AA0FB071E06A7AFD /* LLTableViewHeaderControl.h */,
+				23FEBBB8168B87A600872565 /* Supporting Files */,
 				231CF392E816FFBBCE3E4D42 /* Localizable.strings */,
 				231CF48C1787BE2A6F261124 /* LLHeaderTextField.m */,
 				231CF29E5109A814B92E9B47 /* LLHeaderTextField.h */,
@@ -181,6 +206,8 @@
 			children = (
 				23FEBBE4168B87A600872565 /* ListsTests.h */,
 				23FEBBE5168B87A600872565 /* ListsTests.m */,
+				2369394A168D6F1C00FA576F /* ListItemTests.h */,
+				2369394B168D6F1C00FA576F /* ListItemTests.m */,
 				23FEBBDF168B87A600872565 /* Supporting Files */,
 			);
 			path = ListsTests;
@@ -274,6 +301,7 @@
 				23FEBBCB168B87A600872565 /* MainStoryboard_iPhone.storyboard in Resources */,
 				23FEBBCE168B87A600872565 /* MainStoryboard_iPad.storyboard in Resources */,
 				231CF7888BD4E44E2C22D3C8 /* Localizable.strings in Resources */,
+				23A4F562168D5C38003D7DCC /* AddRow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,11 +339,14 @@
 				23FEBBBE168B87A600872565 /* main.m in Sources */,
 				23FEBBC2168B87A600872565 /* LLAppDelegate.m in Sources */,
 				23FEBBD1168B87A600872565 /* LLViewController.m in Sources */,
-				23FEBC2A168B921100872565 /* LLDataSource.m in Sources */,
-				23FEBC2E168B92A200872565 /* LLList.m in Sources */,
 				23496BBD168B9AEA0082E3DF /* LLTableViewCell.m in Sources */,
 				231CF7B72A12F2DD8D1B0058 /* LLTableViewHeaderControl.m in Sources */,
 				231CF3A39A763B9CE0C66138 /* LLHeaderTextField.m in Sources */,
+				236BF7F3168D2C7C006EAC69 /* ListItem.m in Sources */,
+				23378F421690F69300EDE48D /* ListDataModel.xcdatamodeld in Sources */,
+				23378F45169111F500EDE48D /* CoreDataHelper.m in Sources */,
+				23378F9616914C5600EDE48D /* List.m in Sources */,
+				23378F991691530300EDE48D /* Settings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,10 +355,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				23FEBBE6168B87A600872565 /* ListsTests.m in Sources */,
-				23FEBC2B168B921100872565 /* LLDataSource.m in Sources */,
-				23FEBC2F168B92A200872565 /* LLList.m in Sources */,
 				23496BBE168B9AEA0082E3DF /* LLTableViewCell.m in Sources */,
 				231CF56845F6ED852A05E484 /* LLHeaderTextField.m in Sources */,
+				236BF7F4168D2C7C006EAC69 /* ListItem.m in Sources */,
+				2369394C168D6F1C00FA576F /* ListItemTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,6 +547,21 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		23378F401690F69300EDE48D /* ListDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				23378F461691171200EDE48D /* ListDataModel 2.xcdatamodel */,
+				23378F411690F69300EDE48D /* ListDataModel.xcdatamodel */,
+			);
+			currentVersion = 23378F461691171200EDE48D /* ListDataModel 2.xcdatamodel */;
+			path = ListDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			usesTabs = 0;
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 23FEBBA4168B87A600872565 /* Project object */;
 }

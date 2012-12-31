@@ -7,10 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreGraphics/CoreGraphics.h>
 
-@interface LLTableViewCell : UITableViewCell
+#define ITEM_TEXT_MARGIN 5
+
+@interface LLTableViewCell : UITableViewCell <UITextFieldDelegate>
 enum styles{
     CustomStyleHeader
 };
+
+@property (nonatomic, weak) IBOutlet UITextField *textField;
+
+- (IBAction) textFieldDidChange:(UITextField *)sender;
+
 
 @end

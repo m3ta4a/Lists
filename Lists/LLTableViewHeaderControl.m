@@ -17,9 +17,6 @@
     if (self == nil)
         return nil;
 
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
-
     self.backgroundColor = [UIColor blackColor];
 
     LLHeaderTextField *headerLabel = [[LLHeaderTextField alloc] initWithFrame:CGRectZero];
@@ -45,10 +42,9 @@
 
     [self addSubview:headerLabel];
 
-    UIPanGestureRecognizer *oneFingerSwipeLeft;
-    oneFingerSwipeLeft = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(oneFingerSwipeLeft:)];
-    [self addGestureRecognizer:oneFingerSwipeLeft];
-
+    UIPanGestureRecognizer *oneFingerSwipe;
+    oneFingerSwipe = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(oneFingerSwipe:)];
+    [self addGestureRecognizer:oneFingerSwipe];
 
     return self;
 }
@@ -60,7 +56,7 @@
             0, width + 2 * HEADER_TITLE_MARGIN, 44);
 }
 
-- (void)oneFingerSwipeLeft:(UIPanGestureRecognizer *)recognizer {
+- (void)oneFingerSwipe:(UIPanGestureRecognizer *)recognizer {
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         self.startLocation = [recognizer locationInView:self];
         self.lastLocation = self.startLocation;
@@ -93,13 +89,11 @@
         tf.frame = tf.centerFrame;
     }
 
-
     [UIView commitAnimations];
 }
 
-- (void)deviceOrientationDidChange:(id)sender {
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGFloat screenWidth = screenRect.size.width;
+- (void)deviceOrientationDidChange:(CGFloat)screenWidth {
+
     self.frame = CGRectMake(0.0, 0.0, screenWidth, 44.0);
     for (int i = 0; i < [self.Tags count]; i++) {
         LLHeaderTextField *tf = [self.Tags objectAtIndex:i];

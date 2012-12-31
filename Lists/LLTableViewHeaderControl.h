@@ -21,10 +21,10 @@
 
 - (void)textFieldDidChange:(UITextField *)sender;
 
-- (void)oneFingerSwipeLeft:(UIPanGestureRecognizer *)recognizer;
+- (void)oneFingerSwipe:(UIPanGestureRecognizer *)recognizer;
 
 - (void)resetTabs;
 
-- (void)deviceOrientationDidChange:(id)sender;
+- (void)deviceOrientationDidChange:(CGFloat)screenWidth;
 
 @end
