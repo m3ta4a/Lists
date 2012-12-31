@@ -39,7 +39,7 @@
 		23FEBBDA168B87A600872565 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FEBBB1168B87A600872565 /* UIKit.framework */; };
 		23FEBBDB168B87A600872565 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FEBBB3168B87A600872565 /* Foundation.framework */; };
 		23FEBBE3168B87A600872565 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 23FEBBE1168B87A600872565 /* InfoPlist.strings */; };
-		23FEBBE6168B87A600872565 /* ListsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FEBBE5168B87A600872565 /* ListsTests.m */; };
+		23FEBBE6168B87A600872565 /* ListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FEBBE5168B87A600872565 /* ListTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,8 +95,8 @@
 		23FEBBD8168B87A600872565 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		23FEBBE0168B87A600872565 /* ListsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ListsTests-Info.plist"; sourceTree = "<group>"; };
 		23FEBBE2168B87A600872565 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		23FEBBE4168B87A600872565 /* ListsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListsTests.h; sourceTree = "<group>"; };
-		23FEBBE5168B87A600872565 /* ListsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListsTests.m; sourceTree = "<group>"; };
+		23FEBBE4168B87A600872565 /* ListTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListTests.h; sourceTree = "<group>"; };
+		23FEBBE5168B87A600872565 /* ListTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,8 +204,8 @@
 		23FEBBDE168B87A600872565 /* ListsTests */ = {
 			isa = PBXGroup;
 			children = (
-				23FEBBE4168B87A600872565 /* ListsTests.h */,
-				23FEBBE5168B87A600872565 /* ListsTests.m */,
+				23FEBBE4168B87A600872565 /* ListTests.h */,
+				23FEBBE5168B87A600872565 /* ListTests.m */,
 				2369394A168D6F1C00FA576F /* ListItemTests.h */,
 				2369394B168D6F1C00FA576F /* ListItemTests.m */,
 				23FEBBDF168B87A600872565 /* Supporting Files */,
@@ -354,7 +354,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23FEBBE6168B87A600872565 /* ListsTests.m in Sources */,
+				23FEBBE6168B87A600872565 /* ListTests.m in Sources */,
 				23496BBE168B9AEA0082E3DF /* LLTableViewCell.m in Sources */,
 				231CF56845F6ED852A05E484 /* LLHeaderTextField.m in Sources */,
 				236BF7F4168D2C7C006EAC69 /* ListItem.m in Sources */,

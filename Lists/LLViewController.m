@@ -44,7 +44,7 @@
                              insertNewObjectForEntityForName:@"Settings"
                              inManagedObjectContext:self.managedObjectContext];
         
-        NSSet *listitems = [NSSet setWithObjects:newItem, nil];
+        NSMutableSet *listitems = [NSMutableSet setWithObjects:newItem, nil];
         newList.items = listitems;
         
         settings.currentListID = 0;
@@ -68,7 +68,7 @@
     
     for (NSManagedObject *list in listArray) {
         List *_list = (List*)list;
-        if (_list.id == self.settings.currentListID){
+        if (_list.listID == self.settings.currentListID){
             self.currentList = _list;
             break;
         }
@@ -99,7 +99,7 @@
     assert(tv == self.tableView);
     assert(indexPath != nil);
 
-    int addButtonRow = 2;//[self.dataSrc itemCountInList:self.currentList];
+    int addButtonRow = [[self.currentList items] count];
     
     NSString *identifier = @"Cell";
     if (indexPath.row == addButtonRow)
@@ -115,7 +115,7 @@
     
     if (indexPath.row < addButtonRow){
         cell.textField.tag = indexPath.row;
-        cell.textField.text = @"";//[self.dataSrc getItemInList:self.currentList andRow:indexPath.row].text;
+        cell.textField.text = [self.currentList itemAtRow:indexPath.row].text;
     }
     
     return cell;
@@ -143,30 +143,33 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 2)//[self.dataSrc itemCountInList:self.currentList])
+    if (indexPath.row == [[self.currentList items] count])
         cell.backgroundColor = [UIColor colorWithRed:0.0
                                            green:0.0
                                             blue:0.0
                                            alpha:1.0];
     else
-        cell.backgroundColor = [UIColor colorWithRed:0.745
-                                               green:0.766
-                                                blue:0.766
+        cell.backgroundColor = [UIColor colorWithRed:0.888
+                                               green:0.888
+                                                blue:0.888
                                                alpha:1.0];
     
 }
 -(IBAction)addRow:(id)sender
 {
-   // [self.dataSrc addNewItemToList:self.currentList];
+    ListItem *newItem = [NSEntityDescription
+                         insertNewObjectForEntityForName:@"Item"
+                         inManagedObjectContext:self.managedObjectContext];
+    [self.currentList addItem:newItem toRow:[[self.currentList items] count]];
     [self.tableView reloadData];
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     int row = textField.tag;
     NSString *newStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    //ListItem *item = [self.dataSrc getItemInList:0 andRow:row];
-    //item.text = newStr;
-    //[self.dataSrc setItem:item InList:0 andRow:row];
+    ListItem *item = [self.currentList itemAtRow:row];
+    item.text = newStr;
+    [self.currentList replaceItemInRow:row withItem:item];
     
     return true;
 }

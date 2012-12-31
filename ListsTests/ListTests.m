@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 EggDevil. All rights reserved.
 //
 
-#import "ListsTests.h"
+#import "ListTests.h"
 
-@implementation ListsTests
+@implementation ListTests
 
 - (void)setUp
 {
@@ -23,7 +23,7 @@
     [super tearDown];
 }
 
-- (void)testNothing
+- (void)testList
 {
 
 }

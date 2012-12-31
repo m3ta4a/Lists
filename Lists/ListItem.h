@@ -11,6 +11,7 @@
 
 @interface ListItem : NSManagedObject
 
+@property (nonatomic) int row;
 @property (nonatomic, copy) NSString *text;
 
 @end

@@ -10,6 +10,6 @@
 #import <CoreData/CoreData.h>
 #import <SenTestingKit/SenTestingKit.h>
 
-@interface ListsTests : SenTestCase
+@interface ListTests : SenTestCase
 
 @end

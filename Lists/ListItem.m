@@ -11,6 +11,7 @@
 
 @implementation ListItem
 @dynamic text;
+@dynamic row;
 
 - (void) awakeFromInsert {
     [super awakeFromInsert];
