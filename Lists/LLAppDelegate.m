@@ -96,6 +96,8 @@
         _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         [_managedObjectContext setPersistentStoreCoordinator: coordinator];
     }
+    [_managedObjectContext setStalenessInterval:0];
+
     return _managedObjectContext;
 }
 
@@ -127,7 +129,7 @@
         return _persistentStoreCoordinator;
     }
     NSURL *storeURL = [[self applicationDocumentsDirectory]
-                       URLByAppendingPathComponent:@"data.sqlite"];
+                       URLByAppendingPathComponent:@"data.bin"];
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator
                                     alloc]
@@ -136,7 +138,7 @@
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
                              [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSBinaryStoreType configuration:nil URL:storeURL options:options error:&error])
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error])
     {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();

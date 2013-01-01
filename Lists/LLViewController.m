@@ -23,6 +23,10 @@
 - (void)viewDidLoad {
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];    
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshData:)
+                                                 name:NSManagedObjectContextDidSaveNotification     
+                                               object:nil];
 
     NSError *error;
     if (![[self listFetchedResultsController] performFetch:&error]) {
@@ -80,7 +84,6 @@
 }
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
-    int count = _itemFetchedResultsController.fetchedObjects.count;
     NSUInteger numberOfObjects = [[[_itemFetchedResultsController sections] objectAtIndex:section] numberOfObjects];
     return numberOfObjects + 1;
 }
@@ -157,39 +160,52 @@
 }
 -(IBAction)addRow:(id)sender
 {
-    NSManagedObjectContext *itemcontext = [_itemFetchedResultsController managedObjectContext];
+//    NSManagedObjectContext *itemcontext = [_itemFetchedResultsController managedObjectContext];
     ListItem *newItem = [NSEntityDescription
                          insertNewObjectForEntityForName:@"Item"
-                         inManagedObjectContext:itemcontext];
-    newItem.text= @"Cheese";
+                         inManagedObjectContext:_managedObjectContext];
+    newItem.text= @"New Item";
     newItem.row = _itemFetchedResultsController.fetchedObjects.count;
 
-    NSManagedObjectContext *listcontext = [_listFetchedResultsController managedObjectContext];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"List" inManagedObjectContext:listcontext];
+//    NSManagedObjectContext *listcontext = [_listFetchedResultsController managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"List" inManagedObjectContext:_managedObjectContext];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"listID = %d", 11];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entity];
     [request setPredicate:predicate];
 
     NSError *error = nil;
-    NSArray* lists = [listcontext executeFetchRequest:request error:&error];
+    NSArray* lists = [_managedObjectContext executeFetchRequest:request error:&error];
     List* list = [lists objectAtIndex:0];
+    //[list addItem:newItem toRow:newItem.row];
+    NSMutableSet *listitems = [[list.items setByAddingObject:newItem] mutableCopy];
     
-    NSMutableSet *listitems = [list.items setByAddingObject:newItem];
+    list.items = listitems;
     
-    list.items= listitems;
-        
-    [self.tableView reloadData];
+    [_managedObjectContext save:&error];
+    
+//    [self.tableView reloadData];
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     int row = textField.tag;
+    ListItem* item = (ListItem*)[_itemFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
+
     NSString *newStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
 
-//    item.text = newStr;
-
+    item.text = newStr;
     
     return true;
+}
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    int row = textField.tag;
+    ListItem* item = (ListItem*)[_itemFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
+    
+    item.text = @"";
+    
+    return true;
+
 }
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
@@ -216,7 +232,7 @@
 
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-    
+//    NSLog(@"current = %@, main = %@", [NSThread currentThread], [NSThread mainThread]);
     NSEntityDescription *entity = [[controller fetchRequest] entity];
     //NSLog(@"Changed object %@", entity);
     
@@ -238,10 +254,11 @@
             break;
             
         case NSFetchedResultsChangeUpdate:
+        {
             cell = (LLTableViewCell *) [tableView cellForRowAtIndexPath:indexPath];
             [self configureCell:cell atIndexPath:indexPath];
             break;
-            
+        }
         case NSFetchedResultsChangeMove:
             [tableView deleteRowsAtIndexPaths:[NSArray
                                                arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -288,7 +305,7 @@
 
     NSFetchedResultsController *theFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                                                   managedObjectContext:[self managedObjectContext] sectionNameKeyPath:nil
-                                                                                                             cacheName:@"ListResults"];
+                                                                                                             cacheName:nil];//@"ListResults"];
     self.listFetchedResultsController = theFetchedResultsController;
     _listFetchedResultsController.delegate = self;
 
@@ -313,7 +330,7 @@
 
     NSFetchedResultsController *theFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                                                   managedObjectContext:[self managedObjectContext] sectionNameKeyPath:nil
-                                                                                                             cacheName:@"ItemResults"];
+                                                                                                             cacheName:nil];
     self.itemFetchedResultsController = theFetchedResultsController;
     _itemFetchedResultsController.delegate = self;
 
@@ -321,7 +338,7 @@
 }
 -(void)updateItemFetchedResultsPredicate
 {
-    [NSFetchedResultsController deleteCacheWithName:@"ItemResults"]; 
+  //  [NSFetchedResultsController deleteCacheWithName:@"ItemResults"];
     
     NSNumber *currentListID = [NSNumber numberWithInteger:[[NSUserDefaults standardUserDefaults] integerForKey:@"currentListID"]];
     NSPredicate* pred = [NSPredicate predicateWithFormat:@"lists.listID = %d", 11];//][currentListID integerValue]];
@@ -333,6 +350,8 @@
     }
     [self.tableView reloadData];
 }
-
+- (void) refreshData:(NSNotification *)notif {    
+    [[[self itemFetchedResultsController] managedObjectContext] mergeChangesFromContextDidSaveNotification:notif];
+}
 
 @end
