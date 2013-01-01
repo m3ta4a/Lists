@@ -2,21 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0ece8841-57df-4dcf-9b2f-dba88fcd3258" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ListsTests/ListItemTests.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ListsTests/ListItemTests.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/Lists.xcodeproj/project.pbxproj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/LLDataSource.h" afterPath="$PROJECT_DIR$/Lists/LLDataSource.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/LLDataSource.m" afterPath="$PROJECT_DIR$/Lists/LLDataSource.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/LLTableViewCell.h" afterPath="$PROJECT_DIR$/Lists/LLTableViewCell.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/LLTableViewCell.m" afterPath="$PROJECT_DIR$/Lists/LLTableViewCell.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/LLTableViewHeaderControl.h" afterPath="$PROJECT_DIR$/Lists/LLTableViewHeaderControl.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/LLTableViewHeaderControl.m" afterPath="$PROJECT_DIR$/Lists/LLTableViewHeaderControl.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists.xcodeproj/project.xcworkspace/xcuserdata/Jake.xcuserdatad/UserInterfaceState.xcuserstate" afterPath="$PROJECT_DIR$/Lists.xcodeproj/project.xcworkspace/xcuserdata/Jake.xcuserdatad/UserInterfaceState.xcuserstate" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists.xcodeproj/xcuserdata/Jake.xcuserdatad/xcdebugger/Breakpoints.xcbkptlist" afterPath="$PROJECT_DIR$/Lists.xcodeproj/xcuserdata/Jake.xcuserdatad/xcdebugger/Breakpoints.xcbkptlist" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/LLAppDelegate.m" afterPath="$PROJECT_DIR$/Lists/LLAppDelegate.m" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/LLViewController.h" afterPath="$PROJECT_DIR$/Lists/LLViewController.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/LLViewController.m" afterPath="$PROJECT_DIR$/Lists/LLViewController.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/Lists-Info.plist" afterPath="$PROJECT_DIR$/Lists/Lists-Info.plist" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/en.lproj/MainStoryboard_iPhone.storyboard" afterPath="$PROJECT_DIR$/Lists/en.lproj/MainStoryboard_iPhone.storyboard" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ListsTests/ListsTests.h" afterPath="$PROJECT_DIR$/ListsTests/ListsTests.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ListsTests/ListsTests.m" afterPath="$PROJECT_DIR$/ListsTests/ListsTests.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/ListDataModel.xcdatamodeld/ListDataModel 2.xcdatamodel/contents" afterPath="$PROJECT_DIR$/Lists/ListDataModel.xcdatamodeld/ListDataModel 2.xcdatamodel/contents" />
     </list>
     <ignored path="Lists.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,19 +28,28 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="iphonesimulator_6.0_1" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="LLDataSource.h" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Lists/LLDataSource.h">
+      <file leaf-file-name="LLViewController.h" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Lists/LLViewController.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="7" selection-start="664" selection-end="664" vertical-scroll-proportion="0.0">
+            <state line="15" column="43" selection-start="398" selection-end="398" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LLDataSource.m" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Lists/LLDataSource.m">
+      <file leaf-file-name="LLAppDelegate.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Lists/LLAppDelegate.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="38" selection-start="872" selection-end="872" vertical-scroll-proportion="0.0">
+            <state line="31" column="0" selection-start="1047" selection-end="1047" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Lists/main.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="0" selection-start="240" selection-end="240" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -57,7 +58,7 @@
       <file leaf-file-name="LLViewController.m" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Lists/LLViewController.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="5" selection-start="1732" selection-end="1732" vertical-scroll-proportion="0.45628417">
+            <state line="91" column="0" selection-start="3287" selection-end="3287" vertical-scroll-proportion="1.0417246">
               <folding />
             </state>
           </provider>
@@ -72,19 +73,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ListsTests.m" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ListsTests/ListsTests.m">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="4" selection-start="1217" selection-end="1217" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ListItem.m" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Lists/ListItem.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="8" selection-start="304" selection-end="304" vertical-scroll-proportion="0.0">
+            <state line="20" column="8" selection-start="335" selection-end="335" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -93,7 +85,7 @@
       <file leaf-file-name="ListItem.h" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Lists/ListItem.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="11" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0">
+            <state line="10" column="11" selection-start="191" selection-end="191" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -123,11 +115,12 @@
         <option value="$PROJECT_DIR$/Lists/LLHeaderTextField.h" />
         <option value="$PROJECT_DIR$/Lists/LLHeaderTextField.m" />
         <option value="$PROJECT_DIR$/Lists/LLTableViewHeaderControl.m" />
-        <option value="$PROJECT_DIR$/Lists/LLViewController.m" />
         <option value="$PROJECT_DIR$/Lists/LLDataSource.h" />
         <option value="$PROJECT_DIR$/ListsTests/ListsTests.m" />
         <option value="$PROJECT_DIR$/Lists/LLDataSource.m" />
         <option value="$PROJECT_DIR$/Lists/ListItem.m" />
+        <option value="$PROJECT_DIR$/Lists/LLAppDelegate.m" />
+        <option value="$PROJECT_DIR$/Lists/LLViewController.m" />
       </list>
     </option>
   </component>
@@ -161,6 +154,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="DirectoryView.Xcode" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -203,18 +197,17 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="DirectoryView.Xcode" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="options.lastSelected" value="preferences.sourceCode.Objective-C" />
     <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="preferences.sourceCode.Objective-C" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="FullScreen" value="true" />
     <property name="OBJC.PRESERVED_TARGET_SELECTION" value="Lists,,,ListsTests" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager" selected="Application.Lists">
     <configuration default="true" type="AppleRunConfiguration" factoryName="Application" PROJECT_NAME="Lists" TARGET_NAME="Lists" CONFIG_NAME="Debug" PASS_PARENT_ENVS="FALSE" RUN_TARGET_PROJECT_NAME="Lists" RUN_TARGET_NAME="Lists" MAKE_ACTIVE="TRUE" WAIT_FOR="FALSE">
@@ -224,7 +217,9 @@
     <configuration default="false" name="Lists" type="AppleRunConfiguration" factoryName="Application" SCHEME_NAME="Lists" PROJECT_NAME="Lists" TARGET_NAME="Lists" CONFIG_NAME="Debug" WORKING_DIR="" PASS_PARENT_ENVS="FALSE" RUN_TARGET_PROJECT_NAME="Lists" RUN_TARGET_NAME="Lists" MAKE_ACTIVE="TRUE" WAIT_FOR="FALSE">
       <envs />
       <RunnerSettings RunnerId="AppRunner" />
+      <RunnerSettings RunnerId="InstrumentsRunner" />
       <ConfigurationWrapper RunnerId="AppRunner" />
+      <ConfigurationWrapper RunnerId="InstrumentsRunner" />
       <method />
     </configuration>
     <list size="1">
@@ -297,7 +292,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924336" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924336" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -374,25 +369,20 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Lists/LLDataSource.m</url>
-          <line>18</line>
-          <option name="timeStamp" value="19" />
+          <url>file://$PROJECT_DIR$/Lists/LLViewController.m</url>
+          <line>85</line>
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Lists/LLViewController.m</url>
+          <line>91</line>
+          <option name="timeStamp" value="55" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="22" />
+      <option name="time" value="56" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Lists/LLViewController.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="43" selection-start="396" selection-end="396" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Lists/main.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="240" selection-end="240" vertical-scroll-proportion="0.26639345" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Lists/LLHeaderTextField.h">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="40" selection-start="233" selection-end="233" vertical-scroll-proportion="0.22304833" />
@@ -405,9 +395,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Lists/LLTableViewHeaderControl.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="94" column="4" selection-start="3525" selection-end="3525" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="94" column="4" selection-start="3525" selection-end="3525" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Lists/LLTableViewCell.m">
@@ -422,9 +410,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Lists/LLTableViewHeaderControl.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="139" selection-start="537" selection-end="537" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="22" column="139" selection-start="537" selection-end="537" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Lists/LLTableViewCell.h">
@@ -432,9 +418,23 @@
         <state line="15" column="29" selection-start="298" selection-end="298" vertical-scroll-proportion="0.23659305" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ListsTests/ListsTests.m">
+    <entry file="file://$PROJECT_DIR$/Lists/ListItem.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="4" selection-start="1217" selection-end="1217" vertical-scroll-proportion="0.0">
+        <state line="20" column="8" selection-start="335" selection-end="335" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Lists/ListItem.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="11" selection-start="191" selection-end="191" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/CoreData.framework/Headers/NSFetchRequest.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="38" selection-start="1836" selection-end="1836" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -446,37 +446,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Lists/ListItem.m">
+    <entry file="file://$PROJECT_DIR$/Lists/LLViewController.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="8" selection-start="304" selection-end="304" vertical-scroll-proportion="0.0">
+        <state line="15" column="43" selection-start="398" selection-end="398" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Lists/ListItem.h">
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/CoreData.framework/Headers/NSPersistentStoreCoordinator.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="11" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0">
+        <state line="22" column="50" selection-start="633" selection-end="650" vertical-scroll-proportion="0.37413073">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Lists/LLDataSource.m">
+    <entry file="file://$PROJECT_DIR$/Lists/LLAppDelegate.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="38" selection-start="872" selection-end="872" vertical-scroll-proportion="0.0">
+        <state line="31" column="0" selection-start="1047" selection-end="1047" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Lists/LLDataSource.h">
+    <entry file="file://$PROJECT_DIR$/Lists/main.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="7" selection-start="664" selection-end="664" vertical-scroll-proportion="0.0">
+        <state line="15" column="0" selection-start="240" selection-end="240" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Lists/LLViewController.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="5" selection-start="1732" selection-end="1732" vertical-scroll-proportion="0.45628417">
+        <state line="91" column="0" selection-start="3287" selection-end="3287" vertical-scroll-proportion="1.0417246">
           <folding />
         </state>
       </provider>

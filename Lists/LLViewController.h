@@ -12,12 +12,12 @@
 #import "ListItem.h"
 #import "Settings.h"
 
-@interface LLViewController : UITableViewController <UITableViewDelegate, UITextFieldDelegate>
+@interface LLViewController : UITableViewController <UITableViewDelegate, UITextFieldDelegate, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) LLTableViewHeaderControl *header;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, strong) Settings *settings;
-@property (nonatomic, strong) List *currentList;
+@property (nonatomic, retain) NSFetchedResultsController *listFetchedResultsController;
+@property (nonatomic, retain) NSFetchedResultsController *itemFetchedResultsController;
 
 -(IBAction)addRow:(id)sender;
 

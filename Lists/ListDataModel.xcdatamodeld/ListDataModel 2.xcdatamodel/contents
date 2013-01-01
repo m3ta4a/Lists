@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Item" representedClassName="ListItem" syncable="YES">
-        <attribute name="row" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="text" optional="YES" attributeType="String" defaultValueString="New Item" syncable="YES"/>
+        <attribute name="row" attributeType="Integer 32" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <attribute name="text" attributeType="String" defaultValueString="New Item" syncable="YES"/>
         <relationship name="lists" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="List" inverseName="items" inverseEntity="List" syncable="YES"/>
     </entity>
     <entity name="List" representedClassName="List" syncable="YES">
-        <attribute name="listID" optional="YES" attributeType="Integer 32" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <attribute name="listID" attributeType="Integer 32" minValueString="10" defaultValueString="11" syncable="YES"/>
         <relationship name="items" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Item" inverseName="lists" inverseEntity="Item" syncable="YES"/>
     </entity>
-    <entity name="Settings" representedClassName="Settings" syncable="YES">
-        <attribute name="currentListID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-    </entity>
     <elements>
-        <element name="Item" positionX="369" positionY="18" width="128" height="88"/>
-        <element name="List" positionX="90" positionY="-27" width="128" height="73"/>
-        <element name="Settings" positionX="241" positionY="-85" width="128" height="58"/>
+        <element name="Item" positionX="369" positionY="18" width="128" height="90"/>
+        <element name="List" positionX="90" positionY="-27" width="128" height="75"/>
     </elements>
 </model>
