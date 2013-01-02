@@ -131,11 +131,14 @@
 - (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     int addButtonRow = [[[_itemFetchedResultsController sections] objectAtIndex:indexPath.section] numberOfObjects];
     if (indexPath.row >= addButtonRow) //add button
+    {
+
         return;
+    }
 
     ListItem *item = [_itemFetchedResultsController objectAtIndexPath:indexPath];
     cell.textField.tag = indexPath.row;
-    cell.textField.text = item.text;
+    cell.textField.text = [NSString stringWithFormat:@"%@, %d", item.text, item.row];
     cell.textField.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithTableView:self.tableView];
 }
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -272,11 +275,11 @@
     switch(type) {
             
         case NSFetchedResultsChangeInsert:            
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationMiddle];
             break;
             
         case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
             break;
             
         case NSFetchedResultsChangeUpdate:
@@ -287,9 +290,9 @@
         }
         case NSFetchedResultsChangeMove:
             [tableView deleteRowsAtIndexPaths:[NSArray
-                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
             [tableView insertRowsAtIndexPaths:[NSArray
-                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationMiddle];
             break;
     }
 }
@@ -300,11 +303,11 @@
     switch(type) {
             
         case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationMiddle];
             break;
             
         case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationMiddle];
             break;
     }
 }
@@ -390,7 +393,7 @@
         cell.backgroundColor = [UIColor colorWithRed:0.0
                                                green:0.0
                                                 blue:0.0
-                                               alpha:1.0];
+                                               alpha:0.0];
     else
         cell.backgroundColor = [UIColor colorWithRed:0.8
                                                green:0.8

@@ -11,8 +11,8 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Ibn-wD-I7s">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="separatorColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="separatorColor" cocoaTouchSystemColor="lightTextColor"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Cell" id="MNi-ee-Q9k" customClass="LLTableViewCell">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
@@ -37,14 +37,14 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="X72-MK-wp9" firstAttribute="leading" secondItem="MNi-ee-Q9k" secondAttribute="leading" constant="20" type="default" id="d8i-9G-BUk"/>
-                                    <constraint firstItem="X72-MK-wp9" firstAttribute="centerY" secondItem="MNi-ee-Q9k" secondAttribute="centerY" type="default" id="vgX-2O-WVx"/>
+                                    <constraint firstItem="X72-MK-wp9" firstAttribute="leading" secondItem="MNi-ee-Q9k" secondAttribute="leading" constant="20" type="default" id="N1r-zp-1x9"/>
+                                    <constraint firstItem="X72-MK-wp9" firstAttribute="centerY" secondItem="MNi-ee-Q9k" secondAttribute="centerY" type="default" id="N5Q-HN-gVK"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="textField" destination="X72-MK-wp9" id="tyo-FF-y5X"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AddRow" id="Wv4-TZ-b6x">
+                            <tableViewCell alpha="0.0" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AddRow" id="Wv4-TZ-b6x">
                                 <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -71,10 +71,9 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="kEd-4U-ogj" firstAttribute="centerX" secondItem="Wv4-TZ-b6x" secondAttribute="centerX" type="default" id="AwW-kS-gZn"/>
                                     <constraint firstItem="kEd-4U-ogj" firstAttribute="top" secondItem="Wv4-TZ-b6x" secondAttribute="top" constant="7" id="jQy-ol-m0k"/>
+                                    <constraint firstItem="kEd-4U-ogj" firstAttribute="centerX" secondItem="Wv4-TZ-b6x" secondAttribute="centerX" type="default" id="zdA-f8-7e0"/>
                                 </constraints>
                             </tableViewCell>
                         </prototypes>
@@ -95,6 +94,25 @@
     <resources>
         <image name="AddRow.png" width="32" height="32"/>
     </resources>
+    <classes>
+        <class className="LLTableViewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LLTableViewCell.h"/>
+            <relationships>
+                <relationship kind="action" name="textFieldDidChange:" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="textField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="LLViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LLViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addRow:"/>
+                <relationship kind="action" name="dismissKeyboard"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
