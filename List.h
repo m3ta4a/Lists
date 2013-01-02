@@ -14,8 +14,4 @@
 @property (nonatomic) int listID;
 @property (nonatomic) NSMutableSet *items;
 
--(ListItem*)itemAtRow:(int)row;
--(void)addItem:(ListItem*)item toRow:(int)row;
--(void)removeItemInRow:(int)row;
--(void)replaceItemInRow:(int)row withItem:(ListItem*)item;
 @end

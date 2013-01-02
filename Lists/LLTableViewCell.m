@@ -17,6 +17,8 @@
     if (self == nil)
         return nil;
     
+    self.editingAccessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    
     return self;
 }
 

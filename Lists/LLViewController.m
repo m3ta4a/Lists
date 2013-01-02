@@ -57,13 +57,14 @@
         newList.items = listitems;
         newList.listID = 11;
 
+        self.tableView.allowsSelectionDuringEditing = YES;
         [super viewDidLoad];
-
+        //[self.tableView setEditing:YES animated:YES];
         return;
     }
-
-
-
+    self.tableView.allowsSelectionDuringEditing = YES;
+    //[self.tableView setEditing:YES animated:YES];
+    
     [super viewDidLoad];
 }
 - (void)viewDidUnload {
@@ -88,6 +89,45 @@
     return numberOfObjects + 1;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row < [[[_itemFetchedResultsController sections] objectAtIndex:indexPath.section] numberOfObjects])
+        return true;
+    return false;
+}
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row < [[[_itemFetchedResultsController sections] objectAtIndex:indexPath.section] numberOfObjects])
+        return true;
+    return false;
+}
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        ListItem *oldItem = [_itemFetchedResultsController objectAtIndexPath:indexPath];
+        
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"List" inManagedObjectContext:_managedObjectContext];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"listID = %d", 11];
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        [request setEntity:entity];
+        [request setPredicate:predicate];
+        
+        NSError *error = nil;
+        NSArray* lists = [_managedObjectContext executeFetchRequest:request error:&error];
+        List* list = [lists objectAtIndex:0];
+        NSMutableSet *listitems = list.items;
+        [listitems removeObject:oldItem];
+        list.items = listitems;
+        [_managedObjectContext deleteObject:oldItem];
+        [_managedObjectContext save:&error]; // this causes the fetchedResultsController to update the tableView
+    }
+}
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
+{
+    
+}
+
 - (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     int addButtonRow = [[[_itemFetchedResultsController sections] objectAtIndex:indexPath.section] numberOfObjects];
     if (indexPath.row >= addButtonRow) //add button
@@ -96,6 +136,7 @@
     ListItem *item = [_itemFetchedResultsController objectAtIndexPath:indexPath];
     cell.textField.tag = indexPath.row;
     cell.textField.text = item.text;
+    cell.textField.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithTableView:self.tableView];
 }
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma unused(tv)
@@ -129,14 +170,14 @@
     CGFloat screenWidth = screenRect.size.width;
 
     if (!self.header)
-        self.header = [[LLTableViewHeaderControl alloc] initWithFrame:CGRectMake(0.0, 0.0, screenWidth, 44.0)
+        self.header = [[LLTableViewHeaderControl alloc] initWithFrame:CGRectMake(0.0, 0.0, screenWidth, 46.0)
                                                           andDelegate:self];
 
     return self.header;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 44.0;
+    return 46.0;
 }
 
 // callback for header textfield
@@ -145,29 +186,15 @@
     return NO;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == [[[_itemFetchedResultsController sections] objectAtIndex:indexPath.section] numberOfObjects])
-        cell.backgroundColor = [UIColor colorWithRed:0.0
-                                           green:0.0
-                                            blue:0.0
-                                           alpha:1.0];
-    else
-        cell.backgroundColor = [UIColor colorWithRed:0.888
-                                               green:0.888
-                                                blue:0.888
-                                               alpha:1.0];
-    
-}
+
 -(IBAction)addRow:(id)sender
 {
-//    NSManagedObjectContext *itemcontext = [_itemFetchedResultsController managedObjectContext];
     ListItem *newItem = [NSEntityDescription
                          insertNewObjectForEntityForName:@"Item"
                          inManagedObjectContext:_managedObjectContext];
     newItem.text= @"New Item";
     newItem.row = _itemFetchedResultsController.fetchedObjects.count;
 
-//    NSManagedObjectContext *listcontext = [_listFetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"List" inManagedObjectContext:_managedObjectContext];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"listID = %d", 11];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -177,15 +204,15 @@
     NSError *error = nil;
     NSArray* lists = [_managedObjectContext executeFetchRequest:request error:&error];
     List* list = [lists objectAtIndex:0];
-    //[list addItem:newItem toRow:newItem.row];
     NSMutableSet *listitems = [[list.items setByAddingObject:newItem] mutableCopy];
     
     list.items = listitems;
     
-    [_managedObjectContext save:&error];
-    
-//    [self.tableView reloadData];
+    [_managedObjectContext save:&error]; // this causes the fetchedResultsController to update the tableView
 }
+#pragma mark -----------------
+#pragma mark Textfield delegate
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     int row = textField.tag;
@@ -232,9 +259,8 @@
 
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-//    NSLog(@"current = %@, main = %@", [NSThread currentThread], [NSThread mainThread]);
+
     NSEntityDescription *entity = [[controller fetchRequest] entity];
-    //NSLog(@"Changed object %@", entity);
     
     if ([entity.name isEqualToString:@"List" ])
     {
@@ -246,11 +272,11 @@
     switch(type) {
             
         case NSFetchedResultsChangeInsert:            
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
             
         case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
             
         case NSFetchedResultsChangeUpdate:
@@ -261,9 +287,9 @@
         }
         case NSFetchedResultsChangeMove:
             [tableView deleteRowsAtIndexPaths:[NSArray
-                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             [tableView insertRowsAtIndexPaths:[NSArray
-                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
     }
 }
@@ -274,11 +300,11 @@
     switch(type) {
             
         case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
             
         case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
     }
 }
@@ -352,6 +378,86 @@
 }
 - (void) refreshData:(NSNotification *)notif {    
     [[[self itemFetchedResultsController] managedObjectContext] mergeChangesFromContextDidSaveNotification:notif];
+}
+
+
+#pragma mark -------
+#pragma mark TableView Delegate Methods
+// Display customization
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == [[[_itemFetchedResultsController sections] objectAtIndex:indexPath.section] numberOfObjects])
+        cell.backgroundColor = [UIColor colorWithRed:0.0
+                                               green:0.0
+                                                blue:0.0
+                                               alpha:1.0];
+    else
+        cell.backgroundColor = [UIColor colorWithRed:0.8
+                                               green:0.8
+                                                blue:0.8
+                                               alpha:1.0];
+    
+}
+// Accessories (disclosures).
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
+// Selection
+
+// -tableView:shouldHighlightRowAtIndexPath: is called when a touch comes down on a row.
+// Returning NO to that message halts the selection process and does not cause the currently selected row to lose its selected look while the touch is down.
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath{
+    return true;
+}
+- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+
+}
+
+// Called before the user changes the selection. Return a new indexPath, or nil, to change the proposed selection.
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    return indexPath;
+}
+- (NSIndexPath *)tableView:(UITableView *)tableView willDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    return indexPath;
+}
+// Called after the user changes the selection.
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+}
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
+// Editing
+
+// Allows customization of the editingStyle for a particular cell located at 'indexPath'. If not implemented, all editable cells will have UITableViewCellEditingStyleDelete set for them when the table has editing property set to YES.
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewCellEditingStyleDelete;
+}
+
+// The willBegin/didEnd methods are called whenever the 'editing' property is automatically changed by the table (allowing insert/delete/move). This is done by a swipe activating a single row
+- (void)tableView:(UITableView*)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+}
+- (void)tableView:(UITableView*)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+}
+
+// Indentation
+
+- (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath{ // return 'depth' of row for hierarchies
+    return 0;
+}
+
+// Copy/Paste.  All three methods must be implemented by the delegate.
+
+- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return true;
 }
 
 @end

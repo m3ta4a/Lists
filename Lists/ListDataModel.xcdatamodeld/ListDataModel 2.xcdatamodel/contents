@@ -7,7 +7,7 @@
     </entity>
     <entity name="List" representedClassName="List" syncable="YES">
         <attribute name="listID" attributeType="Integer 32" minValueString="10" defaultValueString="11" syncable="YES"/>
-        <relationship name="items" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Item" inverseName="lists" inverseEntity="Item" syncable="YES"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Item" inverseName="lists" inverseEntity="Item" syncable="YES"/>
     </entity>
     <elements>
         <element name="Item" positionX="369" positionY="18" width="128" height="90"/>

@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 EggDevil. All rights reserved.
 //
 
+#import "LLTableViewKeyboardDismisser.h"
 #import "LLTableViewCell.h"
 #import "LLTableViewHeaderControl.h"
 #import "List.h"
@@ -19,6 +20,7 @@
 @property (nonatomic, retain) NSFetchedResultsController *listFetchedResultsController;
 @property (nonatomic, retain) NSFetchedResultsController *itemFetchedResultsController;
 
+-(IBAction)dismissKeyboard;
 -(IBAction)addRow:(id)sender;
 
 @end

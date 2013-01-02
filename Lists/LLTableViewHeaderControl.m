@@ -31,7 +31,7 @@
     CGFloat width = [headerLabel.text sizeWithFont:headerLabel.font].width;
 
     CGRect newFrame = CGRectMake((frame.size.width - width) / 2 - HEADER_TITLE_MARGIN,
-            0, width + 2 * HEADER_TITLE_MARGIN, 44);
+            0, width + 2 * HEADER_TITLE_MARGIN, frame.size.height);
     headerLabel.frame = newFrame;
     headerLabel.centerFrame = newFrame;
     headerLabel.delegate = (id) delegate;
