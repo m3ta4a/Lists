@@ -1,29 +1,19 @@
 //
 //  ListItem.m
-//  ToDo
+//  Lists
 //
-//  Created by Jake Van Alstyne on 5/7/10.
-//  Copyright 2010 EggDevil. All rights reserved.
+//  Created by Jake Van Alstyne on 1/3/13.
+//  Copyright (c) 2013 EggDevil. All rights reserved.
 //
 
 #import "ListItem.h"
+#import "List.h"
 
 
 @implementation ListItem
-@dynamic text;
-@dynamic row;
 
-- (void) awakeFromInsert {
-    [super awakeFromInsert];
-    self.text = @"New Item";
-}
-- (void)setNilValueForKey:(NSString *)key
-{
-    if ([key isEqualToString:@"text"]) {
-        self.text = @"";
-    }
-    else {
-        [super setNilValueForKey:key];
-    }
-}
+@dynamic itemID;
+@dynamic text;
+@dynamic lists;
+
 @end

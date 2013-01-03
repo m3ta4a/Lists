@@ -1,17 +1,20 @@
 //
 //  ListItem.h
-//  ToDo
+//  Lists
 //
-//  Created by Jake Van Alstyne on 5/7/10.
-//  Copyright 2010 EggDevil. All rights reserved.
+//  Created by Jake Van Alstyne on 1/3/13.
+//  Copyright (c) 2013 EggDevil. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class List;
+
 @interface ListItem : NSManagedObject
 
-@property (nonatomic) int row;
-@property (nonatomic, copy) NSString *text;
+@property (nonatomic, retain) NSNumber * itemID;
+@property (nonatomic, retain) NSString * text;
+@property (nonatomic, retain) List *lists;
 
 @end

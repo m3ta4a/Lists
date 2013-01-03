@@ -27,7 +27,7 @@
     headerLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     headerLabel.textAlignment = NSTextAlignmentCenter;
 
-    headerLabel.text = @"New List";
+    headerLabel.text = @"New";
     CGFloat width = [headerLabel.text sizeWithFont:headerLabel.font].width;
 
     CGRect newFrame = CGRectMake((frame.size.width - width) / 2 - HEADER_TITLE_MARGIN,
@@ -64,7 +64,6 @@
     else if (recognizer.state == UIGestureRecognizerStateChanged) {
         CGPoint nextLocation = [recognizer locationInView:[self superview]];
         CGFloat dx = nextLocation.x - self.lastLocation.x;
-        CGFloat dy = nextLocation.y - self.lastLocation.y;
 
         for (int i = 0; i < [self.Tags count]; i++) {
             UITextField *tf = [self.Tags objectAtIndex:(NSUInteger) i];

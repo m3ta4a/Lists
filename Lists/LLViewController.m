@@ -46,24 +46,17 @@
         NSManagedObjectContext *context = [_itemFetchedResultsController managedObjectContext];
         NSEntityDescription *entity = [[_itemFetchedResultsController fetchRequest] entity];
         ListItem *newItem= [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-
+        newItem.text = @"New Item";
+        
         NSEntityDescription *listentity = [[_listFetchedResultsController fetchRequest] entity];
         List *newList = [NSEntityDescription insertNewObjectForEntityForName:[listentity name] inManagedObjectContext:context];
+        newList.listID = [NSNumber numberWithInt:11];
+        [newList addItemsObject:newItem];
 
-        newItem.text = @"New Item";
-        newItem.row = 0;
-
-        NSMutableSet *listitems = [NSMutableSet setWithObjects:newItem, nil];
-        newList.items = listitems;
-        newList.listID = 11;
-
-        self.tableView.allowsSelectionDuringEditing = YES;
         [super viewDidLoad];
-        //[self.tableView setEditing:YES animated:YES];
+
         return;
     }
-    self.tableView.allowsSelectionDuringEditing = YES;
-    //[self.tableView setEditing:YES animated:YES];
     
     [super viewDidLoad];
 }
@@ -116,9 +109,7 @@
         NSError *error = nil;
         NSArray* lists = [_managedObjectContext executeFetchRequest:request error:&error];
         List* list = [lists objectAtIndex:0];
-        NSMutableSet *listitems = list.items;
-        [listitems removeObject:oldItem];
-        list.items = listitems;
+        [list removeItemsObject:oldItem];
         [_managedObjectContext deleteObject:oldItem];
         [_managedObjectContext save:&error]; // this causes the fetchedResultsController to update the tableView
     }
@@ -137,8 +128,7 @@
     }
 
     ListItem *item = [_itemFetchedResultsController objectAtIndexPath:indexPath];
-    cell.textField.tag = indexPath.row;
-    cell.textField.text = [NSString stringWithFormat:@"%@, %d", item.text, item.row];
+    cell.textField.text = [NSString stringWithFormat:@"%@, %@", item.text, item.itemID];
     cell.textField.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithTableView:self.tableView];
 }
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -196,7 +186,6 @@
                          insertNewObjectForEntityForName:@"Item"
                          inManagedObjectContext:_managedObjectContext];
     newItem.text= @"New Item";
-    newItem.row = _itemFetchedResultsController.fetchedObjects.count;
 
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"List" inManagedObjectContext:_managedObjectContext];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"listID = %d", 11];
@@ -207,9 +196,7 @@
     NSError *error = nil;
     NSArray* lists = [_managedObjectContext executeFetchRequest:request error:&error];
     List* list = [lists objectAtIndex:0];
-    NSMutableSet *listitems = [[list.items setByAddingObject:newItem] mutableCopy];
-    
-    list.items = listitems;
+    [list insertObject:newItem inItemsAtIndex:0];
     
     [_managedObjectContext save:&error]; // this causes the fetchedResultsController to update the tableView
 }
@@ -218,9 +205,9 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    int row = textField.tag;
-    ListItem* item = (ListItem*)[_itemFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
-
+    NSIndexPath* path = [self.tableView indexPathForCell:(LLTableViewCell*) [[textField superview] superview] ];
+    ListItem* item = (ListItem*)[_itemFetchedResultsController objectAtIndexPath:path];
+    
     NSString *newStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
 
     item.text = newStr;
@@ -229,8 +216,8 @@
 }
 - (BOOL)textFieldShouldClear:(UITextField *)textField
 {
-    int row = textField.tag;
-    ListItem* item = (ListItem*)[_itemFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
+    NSIndexPath* path = [self.tableView indexPathForCell:(LLTableViewCell*) [[textField superview] superview] ];
+    ListItem* item = (ListItem*)[_itemFetchedResultsController objectAtIndexPath:path];
     
     item.text = @"";
     
@@ -353,7 +340,7 @@
     NSPredicate* pred = [NSPredicate predicateWithFormat:@"lists.listID = %d",11]; //][currentListID integerValue]];
     [fetchRequest setPredicate:pred];
     
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"row" ascending:NO];
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"itemID" ascending:NO];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
     [fetchRequest setFetchBatchSize:20];
 
@@ -367,9 +354,6 @@
 }
 -(void)updateItemFetchedResultsPredicate
 {
-  //  [NSFetchedResultsController deleteCacheWithName:@"ItemResults"];
-    
-    NSNumber *currentListID = [NSNumber numberWithInteger:[[NSUserDefaults standardUserDefaults] integerForKey:@"currentListID"]];
     NSPredicate* pred = [NSPredicate predicateWithFormat:@"lists.listID = %d", 11];//][currentListID integerValue]];
     [_itemFetchedResultsController.fetchRequest setPredicate:pred];
     NSError *error = nil;

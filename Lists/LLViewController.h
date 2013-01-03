@@ -11,7 +11,6 @@
 #import "LLTableViewHeaderControl.h"
 #import "List.h"
 #import "ListItem.h"
-#import "Settings.h"
 
 @interface LLViewController : UITableViewController <UITableViewDelegate, UITextFieldDelegate, NSFetchedResultsControllerDelegate>
 
@@ -20,7 +19,6 @@
 @property (nonatomic, retain) NSFetchedResultsController *listFetchedResultsController;
 @property (nonatomic, retain) NSFetchedResultsController *itemFetchedResultsController;
 
--(IBAction)dismissKeyboard;
 -(IBAction)addRow:(id)sender;
 
 @end
