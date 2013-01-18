@@ -9,10 +9,14 @@
 #import "LLTableViewKeyboardDismisser.h"
 #import "LLTableViewCell.h"
 #import "LLTableViewHeaderControl.h"
+#import "LLHeaderTag.h"
 #import "List.h"
 #import "ListItem.h"
 
-@interface LLViewController : UITableViewController <UITableViewDelegate, UITextFieldDelegate, NSFetchedResultsControllerDelegate>
+@interface LLTableViewController : UITableViewController <UITableViewDelegate, NSFetchedResultsControllerDelegate, UITextFieldDelegate>
+{
+    List *m_currentList;
+}
 
 @property (nonatomic, strong) LLTableViewHeaderControl *header;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
@@ -21,5 +25,9 @@
 
 -(IBAction)addRow:(id)sender;
 
+- (void)textFieldDidChange:(UITextField *)sender;
+
 @end
+
+
 

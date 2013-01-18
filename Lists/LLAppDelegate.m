@@ -19,8 +19,8 @@
     if (!context) {
         NSLog(@"Big ole problem");// Handle the error.
     }
-    _managedObjectContext = context;
-    LLViewController *vc = (LLViewController*)self.window.rootViewController;
+
+    LLTableViewController *vc = (LLTableViewController*)self.window.rootViewController;
     vc.managedObjectContext = context;
 
     NSManagedObjectModel *model = [self managedObjectModel];
@@ -110,7 +110,7 @@
         return _managedObjectModel;
     }
     NSString *modelPath = [[NSBundle mainBundle]
-                           pathForResource:@"ListDataModel"
+                           pathForResource:@"DataModel"
                            ofType:@"momd"];
     NSURL *modelURL = [NSURL fileURLWithPath:modelPath];
     _managedObjectModel = [[NSManagedObjectModel alloc]
@@ -129,7 +129,7 @@
         return _persistentStoreCoordinator;
     }
     NSURL *storeURL = [[self applicationDocumentsDirectory]
-                       URLByAppendingPathComponent:@"data.bin"];
+                       URLByAppendingPathComponent:@"data.sqlite"];
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator
                                     alloc]

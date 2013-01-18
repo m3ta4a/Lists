@@ -5,38 +5,24 @@
 //
 
 #import "LLTableViewHeaderControl.h"
-#import "LLHeaderTextField.h"
+#import "LLHeaderTag.h"
 
 @implementation LLTableViewHeaderControl
 
 @synthesize startLocation = _startLocation;
 
-- (LLTableViewHeaderControl *)initWithFrame:(CGRect)frame andDelegate:(LLViewController *)delegate {
+- (LLTableViewHeaderControl *)initWithFrame:(CGRect)frame andDelegate:(LLTableViewController *)delegate {
 
     self = [super initWithFrame:frame];
     if (self == nil)
         return nil;
 
-    self.backgroundColor = [UIColor blackColor];
+    self.backgroundColor = [UIColor grayColor];
 
-    LLHeaderTextField *headerLabel = [[LLHeaderTextField alloc] initWithFrame:CGRectZero];
-    headerLabel.backgroundColor = [UIColor redColor];
-    headerLabel.opaque = YES;
-    headerLabel.textColor = [UIColor blackColor];
-    headerLabel.font = [UIFont boldSystemFontOfSize:20];
-    headerLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    headerLabel.textAlignment = NSTextAlignmentCenter;
+    float width = 25.;
+    CGRect newFrame = CGRectMake((frame.size.width - width) / 2 - 5, 0, width + 2 * 5, frame.size.height);
 
-    headerLabel.text = @"New";
-    CGFloat width = [headerLabel.text sizeWithFont:headerLabel.font].width;
-
-    CGRect newFrame = CGRectMake((frame.size.width - width) / 2 - HEADER_TITLE_MARGIN,
-            0, width + 2 * HEADER_TITLE_MARGIN, frame.size.height);
-    headerLabel.frame = newFrame;
-    headerLabel.centerFrame = newFrame;
-    headerLabel.delegate = (id) delegate;
-    [headerLabel addTarget:self action:@selector(textFieldDidChange:)
-          forControlEvents:UIControlEventEditingChanged];
+    LLHeaderTag *headerLabel = [[LLHeaderTag alloc] initWithFrame:newFrame];
 
     self.Tags = [[NSArray alloc] initWithObjects:headerLabel, nil];
 
@@ -47,13 +33,6 @@
     [self addGestureRecognizer:oneFingerSwipe];
 
     return self;
-}
-
-- (void)textFieldDidChange:(UITextField *)sender {
-    CGFloat width;
-    width = [sender.text sizeWithFont:sender.font].width;
-    sender.frame = CGRectMake((self.frame.size.width - width) / 2 - HEADER_TITLE_MARGIN,
-            0, width + 2 * HEADER_TITLE_MARGIN, 44);
 }
 
 - (void)oneFingerSwipe:(UIPanGestureRecognizer *)recognizer {
@@ -84,8 +63,9 @@
     [UIView beginAnimations:nil context:NULL];
 
     for (int i = 0; i < [self.Tags count]; i++) {
-        LLHeaderTextField *tf = [self.Tags objectAtIndex:i];
+        LLHeaderTag *tf = [self.Tags objectAtIndex:i];
         tf.frame = tf.centerFrame;
+        [tf setNeedsDisplay];
     }
 
     [UIView commitAnimations];
@@ -95,10 +75,10 @@
 
     self.frame = CGRectMake(0.0, 0.0, screenWidth, 44.0);
     for (int i = 0; i < [self.Tags count]; i++) {
-        LLHeaderTextField *tf = [self.Tags objectAtIndex:i];
+        LLHeaderTag *tf = [self.Tags objectAtIndex:i];
         CGFloat width = [tf.text sizeWithFont:tf.font].width;
-        tf.centerFrame = CGRectMake((screenWidth - width) / 2 - HEADER_TITLE_MARGIN,
-                0, width + 2 * HEADER_TITLE_MARGIN, 44);
+        tf.centerFrame = CGRectMake((screenWidth - width) / 2 - 5,
+                0, width + 2 * 5, 44);
     }
     [self resetTabs];
 }

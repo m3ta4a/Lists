@@ -6,14 +6,14 @@
 //  Copyright (c) 2012 EggDevil. All rights reserved.
 //
 
-#import "LLViewController.h"
+#import "LLTableViewController.h"
 
-@interface LLViewController ()
+@interface LLTableViewController ()
 
 
 @end
 
-@implementation LLViewController
+@implementation LLTableViewController
 
 @synthesize header = _header;
 @synthesize listFetchedResultsController = _listFetchedResultsController;
@@ -28,6 +28,16 @@
                                                  name:NSManagedObjectContextDidSaveNotification     
                                                object:nil];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(addRow:)
+                                                 name:@"LLTableViewHitOutsideCell"
+                                               object:nil];
+
+    
+    // 0 is returned for no list
+    int listID = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentListID"];
+    
+    // Initialize the fetched results controllers with custom accessors
     NSError *error;
     if (![[self listFetchedResultsController] performFetch:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -38,39 +48,70 @@
         exit(-1);
     }
 
-    // listID's are 1 indexed then, since 0 is returned for no list
-    int listID = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentListID"];
-    
     if (listID == 0) //first load
     {
-        NSManagedObjectContext *context = [_itemFetchedResultsController managedObjectContext];
-        NSEntityDescription *entity = [[_itemFetchedResultsController fetchRequest] entity];
-        ListItem *newItem= [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-        newItem.text = @"New Item";
+        int currentList = 1;
         
-        NSEntityDescription *listentity = [[_listFetchedResultsController fetchRequest] entity];
-        List *newList = [NSEntityDescription insertNewObjectForEntityForName:[listentity name] inManagedObjectContext:context];
-        newList.listID = [NSNumber numberWithInt:11];
+        NSManagedObjectContext *context = [_itemFetchedResultsController managedObjectContext];
+        NSEntityDescription *itemEntity = [[_itemFetchedResultsController fetchRequest] entity];
+        ListItem *newItem= [NSEntityDescription insertNewObjectForEntityForName:[itemEntity name] inManagedObjectContext:context];
+        newItem.text = @"New Item";
+        newItem.itemID = [NSNumber numberWithInt: 0];
+        
+        NSEntityDescription *listEntity = [[_listFetchedResultsController fetchRequest] entity];
+        List *newList = [NSEntityDescription insertNewObjectForEntityForName:[listEntity name] inManagedObjectContext:context];
+        newList.listID = [NSNumber numberWithInt:currentList];
+        newList.text = @"New List";
         [newList addItemsObject:newItem];
+        
+        m_currentList = newList;
+        
+        [[NSUserDefaults standardUserDefaults] setInteger:currentList forKey:@"currentListID"];
+        
+        NSError *error;
+        [_managedObjectContext save:&error];
 
         [super viewDidLoad];
 
         return;
     }
+    else{
+        // Load current List
+        m_currentList = [[_listFetchedResultsController fetchedObjects] objectAtIndex:listID - 1];
+    }
     
     [super viewDidLoad];
+}
+- (void)viewWillAppear:(BOOL)animated {    
+    self.navigationItem.leftBarButtonItem = [self editButtonItem];
 }
 - (void)viewDidUnload {
     self.listFetchedResultsController = nil;
     self.itemFetchedResultsController = nil;
+    
+    [[NSUserDefaults standardUserDefaults] setInteger:[m_currentList.listID integerValue] forKey:@"currentListID"];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    [self.tableView setEditing:editing animated:animated];
+    if(!editing) {
+        int i = 0;
+        NSArray *data =[_itemFetchedResultsController fetchedObjects];
+        for(ListItem *item in data) {
+            item.itemID = [NSNumber numberWithInt:i++];
+        }
+        NSError *error = nil;
+        [_managedObjectContext save:&error];
+    }
+}
+#pragma mark ------------------
+#pragma mark UITableView Data Source Methods
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-
-    NSString *name = [[[_itemFetchedResultsController sections] objectAtIndex:section] name];
-    return name;
+    //NSString *name = [[[_itemFetchedResultsController sections] objectAtIndex:section] name];
+    return @"";
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView {
     NSUInteger count = [[_itemFetchedResultsController sections] count];
@@ -79,55 +120,47 @@
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSUInteger numberOfObjects = [[[_itemFetchedResultsController sections] objectAtIndex:section] numberOfObjects];
-    return numberOfObjects + 1;
+    return numberOfObjects;//+1
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < [[[_itemFetchedResultsController sections] objectAtIndex:indexPath.section] numberOfObjects])
+    if (indexPath.row <= [[[_itemFetchedResultsController sections] objectAtIndex:indexPath.section] numberOfObjects])
         return true;
     return false;
 }
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < [[[_itemFetchedResultsController sections] objectAtIndex:indexPath.section] numberOfObjects])
+    if (indexPath.row <= [[[_itemFetchedResultsController sections] objectAtIndex:indexPath.section] numberOfObjects])
         return true;
     return false;
 }
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         ListItem *oldItem = [_itemFetchedResultsController objectAtIndexPath:indexPath];
         
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"List" inManagedObjectContext:_managedObjectContext];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"listID = %d", 11];
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        [request setEntity:entity];
-        [request setPredicate:predicate];
-        
-        NSError *error = nil;
-        NSArray* lists = [_managedObjectContext executeFetchRequest:request error:&error];
-        List* list = [lists objectAtIndex:0];
-        [list removeItemsObject:oldItem];
         [_managedObjectContext deleteObject:oldItem];
+
+        NSError *error = nil;
         [_managedObjectContext save:&error]; // this causes the fetchedResultsController to update the tableView
     }
 }
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
-{
-    
+-(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+// Don't update ItemID here because editing might not be complete. 
+    NSMutableArray *data = [[_itemFetchedResultsController fetchedObjects] mutableCopy];
+    ListItem * item = [data objectAtIndex:sourceIndexPath.row];
+    [data removeObjectAtIndex:sourceIndexPath.row];
+    [data insertObject:item atIndex:destinationIndexPath.row];
 }
 
-- (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    int addButtonRow = [[[_itemFetchedResultsController sections] objectAtIndex:indexPath.section] numberOfObjects];
-    if (indexPath.row >= addButtonRow) //add button
-    {
 
-        return;
-    }
+- (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
     ListItem *item = [_itemFetchedResultsController objectAtIndexPath:indexPath];
+    
     cell.textField.text = [NSString stringWithFormat:@"%@, %@", item.text, item.itemID];
     cell.textField.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithTableView:self.tableView];
 }
@@ -139,11 +172,7 @@
     assert(tv == self.tableView);
     assert(indexPath != nil);
 
-    int addButtonRow = [[[_itemFetchedResultsController sections] objectAtIndex:indexPath.section] numberOfObjects];
-    
     NSString *identifier = @"Cell";
-    if (indexPath.row == addButtonRow)
-        identifier = @"AddRow";
 
     cell = [self.tableView dequeueReusableCellWithIdentifier:identifier];
 
@@ -173,36 +202,37 @@
     return 46.0;
 }
 
-// callback for header textfield
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return NO;
-}
-
 
 -(IBAction)addRow:(id)sender
 {
     ListItem *newItem = [NSEntityDescription
-                         insertNewObjectForEntityForName:@"Item"
+                         insertNewObjectForEntityForName:@"ListItem"
                          inManagedObjectContext:_managedObjectContext];
     newItem.text= @"New Item";
 
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"List" inManagedObjectContext:_managedObjectContext];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"listID = %d", 11];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setEntity:entity];
-    [request setPredicate:predicate];
+    [m_currentList addItemsObject:newItem];
 
     NSError *error = nil;
-    NSArray* lists = [_managedObjectContext executeFetchRequest:request error:&error];
-    List* list = [lists objectAtIndex:0];
-    [list insertObject:newItem inItemsAtIndex:0];
-    
     [_managedObjectContext save:&error]; // this causes the fetchedResultsController to update the tableView
 }
 #pragma mark -----------------
 #pragma mark Textfield delegate
-
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
+}
+- (void)textFieldDidChange:(UITextField *)sender {
+    CGFloat width;
+    LLHeaderTag *field = (LLHeaderTag*)sender;
+    width = [field getWidth];
+    field.frame = CGRectMake((field.frame.size.width - width) / 2 - 5,
+                              0, width + 2 * 5, 44);
+    
+    NSError *error;
+    [_managedObjectContext save:&error];
+    
+    [sender setNeedsDisplay];
+}
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSIndexPath* path = [self.tableView indexPathForCell:(LLTableViewCell*) [[textField superview] superview] ];
@@ -333,11 +363,15 @@
         return _itemFetchedResultsController;
     }
 
+    int listID = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentListID"];
+    
+    listID = listID == 0 ? 1 : listID; // if the list is zero, it is first load, will be 1 after init
+    
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:[self managedObjectContext]];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ListItem" inManagedObjectContext:[self managedObjectContext]];
     [fetchRequest setEntity:entity];
 
-    NSPredicate* pred = [NSPredicate predicateWithFormat:@"lists.listID = %d",11]; //][currentListID integerValue]];
+    NSPredicate* pred = [NSPredicate predicateWithFormat:@"list.listID = %d",listID];
     [fetchRequest setPredicate:pred];
     
     NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"itemID" ascending:NO];
@@ -354,17 +388,18 @@
 }
 -(void)updateItemFetchedResultsPredicate
 {
-    NSPredicate* pred = [NSPredicate predicateWithFormat:@"lists.listID = %d", 11];//][currentListID integerValue]];
+    NSPredicate* pred = [NSPredicate predicateWithFormat:@"list.listID = %d", [[NSUserDefaults standardUserDefaults] integerForKey:@"currentListID"]];//][currentListID integerValue]];
     [_itemFetchedResultsController.fetchRequest setPredicate:pred];
     NSError *error = nil;
     if (![[self itemFetchedResultsController] performFetch:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 }
 - (void) refreshData:(NSNotification *)notif {    
     [[[self itemFetchedResultsController] managedObjectContext] mergeChangesFromContextDidSaveNotification:notif];
+    [[[self listFetchedResultsController] managedObjectContext] mergeChangesFromContextDidSaveNotification:notif];
 }
 
 
@@ -379,9 +414,9 @@
                                                 blue:0.0
                                                alpha:0.0];
     else
-        cell.backgroundColor = [UIColor colorWithRed:0.8
-                                               green:0.8
-                                                blue:0.8
+        cell.backgroundColor = [UIColor colorWithRed:1.0
+                                               green:1.0
+                                                blue:1.0
                                                alpha:1.0];
     
 }

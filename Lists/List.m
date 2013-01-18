@@ -73,10 +73,17 @@ static NSString *const kItemsKey = @"items";
     NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self mutableOrderedSetValueForKey:kItemsKey]];
     NSUInteger idx = [tmpOrderedSet count];
     NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:idx];
+    
     [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:kItemsKey];
     [tmpOrderedSet addObject:value];
+    
+    int i = [tmpOrderedSet count];
+    for(ListItem *item in tmpOrderedSet) {
+        item.itemID = [NSNumber numberWithInt:i--];
+    }
+   
     [self setPrimitiveValue:tmpOrderedSet forKey:kItemsKey];
-    [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:kItemsKey];
+    [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:kItemsKey];    
 }
 
 - (void)removeItemsObject:(ListItem *)value {
@@ -86,6 +93,12 @@ static NSString *const kItemsKey = @"items";
         NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:idx];
         [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:kItemsKey];
         [tmpOrderedSet removeObject:value];
+        
+        int i = [tmpOrderedSet count];
+        for(ListItem *item in tmpOrderedSet) {
+            item.itemID = [NSNumber numberWithInt:i--];
+        }
+        
         [self setPrimitiveValue:tmpOrderedSet forKey:kItemsKey];
         [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:kItemsKey];
     }
@@ -123,4 +136,5 @@ static NSString *const kItemsKey = @"items";
         [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:kItemsKey];
     }
 }
+
 @end

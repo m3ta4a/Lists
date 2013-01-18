@@ -15,7 +15,7 @@
 
 @property (nonatomic, retain) NSNumber * listID;
 @property (nonatomic, retain) NSString * text;
-@property (nonatomic, retain) NSOrderedSet *items;
+@property (nonatomic, retain) NSMutableOrderedSet *items;
 @end
 
 @interface List (CoreDataGeneratedAccessors)
@@ -30,4 +30,5 @@
 - (void)removeItemsObject:(ListItem *)value;
 - (void)addItems:(NSOrderedSet *)values;
 - (void)removeItems:(NSOrderedSet *)values;
+
 @end

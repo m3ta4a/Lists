@@ -4,12 +4,10 @@
 // To change the template use AppCode | Preferences | File Templates.
 //
 
-
+#import <QuartzCore/QuartzCore.h>
 #import <Foundation/Foundation.h>
 
-#define HEADER_TITLE_MARGIN 5
-
-@class LLViewController;
+@class LLTableViewController;
 
 @interface LLTableViewHeaderControl : UIControl
 
@@ -17,9 +15,7 @@
 @property(nonatomic) CGPoint startLocation;
 @property(nonatomic) CGPoint lastLocation;
 
-- (LLTableViewHeaderControl *)initWithFrame:(CGRect)frame andDelegate:(LLViewController *)delegate;
-
-- (void)textFieldDidChange:(UITextField *)sender;
+- (LLTableViewHeaderControl *)initWithFrame:(CGRect)frame andDelegate:(LLTableViewController *)delegate;
 
 - (void)oneFingerSwipe:(UIPanGestureRecognizer *)recognizer;
 

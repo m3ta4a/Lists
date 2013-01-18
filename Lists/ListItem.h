@@ -15,6 +15,6 @@
 
 @property (nonatomic, retain) NSNumber * itemID;
 @property (nonatomic, retain) NSString * text;
-@property (nonatomic, retain) List *lists;
+@property (nonatomic, retain) List *list;
 
 @end

@@ -4,11 +4,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Table View Controller-->
         <scene sceneID="5">
             <objects>
-                <viewController wantsFullScreenLayout="YES" id="2" customClass="LLViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Ibn-wD-I7s">
+                <viewController wantsFullScreenLayout="YES" id="2" customClass="LLTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Ibn-wD-I7s" customClass="LLTableView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -23,7 +23,6 @@
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="New Item" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="X72-MK-wp9">
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="150" id="BjC-4F-8Gf"/>
                                                 <constraint firstAttribute="height" constant="29" id="wL1-oB-mLh"/>
                                             </constraints>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -39,6 +38,7 @@
                                 <constraints>
                                     <constraint firstItem="X72-MK-wp9" firstAttribute="leading" secondItem="MNi-ee-Q9k" secondAttribute="leading" constant="20" type="default" id="N1r-zp-1x9"/>
                                     <constraint firstItem="X72-MK-wp9" firstAttribute="centerY" secondItem="MNi-ee-Q9k" secondAttribute="centerY" type="default" id="N5Q-HN-gVK"/>
+                                    <constraint firstAttribute="trailing" secondItem="X72-MK-wp9" secondAttribute="trailing" constant="20" type="default" id="Z40-7x-upH"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="textField" destination="X72-MK-wp9" id="tyo-FF-y5X"/>
@@ -95,6 +95,9 @@
         <image name="AddRow.png" width="32" height="32"/>
     </resources>
     <classes>
+        <class className="LLTableView" superclassName="UITableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LLTableView.h"/>
+        </class>
         <class className="LLTableViewCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LLTableViewCell.h"/>
             <relationships>
@@ -102,11 +105,10 @@
                 <relationship kind="outlet" name="textField" candidateClass="UITextField"/>
             </relationships>
         </class>
-        <class className="LLViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LLViewController.h"/>
+        <class className="LLTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LLTableViewController.h"/>
             <relationships>
                 <relationship kind="action" name="addRow:"/>
-                <relationship kind="action" name="dismissKeyboard"/>
             </relationships>
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">

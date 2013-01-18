@@ -4,11 +4,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Table View Controller-->
         <scene sceneID="4">
             <objects>
-                <viewController wantsFullScreenLayout="YES" id="2" customClass="LLViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="8fY-4R-EHr">
+                <viewController wantsFullScreenLayout="YES" id="2" customClass="LLTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="8fY-4R-EHr" customClass="LLTableView">
                         <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -87,6 +87,9 @@
         <image name="AddRow.png" width="32" height="32"/>
     </resources>
     <classes>
+        <class className="LLTableView" superclassName="UITableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LLTableView.h"/>
+        </class>
         <class className="LLTableViewCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LLTableViewCell.h"/>
             <relationships>
@@ -94,8 +97,8 @@
                 <relationship kind="outlet" name="textField" candidateClass="UITextField"/>
             </relationships>
         </class>
-        <class className="LLViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LLViewController.h"/>
+        <class className="LLTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LLTableViewController.h"/>
             <relationships>
                 <relationship kind="action" name="addRow:"/>
             </relationships>

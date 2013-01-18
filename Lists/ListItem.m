@@ -14,6 +14,6 @@
 
 @dynamic itemID;
 @dynamic text;
-@dynamic lists;
+@dynamic list;
 
 @end

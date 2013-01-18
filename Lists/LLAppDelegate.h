@@ -6,12 +6,12 @@
 //  Copyright (c) 2012 EggDevil. All rights reserved.
 //
 
-#import "LLViewController.h"
+#import "LLTableViewController.h"
 
 @interface LLAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) IBOutlet LLViewController *viewController;
+@property (strong, nonatomic) IBOutlet LLTableViewController *viewController;
 @property (nonatomic, strong, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;

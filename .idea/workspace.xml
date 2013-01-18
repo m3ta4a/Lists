@@ -3,12 +3,17 @@
   <component name="ChangeListManager">
     <list default="true" id="0ece8841-57df-4dcf-9b2f-dba88fcd3258" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists.xcodeproj/project.xcworkspace/xcuserdata/Jake.xcuserdatad/UserInterfaceState.xcuserstate" afterPath="$PROJECT_DIR$/Lists.xcodeproj/project.xcworkspace/xcuserdata/Jake.xcuserdatad/UserInterfaceState.xcuserstate" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/Lists.xcodeproj/project.pbxproj" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists.xcodeproj/xcuserdata/Jake.xcuserdatad/xcdebugger/Breakpoints.xcbkptlist" afterPath="$PROJECT_DIR$/Lists.xcodeproj/xcuserdata/Jake.xcuserdatad/xcdebugger/Breakpoints.xcbkptlist" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/LLAppDelegate.m" afterPath="$PROJECT_DIR$/Lists/LLAppDelegate.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/LLHeaderTextField.h" afterPath="$PROJECT_DIR$/Lists/LLHeaderTextField.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/LLHeaderTextField.m" afterPath="$PROJECT_DIR$/Lists/LLHeaderTextField.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/LLTableViewHeaderControl.h" afterPath="$PROJECT_DIR$/Lists/LLTableViewHeaderControl.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/LLTableViewHeaderControl.m" afterPath="$PROJECT_DIR$/Lists/LLTableViewHeaderControl.m" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/LLViewController.h" afterPath="$PROJECT_DIR$/Lists/LLViewController.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/LLViewController.m" afterPath="$PROJECT_DIR$/Lists/LLViewController.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/ListDataModel.xcdatamodeld/ListDataModel 2.xcdatamodel/contents" afterPath="$PROJECT_DIR$/Lists/ListDataModel.xcdatamodeld/ListDataModel 2.xcdatamodel/contents" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/List.h" afterPath="$PROJECT_DIR$/Lists/List.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/List.m" afterPath="$PROJECT_DIR$/Lists/List.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Lists/en.lproj/MainStoryboard_iPhone.storyboard" afterPath="$PROJECT_DIR$/Lists/en.lproj/MainStoryboard_iPhone.storyboard" />
     </list>
     <ignored path="Lists.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,64 +33,63 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="iphonesimulator_6.0_1" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="LLViewController.h" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="LLViewController.h" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Lists/LLViewController.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="43" selection-start="398" selection-end="398" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="14" column="72" selection-start="359" selection-end="359" vertical-scroll-proportion="0.3316413">
+              <folding>
+                <element signature="e#142#182#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LLAppDelegate.m" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Lists/LLAppDelegate.m">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="0" selection-start="1047" selection-end="1047" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.m" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Lists/main.m">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="0" selection-start="240" selection-end="240" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LLViewController.m" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="LLViewController.m" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Lists/LLViewController.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="91" column="0" selection-start="3287" selection-end="3287" vertical-scroll-proportion="1.0417246">
+            <state line="50" column="62" selection-start="1929" selection-end="1929" vertical-scroll-proportion="-181.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NSArray.h" pinned="false" current="false" current-in-tab="false">
-        <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSArray.h">
+      <file leaf-file-name="LLTableViewHeaderControl.h" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Lists/LLTableViewHeaderControl.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="112" column="11" selection-start="5091" selection-end="5091" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="17" column="99" selection-start="487" selection-end="487" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#112#145#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ListItem.m" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Lists/ListItem.m">
+      <file leaf-file-name="LLTableViewHeaderControl.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Lists/LLTableViewHeaderControl.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="8" selection-start="335" selection-end="335" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="21" column="86" selection-start="586" selection-end="586" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#112#148#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ListItem.h" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Lists/ListItem.h">
+      <file leaf-file-name="LLHeaderTextField.h" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Lists/LLHeaderTextField.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="11" selection-start="191" selection-end="191" vertical-scroll-proportion="0.0">
+            <state line="14" column="0" selection-start="330" selection-end="330" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#112#145#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LLHeaderTextField.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Lists/LLHeaderTextField.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="31" column="26" selection-start="814" selection-end="814" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -109,17 +113,17 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/Lists/LLViewController.h" />
         <option value="$PROJECT_DIR$/Lists/Localizable.strings" />
-        <option value="$PROJECT_DIR$/Lists/LLTableViewHeaderControl.h" />
-        <option value="$PROJECT_DIR$/Lists/LLHeaderTextField.h" />
-        <option value="$PROJECT_DIR$/Lists/LLHeaderTextField.m" />
-        <option value="$PROJECT_DIR$/Lists/LLTableViewHeaderControl.m" />
         <option value="$PROJECT_DIR$/Lists/LLDataSource.h" />
         <option value="$PROJECT_DIR$/ListsTests/ListsTests.m" />
         <option value="$PROJECT_DIR$/Lists/LLDataSource.m" />
         <option value="$PROJECT_DIR$/Lists/ListItem.m" />
         <option value="$PROJECT_DIR$/Lists/LLAppDelegate.m" />
+        <option value="$PROJECT_DIR$/Lists/LLViewController.h" />
+        <option value="$PROJECT_DIR$/Lists/LLTableViewHeaderControl.h" />
+        <option value="$PROJECT_DIR$/Lists/LLHeaderTextField.h" />
+        <option value="$PROJECT_DIR$/Lists/LLTableViewHeaderControl.m" />
+        <option value="$PROJECT_DIR$/Lists/LLHeaderTextField.m" />
         <option value="$PROJECT_DIR$/Lists/LLViewController.m" />
       </list>
     </option>
@@ -154,7 +158,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="DirectoryView.Xcode" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -197,24 +200,25 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="DirectoryView.Xcode" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="options.lastSelected" value="preferences.lookFeel" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="preferences.sourceCode.Objective-C" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="FullScreen" value="true" />
     <property name="OBJC.PRESERVED_TARGET_SELECTION" value="Lists,,,ListsTests" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager" selected="Application.Lists">
     <configuration default="true" type="AppleRunConfiguration" factoryName="Application" PROJECT_NAME="Lists" TARGET_NAME="Lists" CONFIG_NAME="Debug" PASS_PARENT_ENVS="FALSE" RUN_TARGET_PROJECT_NAME="Lists" RUN_TARGET_NAME="Lists" MAKE_ACTIVE="TRUE" WAIT_FOR="FALSE">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="Lists" type="AppleRunConfiguration" factoryName="Application" SCHEME_NAME="Lists" PROJECT_NAME="Lists" TARGET_NAME="Lists" CONFIG_NAME="Debug" WORKING_DIR="" PASS_PARENT_ENVS="FALSE" RUN_TARGET_PROJECT_NAME="Lists" RUN_TARGET_NAME="Lists" MAKE_ACTIVE="TRUE" WAIT_FOR="FALSE">
+    <configuration default="false" name="Lists" type="AppleRunConfiguration" factoryName="Application" SCHEME_NAME="Lists" PROJECT_NAME="Lists" TARGET_NAME="Lists" CONFIG_NAME="Debug" PROGRAM_PARAMS="&quot;com.apple.CoreData.SQLDebug 1&quot;" WORKING_DIR="" PASS_PARENT_ENVS="FALSE" RUN_TARGET_PROJECT_NAME="Lists" RUN_TARGET_NAME="Lists" MAKE_ACTIVE="TRUE" WAIT_FOR="FALSE">
       <envs />
       <RunnerSettings RunnerId="AppRunner" />
       <RunnerSettings RunnerId="InstrumentsRunner" />
@@ -294,11 +298,11 @@
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924336" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34038055" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924336" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924336" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1804466" sideWeight="0.77607363" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18077388" sideWeight="0.65961945" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22392638" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -367,88 +371,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Lists/LLViewController.m</url>
-          <line>85</line>
-          <option name="timeStamp" value="54" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Lists/LLViewController.m</url>
-          <line>91</line>
-          <option name="timeStamp" value="55" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="56" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Lists/LLHeaderTextField.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="40" selection-start="233" selection-end="233" vertical-scroll-proportion="0.22304833" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Lists/LLHeaderTextField.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="24" selection-start="203" selection-end="203" vertical-scroll-proportion="0.20446096" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Lists/LLTableViewHeaderControl.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="94" column="4" selection-start="3525" selection-end="3525" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Lists/LLTableViewCell.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UITableViewCell.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="39" selection-start="2457" selection-end="2457" vertical-scroll-proportion="-1.4622166" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Lists/LLTableViewHeaderControl.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="139" selection-start="537" selection-end="537" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Lists/LLTableViewCell.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="29" selection-start="298" selection-end="298" vertical-scroll-proportion="0.23659305" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Lists/ListItem.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="8" selection-start="335" selection-end="335" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Lists/ListItem.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="11" selection-start="191" selection-end="191" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/CoreData.framework/Headers/NSFetchRequest.h">
       <provider selected="true" editor-type-id="text-editor">
         <state line="64" column="38" selection-start="1836" selection-end="1836" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSArray.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="112" column="11" selection-start="5091" selection-end="5091" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Lists/LLViewController.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="43" selection-start="398" selection-end="398" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -460,24 +389,109 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Lists/LLAppDelegate.m">
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSArray.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="0" selection-start="1047" selection-end="1047" vertical-scroll-proportion="0.0">
+        <state line="112" column="11" selection-start="5091" selection-end="5091" vertical-scroll-proportion="0.13646056">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Lists/ListItem.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="8" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Lists/main.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="240" selection-end="240" vertical-scroll-proportion="0.0">
+        <state line="15" column="0" selection-start="240" selection-end="240" vertical-scroll-proportion="0.20504732">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Lists/LLAppDelegate.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="0" selection-start="1047" selection-end="1047" vertical-scroll-proportion="0.015991472">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIView.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="83" column="39" selection-start="3876" selection-end="3876" vertical-scroll-proportion="0.34861407">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIControl.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="79" selection-start="2632" selection-end="2632" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/QuartzCore.framework/Headers/QuartzCore.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UITextField.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="194" column="10" selection-start="8856" selection-end="8856" vertical-scroll-proportion="0.45757997">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Lists/LLHeaderTextField.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="0" selection-start="330" selection-end="330" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#112#145#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Lists/LLTableViewHeaderControl.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="99" selection-start="487" selection-end="487" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#112#145#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Lists/LLHeaderTextField.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="26" selection-start="814" selection-end="814" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Lists/LLTableViewHeaderControl.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="86" selection-start="586" selection-end="586" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#112#148#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Lists/LLViewController.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="0" selection-start="3287" selection-end="3287" vertical-scroll-proportion="1.0417246">
+        <state line="50" column="62" selection-start="1929" selection-end="1929" vertical-scroll-proportion="-181.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Lists/LLViewController.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="72" selection-start="359" selection-end="359" vertical-scroll-proportion="0.3316413">
+          <folding>
+            <element signature="e#142#182#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
