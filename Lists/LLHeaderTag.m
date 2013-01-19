@@ -46,6 +46,18 @@
 }
 #pragma mark -----------------
 #pragma mark Textfield delegate
+- (void)textFieldDidChange:(UITextField *)sender {
+    CGFloat width;
+    LLHeaderTag *field = (LLHeaderTag*)sender;
+    width = [field getWidth];
+    field.frame = CGRectMake((field.frame.size.width - width) / 2 - 5,
+                             0, width + 2 * 5, 44);
+    
+  //  NSError *error;
+//    [_managedObjectContext save:&error];
+    
+    [sender setNeedsDisplay];
+}
 - (void)drawRect:(CGRect)rect
 {
 //    [super drawRect:rect];

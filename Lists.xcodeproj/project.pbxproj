@@ -126,6 +126,61 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		23788B4916A9C98900C21460 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				23589DBD16960A3D00003F50 /* List.h */,
+				23589DBE16960A3D00003F50 /* List.m */,
+				23589DBA1696099400003F50 /* ListItem.h */,
+				23589DBB1696099400003F50 /* ListItem.m */,
+				23378F43169111F500EDE48D /* CoreDataHelper.h */,
+				23378F44169111F500EDE48D /* CoreDataHelper.m */,
+				23F681EB1693CE12006FA9C4 /* LLTableViewKeyboardDismisser.h */,
+				23F681EC1693CE12006FA9C4 /* LLTableViewKeyboardDismisser.m */,
+				23788B4C16A9C9A400C21460 /* Models */,
+				23788B4B16A9C99900C21460 /* Views */,
+				23788B4A16A9C99200C21460 /* Controllers */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		23788B4A16A9C99200C21460 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				23FEBBC0168B87A600872565 /* LLAppDelegate.h */,
+				23FEBBC1168B87A600872565 /* LLAppDelegate.m */,
+				23FEBBCF168B87A600872565 /* LLTableViewController.h */,
+				23C6E18B16A886AD004441C2 /* LLTableViewController.m */,
+				231CF1AE46206AFA9C2B9810 /* LLTableViewHeaderControl.m */,
+				231CFAE0AA0FB071E06A7AFD /* LLTableViewHeaderControl.h */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		23788B4B16A9C99900C21460 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				231CF48C1787BE2A6F261124 /* LLHeaderTag.m */,
+				231CF29E5109A814B92E9B47 /* LLHeaderTag.h */,
+				23788B4616A9051000C21460 /* LLTableView.h */,
+				23788B4716A9051000C21460 /* LLTableView.m */,
+				23496BBB168B9AEA0082E3DF /* LLTableViewCell.h */,
+				23496BBC168B9AEA0082E3DF /* LLTableViewCell.m */,
+				23FEBBCC168B87A600872565 /* MainStoryboard_iPad.storyboard */,
+				23FEBBC9168B87A600872565 /* MainStoryboard_iPhone.storyboard */,
+				23A4F561168D5C38003D7DCC /* AddRow.png */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		23788B4C16A9C9A400C21460 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				23788B4316A8F84E00C21460 /* DataModel.xcdatamodeld */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		23FEBBA2168B87A600872565 = {
 			isa = PBXGroup;
 			children = (
@@ -160,32 +215,8 @@
 		23FEBBB7168B87A600872565 /* Lists */ = {
 			isa = PBXGroup;
 			children = (
-				23FEBBC0168B87A600872565 /* LLAppDelegate.h */,
-				23FEBBC1168B87A600872565 /* LLAppDelegate.m */,
-				23FEBBCC168B87A600872565 /* MainStoryboard_iPad.storyboard */,
-				23FEBBC9168B87A600872565 /* MainStoryboard_iPhone.storyboard */,
-				23A4F561168D5C38003D7DCC /* AddRow.png */,
-				23496BBB168B9AEA0082E3DF /* LLTableViewCell.h */,
-				23496BBC168B9AEA0082E3DF /* LLTableViewCell.m */,
-				23FEBBCF168B87A600872565 /* LLTableViewController.h */,
-				23C6E18B16A886AD004441C2 /* LLTableViewController.m */,
-				23F681EB1693CE12006FA9C4 /* LLTableViewKeyboardDismisser.h */,
-				23F681EC1693CE12006FA9C4 /* LLTableViewKeyboardDismisser.m */,
-				23378F43169111F500EDE48D /* CoreDataHelper.h */,
-				23378F44169111F500EDE48D /* CoreDataHelper.m */,
-				23589DBD16960A3D00003F50 /* List.h */,
-				23589DBE16960A3D00003F50 /* List.m */,
-				23589DBA1696099400003F50 /* ListItem.h */,
-				23589DBB1696099400003F50 /* ListItem.m */,
-				231CF1AE46206AFA9C2B9810 /* LLTableViewHeaderControl.m */,
-				231CFAE0AA0FB071E06A7AFD /* LLTableViewHeaderControl.h */,
+				23788B4916A9C98900C21460 /* App */,
 				23FEBBB8168B87A600872565 /* Supporting Files */,
-				231CF392E816FFBBCE3E4D42 /* Localizable.strings */,
-				231CF48C1787BE2A6F261124 /* LLHeaderTag.m */,
-				231CF29E5109A814B92E9B47 /* LLHeaderTag.h */,
-				23788B4316A8F84E00C21460 /* DataModel.xcdatamodeld */,
-				23788B4616A9051000C21460 /* LLTableView.h */,
-				23788B4716A9051000C21460 /* LLTableView.m */,
 			);
 			path = Lists;
 			sourceTree = "<group>";
@@ -193,6 +224,7 @@
 		23FEBBB8168B87A600872565 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				231CF392E816FFBBCE3E4D42 /* Localizable.strings */,
 				23FEBBB9168B87A600872565 /* Lists-Info.plist */,
 				23FEBBBA168B87A600872565 /* InfoPlist.strings */,
 				23FEBBBD168B87A600872565 /* main.m */,

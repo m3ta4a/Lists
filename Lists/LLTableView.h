@@ -10,6 +10,6 @@
 
 @interface LLTableView : UITableView
 
--(void)tapReceived:(UITapGestureRecognizer*)recognizer;
+
 
 @end

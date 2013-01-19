@@ -29,7 +29,7 @@
                                                object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(addRow:)
+                                             selector:@selector(addRow)
                                                  name:@"LLTableViewHitOutsideCell"
                                                object:nil];
 
@@ -140,6 +140,8 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
+        // Ideally, we would update itemId's here, but since a delete
+        // doesn't alter the order, it is ok. All attempts failed, anyway.
         ListItem *oldItem = [_itemFetchedResultsController objectAtIndexPath:indexPath];
         
         [_managedObjectContext deleteObject:oldItem];
@@ -161,7 +163,7 @@
 
     ListItem *item = [_itemFetchedResultsController objectAtIndexPath:indexPath];
     
-    cell.textField.text = [NSString stringWithFormat:@"%@, %@", item.text, item.itemID];
+    cell.textField.text = [NSString stringWithFormat:@"%@", item.text];
     cell.textField.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithTableView:self.tableView];
 }
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -203,7 +205,7 @@
 }
 
 
--(IBAction)addRow:(id)sender
+-(void)addRow
 {
     ListItem *newItem = [NSEntityDescription
                          insertNewObjectForEntityForName:@"ListItem"
@@ -221,18 +223,7 @@
     [textField resignFirstResponder];
     return NO;
 }
-- (void)textFieldDidChange:(UITextField *)sender {
-    CGFloat width;
-    LLHeaderTag *field = (LLHeaderTag*)sender;
-    width = [field getWidth];
-    field.frame = CGRectMake((field.frame.size.width - width) / 2 - 5,
-                              0, width + 2 * 5, 44);
-    
-    NSError *error;
-    [_managedObjectContext save:&error];
-    
-    [sender setNeedsDisplay];
-}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSIndexPath* path = [self.tableView indexPathForCell:(LLTableViewCell*) [[textField superview] superview] ];
@@ -449,7 +440,7 @@
 }
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+
 }
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     

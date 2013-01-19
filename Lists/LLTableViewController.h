@@ -23,9 +23,9 @@
 @property (nonatomic, retain) NSFetchedResultsController *listFetchedResultsController;
 @property (nonatomic, retain) NSFetchedResultsController *itemFetchedResultsController;
 
--(IBAction)addRow:(id)sender;
+-(void)addRow;
 
-- (void)textFieldDidChange:(UITextField *)sender;
+//- (void)textFieldDidChange:(UITextField *)sender;
 
 @end
 

@@ -31,6 +31,8 @@
     UIPanGestureRecognizer *oneFingerSwipe;
     oneFingerSwipe = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(oneFingerSwipe:)];
     [self addGestureRecognizer:oneFingerSwipe];
+    
+    [self addTarget:delegate action:@selector(addRow) forControlEvents:UIControlEventTouchUpInside];
 
     return self;
 }
