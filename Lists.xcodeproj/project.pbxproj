@@ -129,6 +129,8 @@
 		23788B4916A9C98900C21460 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				23FEBBC0168B87A600872565 /* LLAppDelegate.h */,
+				23FEBBC1168B87A600872565 /* LLAppDelegate.m */,
 				23589DBD16960A3D00003F50 /* List.h */,
 				23589DBE16960A3D00003F50 /* List.m */,
 				23589DBA1696099400003F50 /* ListItem.h */,
@@ -147,8 +149,6 @@
 		23788B4A16A9C99200C21460 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				23FEBBC0168B87A600872565 /* LLAppDelegate.h */,
-				23FEBBC1168B87A600872565 /* LLAppDelegate.m */,
 				23FEBBCF168B87A600872565 /* LLTableViewController.h */,
 				23C6E18B16A886AD004441C2 /* LLTableViewController.m */,
 				231CF1AE46206AFA9C2B9810 /* LLTableViewHeaderControl.m */,
