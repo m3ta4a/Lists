@@ -10,7 +10,7 @@
 		231CF3A39A763B9CE0C66138 /* LLHeaderTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 231CF48C1787BE2A6F261124 /* LLHeaderTag.m */; };
 		231CF56845F6ED852A05E484 /* LLHeaderTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 231CF48C1787BE2A6F261124 /* LLHeaderTag.m */; };
 		231CF7888BD4E44E2C22D3C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 231CF392E816FFBBCE3E4D42 /* Localizable.strings */; };
-		231CF7B72A12F2DD8D1B0058 /* LLTableViewHeaderControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 231CF1AE46206AFA9C2B9810 /* LLTableViewHeaderControl.m */; };
+		231CF7B72A12F2DD8D1B0058 /* LLTabStackControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 231CF1AE46206AFA9C2B9810 /* LLTabStackControl.m */; };
 		23378F3D1690ECB400EDE48D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23378F3C1690ECB400EDE48D /* CoreData.framework */; };
 		23378F3F1690ED0F00EDE48D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23378F3C1690ECB400EDE48D /* CoreData.framework */; };
 		23378F45169111F500EDE48D /* CoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 23378F44169111F500EDE48D /* CoreDataHelper.m */; };
@@ -21,6 +21,17 @@
 		2369394C168D6F1C00FA576F /* ListItemTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2369394B168D6F1C00FA576F /* ListItemTests.m */; };
 		23788B4516A8F84E00C21460 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 23788B4316A8F84E00C21460 /* DataModel.xcdatamodeld */; };
 		23788B4816A9051000C21460 /* LLTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B4716A9051000C21460 /* LLTableView.m */; };
+		23788B4F16AA2C1000C21460 /* LLMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B4E16AA2C1000C21460 /* LLMainView.m */; };
+		23788B5216AA2F7D00C21460 /* LLListItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B5116AA2F7D00C21460 /* LLListItemsViewController.m */; };
+		23788B6016ABA65300C21460 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23788B5E16ABA62F00C21460 /* QuartzCore.framework */; };
+		23788B6316ABA69C00C21460 /* LLPullToInsertItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B6216ABA69C00C21460 /* LLPullToInsertItemView.m */; };
+		23788B6C16ABAB9900C21460 /* LLReorderingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B6B16ABAB9800C21460 /* LLReorderingTableViewController.m */; };
+		23788B6F16AC5BA200C21460 /* LLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B6E16AC5BA200C21460 /* LLNavigationController.m */; };
+		23788B7216AC5CCE00C21460 /* LLListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B7116AC5CCD00C21460 /* LLListsViewController.m */; };
+		23788B7516AC698400C21460 /* LLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B7416AC698400C21460 /* LLViewController.m */; };
+		239C61D216ACEF7900E5880A /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 239C61D116ACEF7900E5880A /* bg.png */; };
+		239C61D516ACFF8700E5880A /* tableViewBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 239C61D416ACFF8700E5880A /* tableViewBG.png */; };
+		239C61D716AD03B100E5880A /* lists_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 239C61D616AD03B100E5880A /* lists_icon.png */; };
 		23A4F562168D5C38003D7DCC /* AddRow.png in Resources */ = {isa = PBXBuildFile; fileRef = 23A4F561168D5C38003D7DCC /* AddRow.png */; };
 		23C6E18C16A886AD004441C2 /* LLTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23C6E18B16A886AD004441C2 /* LLTableViewController.m */; };
 		23F681ED1693CE12006FA9C4 /* LLTableViewKeyboardDismisser.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F681EC1693CE12006FA9C4 /* LLTableViewKeyboardDismisser.m */; };
@@ -33,8 +44,6 @@
 		23FEBBC4168B87A600872565 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 23FEBBC3168B87A600872565 /* Default.png */; };
 		23FEBBC6168B87A600872565 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23FEBBC5168B87A600872565 /* Default@2x.png */; };
 		23FEBBC8168B87A600872565 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23FEBBC7168B87A600872565 /* Default-568h@2x.png */; };
-		23FEBBCB168B87A600872565 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23FEBBC9168B87A600872565 /* MainStoryboard_iPhone.storyboard */; };
-		23FEBBCE168B87A600872565 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23FEBBCC168B87A600872565 /* MainStoryboard_iPad.storyboard */; };
 		23FEBBD9168B87A600872565 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FEBBD8168B87A600872565 /* SenTestingKit.framework */; };
 		23FEBBDA168B87A600872565 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FEBBB1168B87A600872565 /* UIKit.framework */; };
 		23FEBBDB168B87A600872565 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FEBBB3168B87A600872565 /* Foundation.framework */; };
@@ -53,11 +62,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		231CF1AE46206AFA9C2B9810 /* LLTableViewHeaderControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLTableViewHeaderControl.m; sourceTree = "<group>"; };
+		231CF1AE46206AFA9C2B9810 /* LLTabStackControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLTabStackControl.m; sourceTree = "<group>"; };
 		231CF29E5109A814B92E9B47 /* LLHeaderTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLHeaderTag.h; sourceTree = "<group>"; };
 		231CF392E816FFBBCE3E4D42 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		231CF48C1787BE2A6F261124 /* LLHeaderTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLHeaderTag.m; sourceTree = "<group>"; };
-		231CFAE0AA0FB071E06A7AFD /* LLTableViewHeaderControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLTableViewHeaderControl.h; sourceTree = "<group>"; };
+		231CFAE0AA0FB071E06A7AFD /* LLTabStackControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLTabStackControl.h; sourceTree = "<group>"; };
 		23378F3C1690ECB400EDE48D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		23378F43169111F500EDE48D /* CoreDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataHelper.h; sourceTree = "<group>"; };
 		23378F44169111F500EDE48D /* CoreDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataHelper.m; sourceTree = "<group>"; };
@@ -72,6 +81,24 @@
 		23788B4416A8F84E00C21460 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		23788B4616A9051000C21460 /* LLTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLTableView.h; sourceTree = "<group>"; };
 		23788B4716A9051000C21460 /* LLTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLTableView.m; sourceTree = "<group>"; };
+		23788B4D16AA2C1000C21460 /* LLMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLMainView.h; sourceTree = "<group>"; };
+		23788B4E16AA2C1000C21460 /* LLMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLMainView.m; sourceTree = "<group>"; };
+		23788B5016AA2F7D00C21460 /* LLListItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLListItemsViewController.h; sourceTree = "<group>"; };
+		23788B5116AA2F7D00C21460 /* LLListItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLListItemsViewController.m; sourceTree = "<group>"; };
+		23788B5E16ABA62F00C21460 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		23788B6116ABA69C00C21460 /* LLPullToInsertItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLPullToInsertItemView.h; sourceTree = "<group>"; };
+		23788B6216ABA69C00C21460 /* LLPullToInsertItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLPullToInsertItemView.m; sourceTree = "<group>"; };
+		23788B6A16ABAB9800C21460 /* LLReorderingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLReorderingTableViewController.h; sourceTree = "<group>"; };
+		23788B6B16ABAB9800C21460 /* LLReorderingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLReorderingTableViewController.m; sourceTree = "<group>"; };
+		23788B6D16AC5BA200C21460 /* LLNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLNavigationController.h; sourceTree = "<group>"; };
+		23788B6E16AC5BA200C21460 /* LLNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLNavigationController.m; sourceTree = "<group>"; };
+		23788B7016AC5CCD00C21460 /* LLListsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLListsViewController.h; sourceTree = "<group>"; };
+		23788B7116AC5CCD00C21460 /* LLListsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLListsViewController.m; sourceTree = "<group>"; };
+		23788B7316AC698300C21460 /* LLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLViewController.h; sourceTree = "<group>"; };
+		23788B7416AC698400C21460 /* LLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLViewController.m; sourceTree = "<group>"; };
+		239C61D116ACEF7900E5880A /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		239C61D416ACFF8700E5880A /* tableViewBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tableViewBG.png; sourceTree = "<group>"; };
+		239C61D616AD03B100E5880A /* lists_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lists_icon.png; sourceTree = "<group>"; };
 		23A4F561168D5C38003D7DCC /* AddRow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddRow.png; sourceTree = "<group>"; };
 		23C6E18B16A886AD004441C2 /* LLTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLTableViewController.m; sourceTree = "<group>"; };
 		23F681EB1693CE12006FA9C4 /* LLTableViewKeyboardDismisser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLTableViewKeyboardDismisser.h; sourceTree = "<group>"; };
@@ -89,8 +116,6 @@
 		23FEBBC3168B87A600872565 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		23FEBBC5168B87A600872565 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		23FEBBC7168B87A600872565 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		23FEBBCA168B87A600872565 /* MainStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = MainStoryboard_iPhone.storyboard; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		23FEBBCD168B87A600872565 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		23FEBBCF168B87A600872565 /* LLTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLTableViewController.h; sourceTree = "<group>"; };
 		23FEBBD7168B87A600872565 /* ListsTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ListsTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		23FEBBD8168B87A600872565 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -107,6 +132,7 @@
 			files = (
 				23378F3D1690ECB400EDE48D /* CoreData.framework in Frameworks */,
 				23FEBBB2168B87A600872565 /* UIKit.framework in Frameworks */,
+				23788B6016ABA65300C21460 /* QuartzCore.framework in Frameworks */,
 				23FEBBB4168B87A600872565 /* Foundation.framework in Frameworks */,
 				23FEBBB6168B87A600872565 /* CoreGraphics.framework in Frameworks */,
 			);
@@ -149,10 +175,18 @@
 		23788B4A16A9C99200C21460 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				23788B6D16AC5BA200C21460 /* LLNavigationController.h */,
+				23788B6E16AC5BA200C21460 /* LLNavigationController.m */,
 				23FEBBCF168B87A600872565 /* LLTableViewController.h */,
 				23C6E18B16A886AD004441C2 /* LLTableViewController.m */,
-				231CF1AE46206AFA9C2B9810 /* LLTableViewHeaderControl.m */,
-				231CFAE0AA0FB071E06A7AFD /* LLTableViewHeaderControl.h */,
+				23788B6A16ABAB9800C21460 /* LLReorderingTableViewController.h */,
+				23788B6B16ABAB9800C21460 /* LLReorderingTableViewController.m */,
+				23788B7316AC698300C21460 /* LLViewController.h */,
+				23788B7416AC698400C21460 /* LLViewController.m */,
+				23788B7016AC5CCD00C21460 /* LLListsViewController.h */,
+				23788B7116AC5CCD00C21460 /* LLListsViewController.m */,
+				23788B5016AA2F7D00C21460 /* LLListItemsViewController.h */,
+				23788B5116AA2F7D00C21460 /* LLListItemsViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -160,15 +194,19 @@
 		23788B4B16A9C99900C21460 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				231CF48C1787BE2A6F261124 /* LLHeaderTag.m */,
+				231CFAE0AA0FB071E06A7AFD /* LLTabStackControl.h */,
+				231CF1AE46206AFA9C2B9810 /* LLTabStackControl.m */,
 				231CF29E5109A814B92E9B47 /* LLHeaderTag.h */,
+				231CF48C1787BE2A6F261124 /* LLHeaderTag.m */,
 				23788B4616A9051000C21460 /* LLTableView.h */,
 				23788B4716A9051000C21460 /* LLTableView.m */,
 				23496BBB168B9AEA0082E3DF /* LLTableViewCell.h */,
 				23496BBC168B9AEA0082E3DF /* LLTableViewCell.m */,
-				23FEBBCC168B87A600872565 /* MainStoryboard_iPad.storyboard */,
-				23FEBBC9168B87A600872565 /* MainStoryboard_iPhone.storyboard */,
 				23A4F561168D5C38003D7DCC /* AddRow.png */,
+				23788B4D16AA2C1000C21460 /* LLMainView.h */,
+				23788B4E16AA2C1000C21460 /* LLMainView.m */,
+				23788B6116ABA69C00C21460 /* LLPullToInsertItemView.h */,
+				23788B6216ABA69C00C21460 /* LLPullToInsertItemView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -203,6 +241,7 @@
 		23FEBBB0168B87A600872565 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				23788B5E16ABA62F00C21460 /* QuartzCore.framework */,
 				23378F3C1690ECB400EDE48D /* CoreData.framework */,
 				23FEBBB1168B87A600872565 /* UIKit.framework */,
 				23FEBBB3168B87A600872565 /* Foundation.framework */,
@@ -224,6 +263,9 @@
 		23FEBBB8168B87A600872565 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				239C61D616AD03B100E5880A /* lists_icon.png */,
+				239C61D416ACFF8700E5880A /* tableViewBG.png */,
+				239C61D116ACEF7900E5880A /* bg.png */,
 				231CF392E816FFBBCE3E4D42 /* Localizable.strings */,
 				23FEBBB9168B87A600872565 /* Lists-Info.plist */,
 				23FEBBBA168B87A600872565 /* InfoPlist.strings */,
@@ -333,10 +375,11 @@
 				23FEBBC4168B87A600872565 /* Default.png in Resources */,
 				23FEBBC6168B87A600872565 /* Default@2x.png in Resources */,
 				23FEBBC8168B87A600872565 /* Default-568h@2x.png in Resources */,
-				23FEBBCB168B87A600872565 /* MainStoryboard_iPhone.storyboard in Resources */,
-				23FEBBCE168B87A600872565 /* MainStoryboard_iPad.storyboard in Resources */,
 				231CF7888BD4E44E2C22D3C8 /* Localizable.strings in Resources */,
 				23A4F562168D5C38003D7DCC /* AddRow.png in Resources */,
+				239C61D216ACEF7900E5880A /* bg.png in Resources */,
+				239C61D516ACFF8700E5880A /* tableViewBG.png in Resources */,
+				239C61D716AD03B100E5880A /* lists_icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,7 +417,7 @@
 				23FEBBBE168B87A600872565 /* main.m in Sources */,
 				23FEBBC2168B87A600872565 /* LLAppDelegate.m in Sources */,
 				23496BBD168B9AEA0082E3DF /* LLTableViewCell.m in Sources */,
-				231CF7B72A12F2DD8D1B0058 /* LLTableViewHeaderControl.m in Sources */,
+				231CF7B72A12F2DD8D1B0058 /* LLTabStackControl.m in Sources */,
 				231CF3A39A763B9CE0C66138 /* LLHeaderTag.m in Sources */,
 				23378F45169111F500EDE48D /* CoreDataHelper.m in Sources */,
 				23F681ED1693CE12006FA9C4 /* LLTableViewKeyboardDismisser.m in Sources */,
@@ -383,6 +426,13 @@
 				23C6E18C16A886AD004441C2 /* LLTableViewController.m in Sources */,
 				23788B4516A8F84E00C21460 /* DataModel.xcdatamodeld in Sources */,
 				23788B4816A9051000C21460 /* LLTableView.m in Sources */,
+				23788B4F16AA2C1000C21460 /* LLMainView.m in Sources */,
+				23788B5216AA2F7D00C21460 /* LLListItemsViewController.m in Sources */,
+				23788B6316ABA69C00C21460 /* LLPullToInsertItemView.m in Sources */,
+				23788B6C16ABAB9900C21460 /* LLReorderingTableViewController.m in Sources */,
+				23788B6F16AC5BA200C21460 /* LLNavigationController.m in Sources */,
+				23788B7216AC5CCE00C21460 /* LLListsViewController.m in Sources */,
+				23788B7516AC698400C21460 /* LLViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,22 +464,6 @@
 				23FEBBBB168B87A600872565 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		23FEBBC9168B87A600872565 /* MainStoryboard_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				23FEBBCA168B87A600872565 /* MainStoryboard_iPhone.storyboard */,
-			);
-			name = MainStoryboard_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		23FEBBCC168B87A600872565 /* MainStoryboard_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				23FEBBCD168B87A600872565 /* en */,
-			);
-			name = MainStoryboard_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 		23FEBBE1168B87A600872565 /* InfoPlist.strings */ = {

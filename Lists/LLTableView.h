@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LLTableView : UITableView
+@interface LLTableView : UITableView{
 
-
-
+UIImage *background;
+}
 @end

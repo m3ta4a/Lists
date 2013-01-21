@@ -11,23 +11,37 @@
 @implementation LLAppDelegate
 @synthesize managedObjectModel=_managedObjectModel, managedObjectContext=_managedObjectContext, persistentStoreCoordinator=_persistentStoreCoordinator;
 
+
 #pragma mark -
 #pragma mark Application lifecycle
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     NSManagedObjectContext *context = [self managedObjectContext];
     if (!context) {
-        NSLog(@"Big ole problem");// Handle the error.
+        NSLog(@"Big problem");// Handle the error.
     }
-
-    LLTableViewController *vc = (LLTableViewController*)self.window.rootViewController;
-    vc.managedObjectContext = context;
-
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
     NSManagedObjectModel *model = [self managedObjectModel];
     _managedObjectModel = model;
     
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     _persistentStoreCoordinator = coordinator;
+    
+    LLListsViewController *listsVC = [[LLListsViewController alloc] init];
+    listsVC.managedObjectContext = context;
+    [listsVC insertNewList];
+    
+    LLNavigationController *nav = [[LLNavigationController alloc] initWithRootViewController:listsVC];
+    nav.managedObjectContext = context;
+    
+    if([UINavigationBar respondsToSelector:@selector(appearance)]){
+        UIImage *image = [UIImage imageNamed:@"bg.png"];
+        [[UINavigationBar appearance] setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+    }
+        
+    self.window.rootViewController = nav;
+    [self.window makeKeyAndVisible];
     
     return YES;
 }

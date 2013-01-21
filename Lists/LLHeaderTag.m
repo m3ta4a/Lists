@@ -31,32 +31,19 @@
 
     self.text = @"New";
 
+    frame.size.width = [self getWidth];
+    
     self.frame = frame;
     self.centerFrame = frame;
-
-    [self addTarget:self action:@selector(textFieldDidChange:)
-          forControlEvents:UIControlEventEditingChanged];
+    
+    self.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.superview];
 
     return self;
 }
 
 -(double)getWidth
 {
-    return [self.text sizeWithFont:self.font].width + (self.cornerRadius * 2.0);
-}
-#pragma mark -----------------
-#pragma mark Textfield delegate
-- (void)textFieldDidChange:(UITextField *)sender {
-    CGFloat width;
-    LLHeaderTag *field = (LLHeaderTag*)sender;
-    width = [field getWidth];
-    field.frame = CGRectMake((field.frame.size.width - width) / 2 - 5,
-                             0, width + 2 * 5, 44);
-    
-  //  NSError *error;
-//    [_managedObjectContext save:&error];
-    
-    [sender setNeedsDisplay];
+    return [self.text sizeWithFont:self.font].width + (self.cornerRadius * 2.0) + 5;
 }
 - (void)drawRect:(CGRect)rect
 {

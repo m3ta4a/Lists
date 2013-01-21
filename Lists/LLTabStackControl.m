@@ -3,15 +3,13 @@
 //
 // To change the template use AppCode | Preferences | File Templates.
 //
+#import "LLTabStackControl.h"
 
-#import "LLTableViewHeaderControl.h"
-#import "LLHeaderTag.h"
-
-@implementation LLTableViewHeaderControl
+@implementation LLTabStackControl
 
 @synthesize startLocation = _startLocation;
 
-- (LLTableViewHeaderControl *)initWithFrame:(CGRect)frame andDelegate:(LLTableViewController *)delegate {
+- (LLTabStackControl *)initWithFrame:(CGRect)frame andDelegate:(LLListItemsViewController *)delegate {
 
     self = [super initWithFrame:frame];
     if (self == nil)
@@ -23,7 +21,11 @@
     CGRect newFrame = CGRectMake((frame.size.width - width) / 2 - 5, 0, width + 2 * 5, frame.size.height);
 
     LLHeaderTag *headerLabel = [[LLHeaderTag alloc] initWithFrame:newFrame];
-
+    headerLabel.delegate = self;
+    [headerLabel addTarget:self action:@selector(textFieldDidChange:)
+   forControlEvents:UIControlEventEditingChanged];
+    
+    
     self.Tags = [[NSArray alloc] initWithObjects:headerLabel, nil];
 
     [self addSubview:headerLabel];
@@ -32,7 +34,7 @@
     oneFingerSwipe = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(oneFingerSwipe:)];
     [self addGestureRecognizer:oneFingerSwipe];
     
-    [self addTarget:delegate action:@selector(addRow) forControlEvents:UIControlEventTouchUpInside];
+    [self addTarget:delegate action:@selector(insertNewListItem) forControlEvents:UIControlEventTouchUpInside];
 
     return self;
 }
@@ -83,5 +85,23 @@
                 0, width + 2 * 5, 44);
     }
     [self resetTabs];
+}
+#pragma mark -----------------
+#pragma mark Textfield delegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
+}
+- (void)textFieldDidChange:(UITextField *)sender {
+    CGFloat width;
+    LLHeaderTag *field = (LLHeaderTag*)sender;
+    width = [field getWidth];
+    field.frame = CGRectMake((field.frame.size.width - width) / 2 - 5,
+                             0, width + 2 * 5, 44);
+    
+    //  NSError *error;
+    //    [_managedObjectContext save:&error];
+    
+    [sender setNeedsDisplay];
 }
 @end

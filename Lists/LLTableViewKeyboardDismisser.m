@@ -11,21 +11,23 @@
 @implementation LLTableViewKeyboardDismisser {
     UITapGestureRecognizer *tapGR;
 }
-@synthesize tableView = _tableView;
--(id)initWithTableView:(UITableView *)tableView{
+@synthesize view = _view;
+-(id)initWithView:(UIView *)view{
     if ((self = [super initWithFrame:CGRectMake(0, 0, 0, 0)])){
-        _tableView = tableView;
-        tapGR = [[UITapGestureRecognizer alloc] initWithTarget:_tableView action:@selector(endEditing:)];
+        _view = view;
+        tapGR = [[UITapGestureRecognizer alloc] initWithTarget:_view action:@selector(endEditing:)];
+        // Pass the tap through to the UITableView
+        tapGR.cancelsTouchesInView = NO;
     }
     return self;
 }
 -(void)didMoveToWindow{ // When the accessory view presents this delegate method will be called
     [super didMoveToWindow];
     if (self.window){ // If there is a window it is now visible, so one of it's textfields is first responder
-        [_tableView addGestureRecognizer:tapGR];
+        [_view addGestureRecognizer:tapGR];
     }
     else { // If there is no window the textfield is no longer first responder
-        [_tableView removeGestureRecognizer:tapGR];
+        [_view removeGestureRecognizer:tapGR];
     }
 }
 @end

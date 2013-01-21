@@ -6,16 +6,18 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <Foundation/Foundation.h>
+#import "LLHeaderTag.h"
+#import "LLListItemsViewController.h"
 
-@class LLTableViewController;
+@class LLListItemsViewController;
 
-@interface LLTableViewHeaderControl : UIControl
+@interface LLTabStackControl : UIControl <UITextFieldDelegate>
 
 @property(nonatomic, strong) NSArray *Tags;
 @property(nonatomic) CGPoint startLocation;
 @property(nonatomic) CGPoint lastLocation;
 
-- (LLTableViewHeaderControl *)initWithFrame:(CGRect)frame andDelegate:(LLTableViewController *)delegate;
+- (LLTabStackControl *)initWithFrame:(CGRect)frame andDelegate:(LLListItemsViewController *)delegate;
 
 - (void)oneFingerSwipe:(UIPanGestureRecognizer *)recognizer;
 

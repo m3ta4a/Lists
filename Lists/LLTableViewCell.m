@@ -9,6 +9,7 @@
 #import "LLTableViewCell.h"
 
 @implementation LLTableViewCell
+
 @synthesize textField = _textField;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -16,6 +17,13 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self == nil)
         return nil;
+    
+    self.textField = [[UITextField alloc] initWithFrame:CGRectMake(0,0,self.frame.size.width-50, self.frame.size.height)];
+    self.textField.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    self.textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    self.textField.textColor = [UIColor blackColor];
+    
+    [self addSubview:self.textField];
     
     self.editingAccessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     
@@ -26,16 +34,16 @@
 {
     [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
+
 }
 
-- (void)textFieldDidChange:(UITextField *)sender {
+- (void)resizeToFitTextExactly {
     CGFloat width;
-    width = [sender.text sizeWithFont:sender.font].width;
-    CGRect frame = sender.frame;
-    float _width = MAX(width+2*ITEM_TEXT_MARGIN, 150);
+    width = [self.textField.text sizeWithFont:self.textField.font].width;
+    CGRect frame = self.textField.frame;
+    float _width = MAX(width+2*ITEM_TEXT_MARGIN, 50);
     
-    sender.frame = CGRectMake(frame.origin.x, frame.origin.y,
+    self.textField.frame = CGRectMake(frame.origin.x, frame.origin.y,
                               _width, frame.size.height);
 }
 
@@ -43,5 +51,4 @@
     [textField resignFirstResponder];
     return NO;
 }
-
 @end

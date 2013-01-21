@@ -10,8 +10,8 @@
 #import <UIKit/UIKit.h>
 
 @interface LLTableViewKeyboardDismisser : UIView
-@property (nonatomic, assign) IBOutlet UITableView *tableView; // weak if iOS5 only
+@property (nonatomic, assign) IBOutlet UIView *view; // weak if iOS5 only
 
--(id)initWithTableView:(UITableView *)tableView;
+-(id)initWithView:(UIView *)view;
 
 @end

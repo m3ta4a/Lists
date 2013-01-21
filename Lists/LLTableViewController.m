@@ -28,14 +28,10 @@
                                                  name:NSManagedObjectContextDidSaveNotification     
                                                object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(addRow)
-                                                 name:@"LLTableViewHitOutsideCell"
-                                               object:nil];
-
-    
     // 0 is returned for no list
     int listID = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentListID"];
+    
+    
     
     // Initialize the fetched results controllers with custom accessors
     NSError *error;
@@ -77,7 +73,7 @@
     }
     else{
         // Load current List
-        m_currentList = [[_listFetchedResultsController fetchedObjects] objectAtIndex:listID - 1];
+        m_currentList = [[_listFetchedResultsController fetchedObjects] objectAtIndex:1];
     }
     
     [super viewDidLoad];
@@ -88,6 +84,8 @@
 - (void)viewDidUnload {
     self.listFetchedResultsController = nil;
     self.itemFetchedResultsController = nil;
+    
+    
     
     [[NSUserDefaults standardUserDefaults] setInteger:[m_currentList.listID integerValue] forKey:@"currentListID"];
 }
@@ -140,14 +138,17 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        // Ideally, we would update itemId's here, but since a delete
-        // doesn't alter the order, it is ok. All attempts failed, anyway.
         ListItem *oldItem = [_itemFetchedResultsController objectAtIndexPath:indexPath];
         
-        [_managedObjectContext deleteObject:oldItem];
-
-        NSError *error = nil;
-        [_managedObjectContext save:&error]; // this causes the fetchedResultsController to update the tableView
+        [m_currentList removeItemsObject:oldItem];
+        
+//        NSMutableArray *data =[[_itemFetchedResultsController fetchedObjects] mutableCopy];
+        
+//        [data removeObject:oldItem];
+//        [_managedObjectContext deleteObject:oldItem];
+        
+//        NSError *error = nil;
+ //       [_managedObjectContext save:&error]; // this causes the fetchedResultsController to update the tableView
     }
 }
 -(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
@@ -160,11 +161,14 @@
 
 
 - (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-
+//    int addButtonRow = [[[_itemFetchedResultsController sections] objectAtIndex:indexPath.section] numberOfObjects];
+//    if (indexPath.row >= addButtonRow) //add button
+ //       return;
+    
     ListItem *item = [_itemFetchedResultsController objectAtIndexPath:indexPath];
     
-    cell.textField.text = [NSString stringWithFormat:@"%@", item.text];
-    cell.textField.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithTableView:self.tableView];
+    cell.textField.text = [NSString stringWithFormat:@"%@, %@", item.text, item.itemID];
+    cell.textField.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
 }
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma unused(tv)
@@ -174,7 +178,11 @@
     assert(tv == self.tableView);
     assert(indexPath != nil);
 
+//    int addButtonRow = [[[_itemFetchedResultsController sections] objectAtIndex:indexPath.section] numberOfObjects];
+    
     NSString *identifier = @"Cell";
+  //  if (indexPath.row == addButtonRow)
+   //     identifier = @"AddRow";
 
     cell = [self.tableView dequeueReusableCellWithIdentifier:identifier];
 
@@ -190,12 +198,12 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGFloat screenWidth = screenRect.size.width;
+ //   CGRect screenRect = [[UIScreen mainScreen] bounds];
+//    CGFloat screenWidth = screenRect.size.width;
 
-    if (!self.header)
-        self.header = [[LLTableViewHeaderControl alloc] initWithFrame:CGRectMake(0.0, 0.0, screenWidth, 46.0)
-                                                          andDelegate:self];
+ //   if (!self.header)
+//        self.header = [[LLTableViewHeaderControl alloc] initWithFrame:CGRectMake(0.0, 0.0, screenWidth, 46.0)
+   //                                                       andDelegate:self];
 
     return self.header;
 }
@@ -205,17 +213,17 @@
 }
 
 
--(void)addRow
+-(IBAction)addRow:(id)sender
 {
     ListItem *newItem = [NSEntityDescription
-                         insertNewObjectForEntityForName:@"ListItem"
+                         insertNewObjectForEntityForName:@"Item"
                          inManagedObjectContext:_managedObjectContext];
     newItem.text= @"New Item";
 
     [m_currentList addItemsObject:newItem];
 
-    NSError *error = nil;
-    [_managedObjectContext save:&error]; // this causes the fetchedResultsController to update the tableView
+//    NSError *error = nil;
+//    [_managedObjectContext save:&error]; // this causes the fetchedResultsController to update the tableView
 }
 #pragma mark -----------------
 #pragma mark Textfield delegate
@@ -223,7 +231,18 @@
     [textField resignFirstResponder];
     return NO;
 }
-
+- (void)textFieldDidChange:(UITextField *)sender {
+    CGFloat width;
+    LLHeaderTag *field = (LLHeaderTag*)sender;
+    width = [field getWidth];
+    field.frame = CGRectMake((field.frame.size.width - width) / 2 - 5,
+                              0, width + 2 * 5, 44);
+    
+    NSError *error;
+    [_managedObjectContext save:&error];
+    
+    [sender setNeedsDisplay];
+}
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSIndexPath* path = [self.tableView indexPathForCell:(LLTableViewCell*) [[textField superview] superview] ];
@@ -440,7 +459,7 @@
 }
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
 }
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     

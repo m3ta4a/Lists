@@ -3,15 +3,15 @@
     <entity name="List" representedClassName="List" syncable="YES">
         <attribute name="listID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="items" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ListItem" inverseName="list" inverseEntity="ListItem" syncable="YES"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ListItem" inverseName="list" inverseEntity="ListItem" syncable="YES"/>
     </entity>
     <entity name="ListItem" representedClassName="ListItem" syncable="YES">
-        <attribute name="itemID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="itemID" optional="YES" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="list" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="List" inverseName="items" inverseEntity="List" syncable="YES"/>
     </entity>
     <elements>
         <element name="List" positionX="160" positionY="192" width="128" height="90"/>
-        <element name="ListItem" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="ListItem" positionX="-101" positionY="198" width="128" height="88"/>
     </elements>
 </model>

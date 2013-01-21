@@ -8,7 +8,7 @@
 
 #import "LLTableViewKeyboardDismisser.h"
 #import "LLTableViewCell.h"
-#import "LLTableViewHeaderControl.h"
+#import "LLTabStackControl.h"
 #import "LLHeaderTag.h"
 #import "List.h"
 #import "ListItem.h"
@@ -18,14 +18,11 @@
     List *m_currentList;
 }
 
-@property (nonatomic, strong) LLTableViewHeaderControl *header;
+@property (nonatomic, strong) LLTabStackControl *header;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) NSFetchedResultsController *listFetchedResultsController;
 @property (nonatomic, retain) NSFetchedResultsController *itemFetchedResultsController;
 
--(void)addRow;
-
-//- (void)textFieldDidChange:(UITextField *)sender;
 
 @end
 

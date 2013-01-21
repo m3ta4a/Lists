@@ -16,9 +16,10 @@ enum styles{
     CustomStyleHeader
 };
 
-@property (nonatomic, weak) IBOutlet UITextField *textField;
+@property (nonatomic, strong) UITextField *textField;
 
-- (IBAction) textFieldDidChange:(UITextField *)sender;
+
+- (void)resizeToFitTextExactly;
 
 
 @end

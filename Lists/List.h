@@ -11,24 +11,23 @@
 
 @class ListItem;
 
-@interface List : NSManagedObject
+@interface List : NSManagedObject{
+    NSMutableArray *m_orderedItems;
+}
 
 @property (nonatomic, retain) NSNumber * listID;
 @property (nonatomic, retain) NSString * text;
-@property (nonatomic, retain) NSMutableOrderedSet *items;
+@property (nonatomic, retain) NSMutableSet *items;
+
+
 @end
 
-@interface List (CoreDataGeneratedAccessors)
 
-- (void)insertObject:(ListItem *)value inItemsAtIndex:(NSUInteger)idx;
-- (void)removeObjectFromItemsAtIndex:(NSUInteger)idx;
-- (void)insertItems:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
-- (void)removeItemsAtIndexes:(NSIndexSet *)indexes;
-- (void)replaceObjectInItemsAtIndex:(NSUInteger)idx withObject:(ListItem *)value;
-- (void)replaceItemsAtIndexes:(NSIndexSet *)indexes withItems:(NSArray *)values;
+@interface List (CoreDataGeneratedAccessors)
+    
 - (void)addItemsObject:(ListItem *)value;
 - (void)removeItemsObject:(ListItem *)value;
-- (void)addItems:(NSOrderedSet *)values;
-- (void)removeItems:(NSOrderedSet *)values;
+- (void)addItems:(NSSet *)values;
+- (void)removeItems:(NSSet *)values;
 
 @end

@@ -6,12 +6,14 @@
 //  Copyright (c) 2012 EggDevil. All rights reserved.
 //
 
+#import "LLListItemsViewController.h"
 #import "LLTableViewController.h"
+#import "LLNavigationController.h"
 
-@interface LLAppDelegate : UIResponder <UIApplicationDelegate>
+@interface LLAppDelegate : UIResponder <UIApplicationDelegate, UIAppearanceContainer>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) IBOutlet LLTableViewController *viewController;
+
 @property (nonatomic, strong, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
