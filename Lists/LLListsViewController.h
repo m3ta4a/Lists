@@ -9,11 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "LLViewController.h"
 #import "LLListItemsViewController.h"
+#import "LLListConfigureViewController.h"
 #import "LLTableView.h"
 #import "LLTableViewCeLL.h"
 
 @interface LLListsViewController : LLViewController
+{
+    
+}
 
 -(void)insertNewList;
+-(void)enterConfigListMode:(UIButton*)sender;
 
 @end

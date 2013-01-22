@@ -8,6 +8,7 @@
 
 #import "LLTableViewCell.h"
 
+
 @implementation LLTableViewCell
 
 @synthesize textField = _textField;
@@ -18,7 +19,7 @@
     if (self == nil)
         return nil;
     
-    self.textField = [[UITextField alloc] initWithFrame:CGRectMake(0,0,self.frame.size.width-50, self.frame.size.height)];
+    self.textField = [[UITextField alloc] initWithFrame:CGRectMake(15,0,self.frame.size.width-50, self.frame.size.height)];
     self.textField.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     self.textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.textField.textColor = [UIColor blackColor];

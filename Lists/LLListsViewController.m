@@ -8,9 +8,10 @@
 
 #import "LLListsViewController.h"
 
+
 @interface LLListsViewController ()
 {
- 
+    bool configToggle;
 }
 
 @end
@@ -22,12 +23,44 @@
     self = [super init];
     if (!self)
         return nil;
+    
+    configToggle = NO;
+    
     return self;
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    CGRect frame = self.view.frame;
+
+    self.tableView = [[LLTableView alloc] initWithFrame:CGRectMake(BORDER_WIDTH,frame.origin.y,frame.size.width-2*BORDER_WIDTH,frame.size.height-BORDER_WIDTH)];
+    [self.view addSubview:self.tableView];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.title = @"Lists";
+    
+    UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *addImage = [[UIImage imageNamed:@"AddRow.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
+    [addButton setBackgroundImage:addImage forState:UIControlStateNormal];
+    [addButton addTarget:self action:@selector(insertNewList) forControlEvents:UIControlEventTouchUpInside];
+    addButton.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
+    self.navigationItem.rightBarButtonItem = addButtonItem;
+    
+    UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *editImage = [[UIImage imageNamed:@"config_icon.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
+    UIImage *editImageOn = [[UIImage imageNamed:@"config_icon_on.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
+    [editButton setBackgroundImage:editImage forState:UIControlStateNormal];
+    [editButton setBackgroundImage:editImageOn forState:UIControlStateSelected];
+    [editButton addTarget:self action:@selector(enterConfigListMode:) forControlEvents:UIControlEventTouchUpInside];
+    editButton.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *editButtonItem = [[UIBarButtonItem alloc] initWithCustomView:editButton];
+    self.navigationItem.leftBarButtonItem = editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,7 +95,19 @@
     
     [self saveContext];
 }
+-(void)enterConfigListMode:(UIButton*)sender
+{
+    if([sender isSelected]){
 
+        [sender setSelected:NO];
+        configToggle = NO;
+    } else {
+
+        [sender setSelected:YES];
+        configToggle = YES;
+    }
+    [self.tableView reloadData];
+}
 -(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     NSUInteger fromIndex = sourceIndexPath.row;
     NSUInteger toIndex = destinationIndexPath.row;
@@ -127,10 +172,15 @@
     
     [cell resizeToFitTextExactly];
     
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    if (!configToggle)
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    else
+        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    
     cell.textField.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
 
-    [cell.textField addTarget:self action:@selector(textFieldDidChange:)
-             forControlEvents:UIControlEventEditingChanged];
     cell.textField.delegate = self;
 }
 
@@ -242,19 +292,29 @@
 }
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    LLListItemsViewController *vc = [[LLListItemsViewController alloc] init];
-    vc.managedObjectContext = self.managedObjectContext;
+    if (!configToggle)
+    {
+        LLListItemsViewController *vc = [[LLListItemsViewController alloc] init];
+        vc.managedObjectContext = self.managedObjectContext;
     
-    List* list = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    vc.currentList = list;
-    vc.title = list.text;
-    
-    [vc insertNewListItem];
-    
-    [self.navigationController pushViewController:vc animated:YES];
-}
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+        List* list = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        vc.currentList = list;
+        vc.title = list.text;
+
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else{
+        LLListConfigureViewController *vc = [[LLListConfigureViewController alloc] init];
+        
+        vc.managedObjectContext = self.managedObjectContext;
+        
+        List* list = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        vc.currentList = list;
+        vc.title = list.text;
+        
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
 }
 
 // Editing
@@ -285,18 +345,24 @@
 }
 #pragma mark -----------------
 #pragma mark Textfield delegate
-- (void)textFieldDidChange:(UITextField *)sender
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    LLTableViewCell *field = (LLTableViewCell*)[sender superview];
-    NSIndexPath *path = [self.tableView indexPathForCell:field];
+    NSIndexPath* path = [self.tableView indexPathForCell:(LLTableViewCell*) [textField superview]];
+    List* list = (List*)[self.fetchedResultsController objectAtIndexPath:path];
     
-    List* list = [self.fetchedResultsController objectAtIndexPath:path];
-    list.text = field.textField.text;
+    NSString *newStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
     
-    [self saveContext];
+    list.text = newStr;
     
-    [field resizeToFitTextExactly];
+    return true;
+}
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    NSIndexPath* path = [self.tableView indexPathForCell:(LLTableViewCell*) [[textField superview] superview]];
+    List* item = (List*)[self.fetchedResultsController objectAtIndexPath:path];
     
-    [sender setNeedsDisplay];
+    item.text = @"";
+    
+    return true;
 }
 @end

@@ -19,8 +19,6 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize fetchedResultsController = _fetchedResultsController;
 
-#define BORDER_WIDTH 10
-
 - (id)init
 {
     self = [super init];
@@ -37,15 +35,36 @@
     
     return self;
 }
-- (void)viewDidLoad
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidLoad];
-    CGRect frame = self.view.bounds;
+    [super viewWillAppear:animated];
+
+    CGRect frame = self.view.frame;
     
-    self.tableView = [[LLTableView alloc] initWithFrame:CGRectMake(BORDER_WIDTH,0,frame.size.width-2*BORDER_WIDTH,frame.size.height-BORDER_WIDTH)];
-    [self.view addSubview:self.tableView];
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
+    UIImage *vert_strip = [UIImage imageNamed:@"blue_leather_vert_strip.png"];
+    UIImage *horiz_strip = [UIImage imageNamed:@"blue_leather_horiz_strip.png"];
+    
+    UIImageView* blockViewLeft = [[UIImageView alloc] initWithImage:vert_strip];
+    blockViewLeft.frame = CGRectMake(0,
+                                 frame.origin.y,
+                                 BORDER_WIDTH,
+                                 frame.size.height);
+    
+    UIImageView* blockViewRight = [[UIImageView alloc] initWithImage:vert_strip];
+    blockViewRight.frame = CGRectMake(self.view.frame.size.width-BORDER_WIDTH,
+                                     frame.origin.y,
+                                     BORDER_WIDTH,
+                                     frame.size.height);
+
+    UIImageView* blockViewBottom = [[UIImageView alloc] initWithImage:horiz_strip];
+    blockViewBottom.frame = CGRectMake(0,
+                                      frame.size.height-BORDER_WIDTH,
+                                      frame.size.width,
+                                      BORDER_WIDTH);
+
+    [self.view addSubview:blockViewLeft];
+    [self.view addSubview:blockViewRight];
+    [self.view addSubview:blockViewBottom];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -89,8 +108,8 @@
 #pragma mark ------------------
 #pragma mark UITableView Data Source Methods
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    //NSString *name = [[[_itemFetchedResultsController sections] objectAtIndex:section] name];
-    return @"";
+    NSString *name = [[[self.fetchedResultsController sections] objectAtIndex:section] name];
+    return name;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView {
     NSUInteger count = [[self.fetchedResultsController sections] count];
@@ -214,5 +233,18 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return NO;
+}
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    CGRect rect = textField.frame;
+    rect.size.width = 200;
+    textField.frame = rect;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    LLTableViewCell *field = (LLTableViewCell*)[textField superview];
+    
+    [field resizeToFitTextExactly];
+    [textField setNeedsDisplay];
 }
 @end

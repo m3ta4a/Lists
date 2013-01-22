@@ -7,7 +7,6 @@
 //
 
 #import "LLListItemsViewController.h"
-#import "LLTableViewController.h"
 #import "LLNavigationController.h"
 
 @interface LLAppDelegate : UIResponder <UIApplicationDelegate, UIAppearanceContainer>

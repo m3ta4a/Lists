@@ -10,6 +10,19 @@
 #import <CoreData/CoreData.h>
 #import <SenTestingKit/SenTestingKit.h>
 
+#import "LLAppDelegate.h"
+#import "LLListsViewController.h"
+#import "LLListItemsViewController.h"
+
 @interface ListTests : SenTestCase
+{
+@private
+
+    LLAppDelegate    *app_delegate;
+    LLNavigationController *navigation_controller;
+    LLListsViewController *lists_view_controller;
+    LLListItemsViewController *listitems_view_controller;
+    UIView             *lists_view;
+}
 
 @end

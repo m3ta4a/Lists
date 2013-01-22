@@ -31,68 +31,41 @@ typedef enum {
     if (!self)
         return nil;
     
-//    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGRect frame = self.view.frame;
-    
-//    LLTabStackControl *tabStackControl = [[LLTabStackControl alloc]
-//                                          initWithFrame:CGRectMake(0.0, 0.0, frame.size.width, STACK_CTRL_HEIGHT)
-//                                               andDelegate:self];
-//    [self.view addSubview:tabStackControl];
-
-    
     _pullToInsertItemView = [[LLPullToInsertItemView alloc] initWithFrame: CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,
 																						 320.0f, self.view.bounds.size.height)];
 	[self.tableView addSubview:self.pullToInsertItemView];
-    
-//    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(insertNewListItem)
                                                  name:@"LLTableViewHitOutsideCell"
                                                object:nil];
-    
-    
-    // 0 is returned for no list
-//    int listID = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentListID"];
-    
-    // Initialize the fetched results controllers with custom accessors
-//    NSError *error;
-//    if (![[self fetchedResultsController] performFetch:&error]) {
-//        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-//        exit(-1);
-//    }
-//    
-//    if (listID == 0) //first load
-//    {
-//        int currentList = 1;
-//        
-//        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-//        NSEntityDescription *itemEntity = [[self.fetchedResultsController fetchRequest] entity];
-//        ListItem *newItem= [NSEntityDescription insertNewObjectForEntityForName:[itemEntity name] inManagedObjectContext:context];
-//        newItem.text = @"New Item";
-//        newItem.itemID = [NSNumber numberWithInt: 0];
-//        
-////        m_currentList = newList;
-//        
-//        [[NSUserDefaults standardUserDefaults] setInteger:currentList forKey:@"currentListID"];
-//        
-//        NSError *error;
-//        [self.managedObjectContext save:&error];
-//    }
-//    else{
-//        // Load current List
-//        m_currentList = [[self.fetchedResultsController fetchedObjects] objectAtIndex:listID - 1];
-//    }
     return self;
 }
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+
+    CGRect frame = self.view.frame;
+
+    self.tableView = [[LLTableView alloc] initWithFrame:CGRectMake(BORDER_WIDTH,frame.origin.y,frame.size.width-2*BORDER_WIDTH,frame.size.height-BORDER_WIDTH)];
+    [self.view addSubview:self.tableView];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *butImage = [[UIImage imageNamed:@"lists_icon.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
+    UIImage *butImage = [[UIImage imageNamed:@"lists_icon.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
     [button setBackgroundImage:butImage forState:UIControlStateNormal];
     [button addTarget:self action:@selector(gotoBack:) forControlEvents:UIControlEventTouchUpInside];
-    button.frame = CGRectMake(0, 0, 48, 30);
+    button.frame = CGRectMake(0, 0, 30, 30);
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = backButton;
+
+    UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *addImage = [[UIImage imageNamed:@"AddRow.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [addButton setBackgroundImage:addImage forState:UIControlStateNormal];
+    [addButton addTarget:self action:@selector(insertNewListItem) forControlEvents:UIControlEventTouchUpInside];
+    addButton.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
+    self.navigationItem.rightBarButtonItem = addButtonItem;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -118,7 +91,7 @@ typedef enum {
                          insertNewObjectForEntityForName:@"ListItem"
                          inManagedObjectContext:self.managedObjectContext];
     newItem.text= @"New Item";
-    NSMutableArray* relationship = [[self.fetchedResultsController fetchedObjects] mutableCopy];
+    NSArray* relationship = [self.fetchedResultsController fetchedObjects];
         
     int maxID = 0;
     for (ListItem* item in relationship)
@@ -233,12 +206,11 @@ typedef enum {
     ListItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     cell.textField.text = [NSString stringWithFormat:@"%@", item.text];
-    cell.textField.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
  
     [cell resizeToFitTextExactly];
     
-    [cell.textField addTarget:self action:@selector(textFieldDidChange:)
-          forControlEvents:UIControlEventEditingChanged];
+    cell.textField.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
+
     cell.textField.delegate = self;
 }
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -271,9 +243,7 @@ typedef enum {
         return _fetchedResultsController;
     }
     
-    int listID = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentListID"];
-    
-    listID = listID == 0 ? 1 : listID; // if the list is zero, it is first load, will be 1 after init
+    int listID = [m_currentList.listID integerValue];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"ListItem" inManagedObjectContext:self.managedObjectContext];
@@ -375,16 +345,25 @@ typedef enum {
 }
 #pragma mark -----------------
 #pragma mark Textfield delegate
-- (void)textFieldDidChange:(UITextField *)sender
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    LLTableViewCell *field = (LLTableViewCell*)[sender superview];
-    NSIndexPath *path = [self.tableView indexPathForCell:field];
-
-    ListItem* item = [self.fetchedResultsController objectAtIndexPath:path];
-    item.text = field.textField.text;
+    NSIndexPath* path = [self.tableView indexPathForCell:(LLTableViewCell*) [textField superview]];
+    ListItem* item = (ListItem*)[self.fetchedResultsController objectAtIndexPath:path];
     
-    [self saveContext];
+    NSString *newStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
     
-    [sender setNeedsDisplay];
+    item.text = newStr;
+    
+    return true;
 }
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    NSIndexPath* path = [self.tableView indexPathForCell:(LLTableViewCell*) [[textField superview] superview] ];
+    ListItem* item = (ListItem*)[self.fetchedResultsController objectAtIndexPath:path];
+    
+    item.text = @"";
+    
+    return true;
+}
+
 @end

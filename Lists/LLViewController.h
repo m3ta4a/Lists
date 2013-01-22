@@ -11,14 +11,16 @@
 #import "LLTableViewKeyboardDismisser.h"
 #import "List.h"
 #import "ListItem.h"
-#import "LLTableView.h"
 #import "LLTableViewCell.h"
+
+#define BORDER_WIDTH 7
 
 @interface LLViewController : LLReorderingTableViewController <UIScrollViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 {
     BOOL _userDrivenDataModelChange;
     NSManagedObjectContext *_managedObjectContext;
     NSFetchedResultsController *_fetchedResultsController;
+    NSRange _last_range;
 }
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
