@@ -12,6 +12,7 @@
 @interface LLListsViewController ()
 {
     bool configToggle;
+    NSIndexPath *_fromIndex;
 }
 
 @end
@@ -24,7 +25,7 @@
     if (!self)
         return nil;
 
-
+    self.dragDelegate = self;
 
     configToggle = NO;
     
@@ -127,7 +128,22 @@
     }
     [self.tableView reloadData];
 }
+- (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController didBeginDraggingAtRow:(NSIndexPath *)dragRow
+{
+    _fromIndex = dragRow;
+}
+- (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController willEndDraggingToRow:(NSIndexPath *)destinationIndexPath
+{
+    [self tableView:dragTableViewController.tableView moveRowAtIndexPath:_fromIndex toIndexPath:destinationIndexPath];
+}
+- (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController didEndDraggingToRow:(NSIndexPath *)destinationIndexPath
+{
 
+}
+- (BOOL)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController shouldHideDraggableIndicatorForDraggingToRow:(NSIndexPath *)destinationIndexPath
+{
+    return YES;
+}
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;

@@ -8,6 +8,12 @@
 
 #import "LLListItemsViewController.h"
 
+@interface LLListItemsViewController ()
+{
+
+    NSIndexPath *_fromIndex;
+}
+@end
 
 @implementation LLListItemsViewController
 
@@ -125,6 +131,23 @@
 
 #pragma mark ------------------
 #pragma mark UITableView Data Source Methods
+- (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController didBeginDraggingAtRow:(NSIndexPath *)dragRow
+{
+    _fromIndex = dragRow;
+}
+- (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController willEndDraggingToRow:(NSIndexPath *)destinationIndexPath
+{
+    [self tableView:dragTableViewController.tableView moveRowAtIndexPath:_fromIndex toIndexPath:destinationIndexPath];
+}
+- (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController didEndDraggingToRow:(NSIndexPath *)destinationIndexPath
+{
+
+}
+- (BOOL)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController shouldHideDraggableIndicatorForDraggingToRow:(NSIndexPath *)destinationIndexPath
+{
+    return YES;
+}
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
@@ -187,7 +210,15 @@
     // update with a short delay the moved cell
     [self performSelector:(@selector(configureCellAtIndexPath:)) withObject:(destinationIndexPath) afterDelay:0.2];
 }
+- (UITableViewCell *)cellIdenticalToCellAtIndexPath:(NSIndexPath *)indexPath forDragTableViewController:(LLReorderingTableViewController *)dragTableViewController
+{
+    LLTableViewCell *cell = [[LLTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    ListItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
+    cell.textField.text = [NSString stringWithFormat:@"%@", item.text];
+
+    return cell;
+}
 
 - (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 

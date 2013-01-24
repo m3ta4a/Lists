@@ -11,9 +11,9 @@
 #import "LLListItemsViewController.h"
 #import "LLListConfigureViewController.h"
 
-@interface LLListsViewController : LLViewController
+@interface LLListsViewController : LLViewController <LLReorderingTableViewControllerDelegate>
 {
-    
+
 }
 
 -(void)insertNewList;

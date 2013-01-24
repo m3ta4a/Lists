@@ -12,7 +12,7 @@
 
 #define kPullDownToReloadToggleHeight 65.0f
 
-@interface LLListItemsViewController : LLViewController{
+@interface LLListItemsViewController : LLViewController <LLReorderingTableViewControllerDelegate>{
 
 @private    
     List *m_currentList;
