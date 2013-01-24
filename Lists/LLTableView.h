@@ -11,5 +11,6 @@
 @interface LLTableView : UITableView{
 
 UIImage *background;
+    
 }
 @end

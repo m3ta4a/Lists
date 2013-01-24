@@ -23,27 +23,25 @@
     self = [super init];
     if (!self)
         return nil;
-    
+
+
+
     configToggle = NO;
     
     return self;
 }
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
-    CGRect frame = self.view.frame;
-
-    self.tableView = [[LLTableView alloc] initWithFrame:CGRectMake(BORDER_WIDTH,frame.origin.y,frame.size.width-2*BORDER_WIDTH,frame.size.height-BORDER_WIDTH)];
-    [self.view addSubview:self.tableView];
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-}
 - (void)viewDidLoad
 {
+    self.tableView = [[LLTableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
+//    [self.view addSubview:self.tableView];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+
+    // Table View must be loaded for reordering TVController
     [super viewDidLoad];
+
     self.title = @"Lists";
-    
+
     UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *addImage = [[UIImage imageNamed:@"AddRow.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
     [addButton setBackgroundImage:addImage forState:UIControlStateNormal];
@@ -62,19 +60,35 @@
     UIBarButtonItem *editButtonItem = [[UIBarButtonItem alloc] initWithCustomView:editButton];
     self.navigationItem.leftBarButtonItem = editButtonItem;
 }
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-// Add a ListItem to the data store and to the tableview
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    [self.tableView reloadData];
+
+    NSArray* relationship = [self.fetchedResultsController fetchedObjects];
+    if ([relationship count] == 0)
+    {
+        [self insertNewList];
+    }
+}
+
 -(void)insertNewList
+{
+    [self insertNewListNamed:@""];
+}
+-(void)insertNewListNamed:(NSString*)name
 {
     List *newList = [NSEntityDescription
                          insertNewObjectForEntityForName:@"List"
                          inManagedObjectContext:self.managedObjectContext];
-    newList.text= @"New List";
+    newList.text= name;
     newList.listID = [NSNumber numberWithInt:0];
     
     NSMutableArray* relationship = [[self.fetchedResultsController fetchedObjects] mutableCopy];
@@ -94,19 +108,33 @@
     newList.listID = [NSNumber numberWithInt:maxID+1];    
     
     [self saveContext];
+
+    // give the new tableview cell textfield firstresponder status
+    NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
+    LLTableViewCell *cell = (LLTableViewCell*)[self.tableView cellForRowAtIndexPath:path];
+    [cell.textField becomeFirstResponder];
 }
 -(void)enterConfigListMode:(UIButton*)sender
 {
     if([sender isSelected]){
-
         [sender setSelected:NO];
         configToggle = NO;
+        self.navigationItem.rightBarButtonItem.enabled = YES;
     } else {
-
         [sender setSelected:YES];
         configToggle = YES;
+        self.navigationItem.rightBarButtonItem.enabled = NO;
     }
     [self.tableView reloadData];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
 }
 -(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     NSUInteger fromIndex = sourceIndexPath.row;
@@ -162,9 +190,16 @@
     // update with a short delay the moved cell
     [self performSelector:(@selector(configureCellAtIndexPath:)) withObject:(destinationIndexPath) afterDelay:0.2];
 }
+- (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
+{
+    NSUInteger numberOfObjects = [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
 
+    return numberOfObjects;
+}
 
 - (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+
+    [super configureCell:cell atIndexPath:indexPath];
     
     List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
@@ -174,10 +209,10 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    if (!configToggle)
+    if (configToggle)
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     else
-        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+        cell.accessoryType = UITableViewCellAccessoryNone;
     
     cell.textField.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
 
@@ -191,17 +226,26 @@
     assert(indexPath != nil);
     
     NSString *identifier = @"ListCell";
-    
+
     cell = [self.tableView dequeueReusableCellWithIdentifier:identifier];
     
     if (cell == nil) {
         cell = [[LLTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     assert(cell != nil);
-    
-    // Set up the cell...
+
     [self configureCell:cell atIndexPath:indexPath];
+
     
+    return cell;
+}
+- (UITableViewCell *)cellIdenticalToCellAtIndexPath:(NSIndexPath *)indexPath forDragTableViewController:(LLReorderingTableViewController *)dragTableViewController
+{
+    LLTableViewCell *cell = [[LLTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
+    cell.textField.text = [NSString stringWithFormat:@"%@", list.text];
+
     return cell;
 }
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -362,7 +406,9 @@
     List* item = (List*)[self.fetchedResultsController objectAtIndexPath:path];
     
     item.text = @"";
-    
+
+    [self saveContext];
+
     return true;
 }
 @end

@@ -8,21 +8,9 @@
 
 #import "LLListItemsViewController.h"
 
-#define STACK_CTRL_HEIGHT 47
-
-@interface LLListItemsViewController ()
-
-typedef enum {
-	AutoscrollStatusCellInBetween,
-	AutoscrollStatusCellAtTop,
-	AutoscrollStatusCellAtBottom
-} AutoscrollStatus;
-
-@end
 
 @implementation LLListItemsViewController
 
-@synthesize pullToInsertItemView = _pullToInsertItemView;
 @synthesize currentList = m_currentList;
 
 - (id)init
@@ -30,26 +18,29 @@ typedef enum {
     self = [super init];
     if (!self)
         return nil;
-    
-    _pullToInsertItemView = [[LLPullToInsertItemView alloc] initWithFrame: CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,
-																						 320.0f, self.view.bounds.size.height)];
-	[self.tableView addSubview:self.pullToInsertItemView];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(insertNewListItem)
-                                                 name:@"LLTableViewHitOutsideCell"
-                                               object:nil];
+
     return self;
 }
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-
-    CGRect frame = self.view.frame;
-
-    self.tableView = [[LLTableView alloc] initWithFrame:CGRectMake(BORDER_WIDTH,frame.origin.y,frame.size.width-2*BORDER_WIDTH,frame.size.height-BORDER_WIDTH)];
-    [self.view addSubview:self.tableView];
+-(void)viewDidLoad
+{
+    self.tableView = [[LLTableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
+//    [self.view addSubview:self.tableView];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+
+    [super viewDidLoad];
+
+    //    _pullToInsertItemView = [[LLPullToInsertItemView alloc] initWithFrame: CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,
+//                                                                                      320.0f, self.view.bounds.size.height)];
+//	[self.tableView addSubview:self.pullToInsertItemView];
+
+
+
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(insertNewListItem)
+//                                                 name:@"LLTableViewHitOutsideCell"
+//                                               object:nil];
+
 
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *butImage = [[UIImage imageNamed:@"lists_icon.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
@@ -70,6 +61,20 @@ typedef enum {
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    [self.tableView reloadData];
+
+    NSArray* relationship = [self.fetchedResultsController fetchedObjects];
+    if ([relationship count] == 0)
+    {
+        [self insertNewListItem];
+    }
+}
+
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     [self.tableView setEditing:editing animated:animated];
@@ -84,13 +89,17 @@ typedef enum {
     }
 }
 
+- (void) insertNewListItem
+{
+    [self insertNewListItemNamed:@""];
+}
 // Add a ListItem to the data store and to the tableview
--(void)insertNewListItem
+-(void)insertNewListItemNamed:(NSString *)name
 {
     ListItem *newItem = [NSEntityDescription
                          insertNewObjectForEntityForName:@"ListItem"
                          inManagedObjectContext:self.managedObjectContext];
-    newItem.text= @"New Item";
+    newItem.text= name;
     NSArray* relationship = [self.fetchedResultsController fetchedObjects];
         
     int maxID = 0;
@@ -103,48 +112,27 @@ typedef enum {
     [m_currentList addItemsObject:newItem];
     
     [self saveContext];
+
+    // give the new tableview cell textfield firstresponder status
+    NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
+    LLTableViewCell *cell = (LLTableViewCell*)[self.tableView cellForRowAtIndexPath:path];
+    [cell.textField becomeFirstResponder];
 }
 -(void)gotoBack:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
-#pragma mark UIScrollViewDelegate
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-	if ([self.pullToInsertItemView status] == kPullStatusLoading) return;
-	checkForRefresh = YES;  //  only check offset when dragging
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-	if ([self.pullToInsertItemView status] == kPullStatusLoading) return;
-	
-	if (checkForRefresh) {
-		if (scrollView.contentOffset.y > -kPullDownToReloadToggleHeight && scrollView.contentOffset.y < 0.0f) {
-			[self.pullToInsertItemView setStatus:kPullStatusPullDownToReload animated:YES];
-			
-		} else if (scrollView.contentOffset.y < -kPullDownToReloadToggleHeight) {
-			[self.pullToInsertItemView setStatus:kPullStatusReleaseToReload animated:YES];
-		}
-	}
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-	if ([self.pullToInsertItemView status] == kPullStatusLoading) return;
-	
-	if ([self.pullToInsertItemView status]==kPullStatusReleaseToReload) {
-//		[self.pullToInsertItemView startReloading:self.tableView animated:YES];
-		[self pullDownToReloadAction];
-	}
-	checkForRefresh = NO;
-}
-
-#pragma mark actions
-
--(void) pullDownToReloadAction {
-	NSLog(@"TODO: Overload this");
-}
 #pragma mark ------------------
 #pragma mark UITableView Data Source Methods
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
 -(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     NSUInteger fromIndex = sourceIndexPath.row;
     NSUInteger toIndex = destinationIndexPath.row;
@@ -202,6 +190,8 @@ typedef enum {
 
 
 - (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+
+    [super configureCell:cell atIndexPath:indexPath];
 
     ListItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
@@ -353,7 +343,7 @@ typedef enum {
     NSString *newStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
     
     item.text = newStr;
-    
+
     return true;
 }
 - (BOOL)textFieldShouldClear:(UITextField *)textField
@@ -362,6 +352,8 @@ typedef enum {
     ListItem* item = (ListItem*)[self.fetchedResultsController objectAtIndexPath:path];
     
     item.text = @"";
+
+    [self saveContext];
     
     return true;
 }

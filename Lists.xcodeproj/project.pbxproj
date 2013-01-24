@@ -21,7 +21,6 @@
 		23788B4F16AA2C1000C21460 /* LLMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B4E16AA2C1000C21460 /* LLMainView.m */; };
 		23788B5216AA2F7D00C21460 /* LLListItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B5116AA2F7D00C21460 /* LLListItemsViewController.m */; };
 		23788B6016ABA65300C21460 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23788B5E16ABA62F00C21460 /* QuartzCore.framework */; };
-		23788B6316ABA69C00C21460 /* LLPullToInsertItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B6216ABA69C00C21460 /* LLPullToInsertItemView.m */; };
 		23788B6C16ABAB9900C21460 /* LLReorderingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B6B16ABAB9800C21460 /* LLReorderingTableViewController.m */; };
 		23788B6F16AC5BA200C21460 /* LLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B6E16AC5BA200C21460 /* LLNavigationController.m */; };
 		23788B7216AC5CCE00C21460 /* LLListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B7116AC5CCD00C21460 /* LLListsViewController.m */; };
@@ -83,8 +82,6 @@
 		23788B5016AA2F7D00C21460 /* LLListItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLListItemsViewController.h; sourceTree = "<group>"; };
 		23788B5116AA2F7D00C21460 /* LLListItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLListItemsViewController.m; sourceTree = "<group>"; };
 		23788B5E16ABA62F00C21460 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		23788B6116ABA69C00C21460 /* LLPullToInsertItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLPullToInsertItemView.h; sourceTree = "<group>"; };
-		23788B6216ABA69C00C21460 /* LLPullToInsertItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLPullToInsertItemView.m; sourceTree = "<group>"; };
 		23788B6A16ABAB9800C21460 /* LLReorderingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLReorderingTableViewController.h; sourceTree = "<group>"; };
 		23788B6B16ABAB9800C21460 /* LLReorderingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLReorderingTableViewController.m; sourceTree = "<group>"; };
 		23788B6D16AC5BA200C21460 /* LLNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLNavigationController.h; sourceTree = "<group>"; };
@@ -201,8 +198,6 @@
 				23496BBC168B9AEA0082E3DF /* LLTableViewCell.m */,
 				23788B4D16AA2C1000C21460 /* LLMainView.h */,
 				23788B4E16AA2C1000C21460 /* LLMainView.m */,
-				23788B6116ABA69C00C21460 /* LLPullToInsertItemView.h */,
-				23788B6216ABA69C00C21460 /* LLPullToInsertItemView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -430,7 +425,6 @@
 				23788B4816A9051000C21460 /* LLTableView.m in Sources */,
 				23788B4F16AA2C1000C21460 /* LLMainView.m in Sources */,
 				23788B5216AA2F7D00C21460 /* LLListItemsViewController.m in Sources */,
-				23788B6316ABA69C00C21460 /* LLPullToInsertItemView.m in Sources */,
 				23788B6C16ABAB9900C21460 /* LLReorderingTableViewController.m in Sources */,
 				23788B6F16AC5BA200C21460 /* LLNavigationController.m in Sources */,
 				23788B7216AC5CCE00C21460 /* LLListsViewController.m in Sources */,

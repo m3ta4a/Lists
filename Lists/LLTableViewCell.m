@@ -23,6 +23,10 @@
     self.textField.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     self.textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.textField.textColor = [UIColor blackColor];
+
+    NSLog(@"%@", [UIFont familyNames]);
+
+    self.textLabel.font = [UIFont fontWithName:@"" size:10];
     
     [self addSubview:self.textField];
     

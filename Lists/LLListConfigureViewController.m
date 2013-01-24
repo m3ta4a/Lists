@@ -19,18 +19,16 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    if (!self)
+        return nil;
+
+        return self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     CGRect frame = self.view.frame;
-    
-	// Do any additional setup after loading the view.
     self.tableView = [[LLTableView alloc] initWithFrame:
                       CGRectMake(BORDER_WIDTH,
                                  frame.origin.y,
@@ -38,10 +36,12 @@
                                  frame.size.height-BORDER_WIDTH)
                                                   style:UITableViewStyleGrouped];
     [self.tableView
-            setSeparatorStyle:UITableViewCellSeparatorStyleSingleLineEtched];
-    [self.view addSubview:self.tableView];
+     setSeparatorStyle:UITableViewCellSeparatorStyleSingleLineEtched];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    [self.view addSubview:self.tableView];
+	// Do any additional setup after loading the view.
+  
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,14 +60,17 @@
     NSString *identifier = @"";
     
     switch (indexPath.section) {
-        case 0: // List Type
+        case ListTypeConfig: // List Type
             switch (indexPath.row) {
-                case 0: // Simple List
-                    
+                case SimpleList:                    
                     identifier = @"SimpleListCell";
-                    
                     break;
-                    
+                case ToDoList:
+                    identifier = @"ToDoListCell";
+                    break;
+                case OutlineList:
+                    identifier = @"OutlineListCell";
+                    break;
                 default:
                     break;
             }
@@ -83,21 +86,27 @@
         cell = [[LLTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     assert(cell != nil);
-    
+
+    cell.textField.enabled = NO;
+    cell.textField.hidden = YES;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.textField.delegate = self;
+
     switch (indexPath.section) {
-        case 0: // List Type
+        case ListTypeConfig: // List Type
+
+            cell.accessoryType = UITableViewCellAccessoryNone;
+
             switch (indexPath.row) {
-                case 0: // Simple List
-                    
-                    cell.textField.enabled = NO;
-                    cell.textField.hidden = YES;
+                case SimpleList:
                     cell.textLabel.text = @"Simple List";
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    
-                    cell.textField.delegate = self;
-                    
                     break;
-                    
+                case ToDoList:
+                    cell.textLabel.text = @"To Do List";
+                    break;
+                case OutlineList:
+                    cell.textLabel.text = @"Outline List";
+                    break;
                 default:
                     break;
             }
@@ -131,5 +140,37 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+}
+
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    switch (indexPath.section) {
+        case ListTypeConfig: // List Type
+
+            switch (indexPath.row) {
+                case SimpleList:
+                    [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section]].accessoryType = UITableViewCellAccessoryNone;
+                    [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+2 inSection:indexPath.section]].accessoryType = UITableViewCellAccessoryNone;
+                    break;
+                case ToDoList:
+                    [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section]].accessoryType = UITableViewCellAccessoryNone;
+                    [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section]].accessoryType = UITableViewCellAccessoryNone;
+                    break;
+                case OutlineList:
+                    [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row-2 inSection:indexPath.section]].accessoryType = UITableViewCellAccessoryNone;
+                    [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section]].accessoryType = UITableViewCellAccessoryNone;
+                    break;
+                default:
+                    break;
+            }
+            break;
+
+        default:
+            break;
+    }
 }
 @end

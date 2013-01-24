@@ -10,8 +10,6 @@
 #import "LLViewController.h"
 #import "LLListItemsViewController.h"
 #import "LLListConfigureViewController.h"
-#import "LLTableView.h"
-#import "LLTableViewCeLL.h"
 
 @interface LLListsViewController : LLViewController
 {
@@ -19,6 +17,7 @@
 }
 
 -(void)insertNewList;
+-(void)insertNewListNamed:(NSString*)name;
 -(void)enterConfigListMode:(UIButton*)sender;
 
 @end

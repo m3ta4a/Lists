@@ -7,22 +7,36 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 #import "LLReorderingTableViewController.h"
 #import "LLTableViewKeyboardDismisser.h"
 #import "List.h"
 #import "ListItem.h"
 #import "LLTableViewCell.h"
+#import "LLTableView.h"
 
-#define BORDER_WIDTH 7
 
-@interface LLViewController : LLReorderingTableViewController <UIScrollViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
+#define BORDER_WIDTH 0
+
+@interface LLViewController : LLReorderingTableViewController <UIScrollViewDelegate, UITextFieldDelegate, NSFetchedResultsControllerDelegate>
 {
     BOOL _userDrivenDataModelChange;
     NSManagedObjectContext *_managedObjectContext;
     NSFetchedResultsController *_fetchedResultsController;
     NSRange _last_range;
+    //    LLTableView *_tableView;
 }
 
+typedef enum{
+    ListTypeConfig
+} ConfigurationSection;
+typedef enum{
+    SimpleList,
+    ToDoList,
+    OutlineList
+} ListType;
+
+//@property (nonatomic, strong) LLTableView *tableView;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 

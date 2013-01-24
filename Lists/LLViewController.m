@@ -16,6 +16,7 @@
 
 @implementation LLViewController
 
+//@synthesize tableView = _tableView;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize fetchedResultsController = _fetchedResultsController;
 
@@ -35,41 +36,35 @@
     
     return self;
 }
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
-    CGRect frame = self.view.frame;
-    
-    UIImage *vert_strip = [UIImage imageNamed:@"blue_leather_vert_strip.png"];
-    UIImage *horiz_strip = [UIImage imageNamed:@"blue_leather_horiz_strip.png"];
-    
-    UIImageView* blockViewLeft = [[UIImageView alloc] initWithImage:vert_strip];
-    blockViewLeft.frame = CGRectMake(0,
-                                 frame.origin.y,
-                                 BORDER_WIDTH,
-                                 frame.size.height);
-    
-    UIImageView* blockViewRight = [[UIImageView alloc] initWithImage:vert_strip];
-    blockViewRight.frame = CGRectMake(self.view.frame.size.width-BORDER_WIDTH,
-                                     frame.origin.y,
-                                     BORDER_WIDTH,
-                                     frame.size.height);
-
-    UIImageView* blockViewBottom = [[UIImageView alloc] initWithImage:horiz_strip];
-    blockViewBottom.frame = CGRectMake(0,
-                                      frame.size.height-BORDER_WIDTH,
-                                      frame.size.width,
-                                      BORDER_WIDTH);
-
-    [self.view addSubview:blockViewLeft];
-    [self.view addSubview:blockViewRight];
-    [self.view addSubview:blockViewBottom];
-}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    [self.view addSubview:self.tableView];
+
+    CATransition* transition = [CATransition animation];
+    transition.duration = .15;
+    transition.type = kCATransitionPush;
+    transition.subtype = kCATransitionFromBottom;
+
+        [self.view.layer
+         addAnimation:transition forKey:kCATransition];
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+
+    [self.tableView removeFromSuperview];
+
 }
 - (void)refreshData:(NSNotification *)notif {
     [[self.fetchedResultsController managedObjectContext] mergeChangesFromContextDidSaveNotification:notif];
@@ -120,16 +115,6 @@
     NSUInteger numberOfObjects = [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
     return numberOfObjects;
 }
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return indexPath.row <= [[[self.fetchedResultsController sections] objectAtIndex:indexPath.section] numberOfObjects];
-}
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return indexPath.row <= [[[self.fetchedResultsController sections] objectAtIndex:indexPath.section] numberOfObjects];
-}
-
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
@@ -137,20 +122,31 @@
         // Delete the managed object for the given index path
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
         [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-        
-        // Save the context.
-        NSError *error = nil;
-        if (![context save:&error]) {
-            /*
-             Replace this implementation with code to handle the error appropriately.
-             
-             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-             */
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-        
+
+        [self saveContext];
     }
+}
+- (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    CGRect rect = cell.frame;
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    CGContextSetFillColorWithColor(context, [[UIColor grayColor] CGColor]);
+    CGContextFillRect(context, rect);
+
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:image];
+    
+}
+- (void)configureCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self configureCell:(LLTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+}
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return [[UIView alloc] initWithFrame:CGRectZero]; // empty footer prevents empty cells from drawing
 }
 #pragma ------------
 #pragma NSFetchedResultsController Delegate Methods
@@ -213,18 +209,10 @@
             break;
     }
 }
-
-- (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Subclasses of LLViewController must implement configureCell: atIndexPath:");
-}
-- (void)configureCellAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self configureCell:(LLTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-}
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    
+
     if (_userDrivenDataModelChange) return;
-    
+
     // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
     [self.tableView endUpdates];
 }
@@ -246,5 +234,7 @@
     
     [field resizeToFitTextExactly];
     [textField setNeedsDisplay];
+
+    [self saveContext];
 }
 @end

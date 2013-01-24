@@ -10,6 +10,8 @@
 #import "LLListsViewController.h"
 #import "LLListItemsViewController.h"
 
+#define ANIMATION_DURATION 0.5
+
 @interface LLNavigationController : UINavigationController
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
