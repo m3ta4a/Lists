@@ -53,7 +53,7 @@
 @end
 
 
-@interface LLReorderingTableViewController : UIViewController <UIGestureRecognizerDelegate, LLReorderingTableViewControllerDraggableIndicators>  {
+@interface LLReorderingTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, LLReorderingTableViewControllerDraggableIndicators>  {
 @protected
 	UIPanGestureRecognizer *dragGestureRecognizer;
 	UILongPressGestureRecognizer *longPressGestureRecognizer;

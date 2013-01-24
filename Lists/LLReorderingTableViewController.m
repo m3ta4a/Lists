@@ -791,7 +791,7 @@ typedef enum {
     
 	CGRect rectForIndexPath = [self.tableView rectForRowAtIndexPath:self.indexPathBelowDraggedCell];
     
-	BOOL hideDragIndicator = YES;
+	BOOL hideDragIndicator = NO;
 	if( [self.dragDelegate respondsToSelector:@selector(dragTableViewController:shouldHideDraggableIndicatorForDraggingToRow:)] )
 		hideDragIndicator = [self.dragDelegate dragTableViewController:self shouldHideDraggableIndicatorForDraggingToRow:blankIndexPath];
     
