@@ -39,6 +39,8 @@
      setSeparatorStyle:UITableViewCellSeparatorStyleSingleLineEtched];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.backgroundView= nil;
     [self.view addSubview:self.tableView];
 	// Do any additional setup after loading the view.
   
@@ -52,13 +54,14 @@
 #pragma mark ------------------
 #pragma mark UITableView Data Source Methods
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LLTableViewCell *cell;
+    UITableViewCell *cell;
     
     assert(tv == self.tableView);
     assert(indexPath != nil);
     
     NSString *identifier = @"";
-    
+
+    // Get the right identifier
     switch (indexPath.section) {
         case ListTypeConfig: // List Type
             switch (indexPath.row) {
@@ -81,17 +84,40 @@
     }
     
     cell = [self.tableView dequeueReusableCellWithIdentifier:identifier];
-    
+
+
+    // Then get the right cell, if we must
     if (cell == nil) {
-        cell = [[LLTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        switch (indexPath.section) {
+            case ListTypeConfig: // List Type
+                switch (indexPath.row) {
+                    case SimpleList:
+                        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+                        break;
+                    case ToDoList:
+                        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+                        break;
+                    case OutlineList:
+                        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+                        break;
+                    default:
+                        break;
+                }
+                break;
+                
+            default:
+                break;
+        }
     }
+
+    // and make sure we got a cell
     assert(cell != nil);
 
-    cell.textField.enabled = NO;
-    cell.textField.hidden = YES;
+    // no config cells need these settings
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textField.delegate = self;
 
+
+    // Now we've verified and set common settings, set unique ones
     switch (indexPath.section) {
         case ListTypeConfig: // List Type
 
@@ -100,12 +126,15 @@
             switch (indexPath.row) {
                 case SimpleList:
                     cell.textLabel.text = @"Simple List";
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
                     break;
                 case ToDoList:
                     cell.textLabel.text = @"To Do List";
+                    cell.accessoryType = UITableViewCellAccessoryNone;
                     break;
                 case OutlineList:
                     cell.textLabel.text = @"Outline List";
+                    cell.accessoryType = UITableViewCellAccessoryNone;
                     break;
                 default:
                     break;

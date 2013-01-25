@@ -24,22 +24,14 @@
     self.textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.textField.textColor = [UIColor blackColor];
 
-    NSLog(@"%@", [UIFont familyNames]);
-
-    self.textLabel.font = [UIFont fontWithName:@"" size:10];
-    
     [self addSubview:self.textField];
-    
-    self.editingAccessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+
+
+    // Don't use textLabel, use textField (editable)
+    self.textLabel.hidden = YES;
+    self.textLabel.enabled = NO;
     
     return self;
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-
 }
 
 - (void)resizeToFitTextExactly {
@@ -55,5 +47,27 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return NO;
+}
+
+-(void)drawRect:(CGRect)rect
+{
+    float f = 199.0/255.0;
+    float t = 215.0/255.0;
+    CGFloat colors [] = {
+        t, t, t, 1.0,
+        f, f, f, 1.0
+    };
+
+    CGColorSpaceRef baseSpace = CGColorSpaceCreateDeviceRGB();
+    CGGradientRef gradient = CGGradientCreateWithColorComponents(baseSpace, colors, NULL, 2);
+    CGColorSpaceRelease(baseSpace), baseSpace = NULL;
+
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    CGPoint startPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMinY(rect));
+    CGPoint endPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMaxY(rect));
+
+    CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
+    CGGradientRelease(gradient), gradient = NULL;
 }
 @end

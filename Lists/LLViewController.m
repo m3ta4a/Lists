@@ -56,8 +56,8 @@
     transition.type = kCATransitionPush;
     transition.subtype = kCATransitionFromBottom;
 
-        [self.view.layer
-         addAnimation:transition forKey:kCATransition];
+    //        [self.view.layer
+    //         addAnimation:transition forKey:kCATransition];
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
@@ -83,6 +83,11 @@
         abort();
     }
 }
++(bool)deviceHasRetinaDisplay
+{
+    return ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
+            ([UIScreen mainScreen].scale == 2.0));
+}
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     UIInterfaceOrientation orientation = toInterfaceOrientation;
@@ -104,10 +109,6 @@
 #pragma mark -------
 #pragma mark TableView Delegate Methods
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = [UIColor colorWithRed:.84
-                                           green:.84
-                                            blue:.84
-                                           alpha:0.17];
 }
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {

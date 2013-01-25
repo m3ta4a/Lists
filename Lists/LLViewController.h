@@ -45,4 +45,6 @@ typedef enum{
 - (void)refreshData:(NSNotification *)notif;
 - (void)saveContext;
 
++ (bool)deviceHasRetinaDisplay;
+
 @end

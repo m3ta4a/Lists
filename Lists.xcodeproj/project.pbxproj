@@ -31,12 +31,15 @@
 		23788B6F16AC5BA200C21460 /* LLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B6E16AC5BA200C21460 /* LLNavigationController.m */; };
 		23788B7216AC5CCE00C21460 /* LLListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B7116AC5CCD00C21460 /* LLListsViewController.m */; };
 		23788B7516AC698400C21460 /* LLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B7416AC698400C21460 /* LLViewController.m */; };
-		239C61D216ACEF7900E5880A /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 239C61D116ACEF7900E5880A /* bg.png */; };
 		239C61D716AD03B100E5880A /* lists_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 239C61D616AD03B100E5880A /* lists_icon.png */; };
 		239C61DF16ADFDD300E5880A /* config_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 239C61DE16ADFDD300E5880A /* config_icon.png */; };
 		239C61E116AE000E00E5880A /* config_icon_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 239C61E016AE000E00E5880A /* config_icon_on.png */; };
 		239C61E416AE057900E5880A /* LLListConfigureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 239C61E316AE057900E5880A /* LLListConfigureViewController.m */; };
 		23A4F562168D5C38003D7DCC /* AddRow.png in Resources */ = {isa = PBXBuildFile; fileRef = 23A4F561168D5C38003D7DCC /* AddRow.png */; };
+		23EA30F116B24E3200EA9158 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23EA30F016B24E3200EA9158 /* AudioToolbox.framework */; };
+		23EA30F716B257FD00EA9158 /* nav_header.png in Resources */ = {isa = PBXBuildFile; fileRef = 23EA30F516B257FD00EA9158 /* nav_header.png */; };
+		23EA30F816B257FD00EA9158 /* nav_header@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23EA30F616B257FD00EA9158 /* nav_header@2x.png */; };
+		23EA30FA16B25F4700EA9158 /* dark_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23EA30F916B25F4700EA9158 /* dark_background@2x.png */; };
 		23F681ED1693CE12006FA9C4 /* LLTableViewKeyboardDismisser.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F681EC1693CE12006FA9C4 /* LLTableViewKeyboardDismisser.m */; };
 		23FEBBB2168B87A600872565 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FEBBB1168B87A600872565 /* UIKit.framework */; };
 		23FEBBB4168B87A600872565 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FEBBB3168B87A600872565 /* Foundation.framework */; };
@@ -99,13 +102,16 @@
 		23788B7116AC5CCD00C21460 /* LLListsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLListsViewController.m; sourceTree = "<group>"; };
 		23788B7316AC698300C21460 /* LLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLViewController.h; sourceTree = "<group>"; };
 		23788B7416AC698400C21460 /* LLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLViewController.m; sourceTree = "<group>"; };
-		239C61D116ACEF7900E5880A /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		239C61D616AD03B100E5880A /* lists_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lists_icon.png; sourceTree = "<group>"; };
 		239C61DE16ADFDD300E5880A /* config_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = config_icon.png; sourceTree = "<group>"; };
 		239C61E016AE000E00E5880A /* config_icon_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = config_icon_on.png; sourceTree = "<group>"; };
 		239C61E216AE057800E5880A /* LLListConfigureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLListConfigureViewController.h; sourceTree = "<group>"; };
 		239C61E316AE057900E5880A /* LLListConfigureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLListConfigureViewController.m; sourceTree = "<group>"; };
 		23A4F561168D5C38003D7DCC /* AddRow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddRow.png; sourceTree = "<group>"; };
+		23EA30F016B24E3200EA9158 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		23EA30F516B257FD00EA9158 /* nav_header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_header.png; sourceTree = "<group>"; };
+		23EA30F616B257FD00EA9158 /* nav_header@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_header@2x.png"; sourceTree = "<group>"; };
+		23EA30F916B25F4700EA9158 /* dark_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_background@2x.png"; sourceTree = "<group>"; };
 		23F681EB1693CE12006FA9C4 /* LLTableViewKeyboardDismisser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLTableViewKeyboardDismisser.h; sourceTree = "<group>"; };
 		23F681EC1693CE12006FA9C4 /* LLTableViewKeyboardDismisser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLTableViewKeyboardDismisser.m; sourceTree = "<group>"; };
 		23FEBBAD168B87A600872565 /* Lists.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lists.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,6 +140,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23EA30F116B24E3200EA9158 /* AudioToolbox.framework in Frameworks */,
 				23378F3D1690ECB400EDE48D /* CoreData.framework in Frameworks */,
 				23FEBBB2168B87A600872565 /* UIKit.framework in Frameworks */,
 				23788B6016ABA65300C21460 /* QuartzCore.framework in Frameworks */,
@@ -238,6 +245,7 @@
 		23FEBBB0168B87A600872565 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				23EA30F016B24E3200EA9158 /* AudioToolbox.framework */,
 				23788B5E16ABA62F00C21460 /* QuartzCore.framework */,
 				23378F3C1690ECB400EDE48D /* CoreData.framework */,
 				23FEBBB1168B87A600872565 /* UIKit.framework */,
@@ -268,9 +276,11 @@
 				232FD7E616B221EA0030AED5 /* AddRow@2x.png */,
 				239C61D616AD03B100E5880A /* lists_icon.png */,
 				232FD7ED16B2240E0030AED5 /* lists_icon@2x.png */,
+				23EA30F916B25F4700EA9158 /* dark_background@2x.png */,
 				2342D77E16B22AE600897991 /* background.png */,
 				2342D77F16B22AE600897991 /* background@2x.png */,
-				239C61D116ACEF7900E5880A /* bg.png */,
+				23EA30F516B257FD00EA9158 /* nav_header.png */,
+				23EA30F616B257FD00EA9158 /* nav_header@2x.png */,
 				231CF392E816FFBBCE3E4D42 /* Localizable.strings */,
 				23FEBBB9168B87A600872565 /* Lists-Info.plist */,
 				23FEBBBA168B87A600872565 /* InfoPlist.strings */,
@@ -382,7 +392,6 @@
 				23FEBBC8168B87A600872565 /* Default-568h@2x.png in Resources */,
 				231CF7888BD4E44E2C22D3C8 /* Localizable.strings in Resources */,
 				23A4F562168D5C38003D7DCC /* AddRow.png in Resources */,
-				239C61D216ACEF7900E5880A /* bg.png in Resources */,
 				239C61D716AD03B100E5880A /* lists_icon.png in Resources */,
 				239C61DF16ADFDD300E5880A /* config_icon.png in Resources */,
 				239C61E116AE000E00E5880A /* config_icon_on.png in Resources */,
@@ -392,6 +401,9 @@
 				232FD7EE16B2240E0030AED5 /* lists_icon@2x.png in Resources */,
 				2342D78016B22AE600897991 /* background.png in Resources */,
 				2342D78116B22AE600897991 /* background@2x.png in Resources */,
+				23EA30F716B257FD00EA9158 /* nav_header.png in Resources */,
+				23EA30F816B257FD00EA9158 /* nav_header@2x.png in Resources */,
+				23EA30FA16B25F4700EA9158 /* dark_background@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,6 +561,7 @@
 				GCC_PREFIX_HEADER = "Lists/Lists-Prefix.pch";
 				INFOPLIST_FILE = "Lists/Lists-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -560,6 +573,7 @@
 				GCC_PREFIX_HEADER = "Lists/Lists-Prefix.pch";
 				INFOPLIST_FILE = "Lists/Lists-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

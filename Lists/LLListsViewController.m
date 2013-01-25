@@ -47,13 +47,6 @@
     NSString *configIconImgFile = @"config_icon.png";
     NSString *configIconONImgFile = @"config_icon_on.png";
 
-    if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
-        ([UIScreen mainScreen].scale == 2.0)) {
-        addRowImgFile = @"AddRow@2x.png";
-        configIconImgFile = @"config_icon@2x.png";
-        configIconONImgFile = @"config_icon_on@2x.png";
-    }
-
     UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *addImage = [[UIImage imageNamed:addRowImgFile] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
     [addButton setBackgroundImage:addImage forState:UIControlStateNormal];
@@ -132,12 +125,10 @@
         [sender setSelected:NO];
         configToggle = NO;
         self.navigationItem.rightBarButtonItem.enabled = YES;
-        [self.tableView setEditing:NO animated:YES];
     } else {
         [sender setSelected:YES];
         configToggle = YES;
         self.navigationItem.rightBarButtonItem.enabled = NO;
-        [self.tableView setEditing:YES animated:YES];
     }
     [self.tableView reloadData];
 }
@@ -177,44 +168,15 @@
 
     int toObjectDisplayOrder =  [[toObject valueForKey:@"listID"] integerValue];
     int fromObjectDisplayOrder =  [[movingObject valueForKey:@"listID"] integerValue];
-    
-//    double newIndex;
-//
-//    if ( fromIndex > toIndex ) { // Moving up
-//        if ( toIndex == count - 1 ) {
-//            newIndex = toObjectDisplayOrder + 1.0;
-//        } else  {
-//            NSManagedObject *object = [self.fetchedResultsController.fetchedObjects objectAtIndex:toIndex+1];
-//            double objectDisplayOrder = [[object valueForKey:@"listID"] doubleValue];
-//            
-//            newIndex = toObjectDisplayOrder + (objectDisplayOrder - toObjectDisplayOrder) / 2.0;
-//        }
-//        
-//    } else {
-//        // moving down
-//        
-//        if ( toIndex == 0) {
-//            // toObject == last object
-//            newIndex = toObjectDisplayOrder - 1.0;
-//            
-//        } else {
-//            
-//            NSManagedObject *object = [self.fetchedResultsController.fetchedObjects objectAtIndex:toIndex-1];
-//            double objectDisplayOrder = [[object valueForKey:@"listID"] doubleValue];
-//            
-//            newIndex = objectDisplayOrder + (toObjectDisplayOrder - objectDisplayOrder) / 2.0;
-//            
-//        }
-//    }
 
     [movingObject setValue:[NSNumber numberWithInteger:toObjectDisplayOrder] forKey:@"listID"];
     [toObject setValue:[NSNumber numberWithInteger:fromObjectDisplayOrder] forKey:@"listID"];
-    
-    //    _userDrivenDataModelChange = YES;
-    
+
+    _userDrivenDataModelChange = YES;
+
     [self saveContext];
     
-//    _userDrivenDataModelChange = NO;
+    _userDrivenDataModelChange = NO;
 
     // update with a short delay the moved cell
     [self performSelector:(@selector(configureCellAtIndexPath:)) withObject:(sourceIndexPath) afterDelay:0.2];
@@ -234,18 +196,18 @@
     List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     cell.textField.text = [NSString stringWithFormat:@"%@", list.text];
-    
-    [cell resizeToFitTextExactly];
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
     if (configToggle)
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.textField.font = [UIFont italicSystemFontOfSize:[UIFont systemFontSize]];
     else
-        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.textField.font = [UIFont fontWithName:@"Helvetica" size:[UIFont systemFontSize]];
+
+    [cell resizeToFitTextExactly];
+
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     cell.textField.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
-
     cell.textField.delegate = self;
 }
 
@@ -360,6 +322,22 @@
 }
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+
+//    // ivar
+//    SystemSoundID mBeep;
+//
+//    // Create the sound ID
+//    NSString* path = [[NSBundle mainBundle]
+//                      pathForResource:@"Beep" ofType:@"aiff"];
+//    NSURL* url = [NSURL fileURLWithPath:path];
+//    AudioServicesCreateSystemSoundID((__bridge CFURLRef)url, &mBeep);
+//
+//    // Play the sound
+//    AudioServicesPlaySystemSound(mBeep);
+//
+//    // Dispose of the sound
+//    AudioServicesDisposeSystemSoundID(mBeep);
+
     if (!configToggle)
     {
         LLListItemsViewController *vc = [[LLListItemsViewController alloc] init];
@@ -381,7 +359,6 @@
         vc.title = list.text;
         
         [self.navigationController pushViewController:vc animated:YES];
-
     }
 }
 

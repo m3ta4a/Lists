@@ -51,12 +51,6 @@
     NSString *addRowImgFile = @"AddRow.png";
     NSString *listsIconImgFile = @"lists_icon.png";
 
-    if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
-        ([UIScreen mainScreen].scale == 2.0)) {
-        addRowImgFile = @"AddRow@2x.png";
-        listsIconImgFile = @"lists_icon@2x.png";
-    }
-
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *butImage = [[UIImage imageNamed:listsIconImgFile] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
     [button setBackgroundImage:butImage forState:UIControlStateNormal];

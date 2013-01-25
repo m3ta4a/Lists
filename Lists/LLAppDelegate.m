@@ -30,28 +30,14 @@
     
     LLListsViewController *listsVC = [[LLListsViewController alloc] init];
     listsVC.managedObjectContext = context;
-    
-//    
-//    // See whether we need to create a first list
-//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-//    NSEntityDescription *entity = [NSEntityDescription entityForName:@"List"
-//                                              inManagedObjectContext:context];
-//    [fetchRequest setEntity:entity];
-//    
-//    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"listID" ascending:NO];
-//    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
-//    [fetchRequest setFetchBatchSize:20];
-//
-//    NSError *error;
-//    NSArray *results = [context executeFetchRequest:fetchRequest error:&error];
-//    if ([results count] == 0)
-//        [listsVC insertNewListNamed:@"New List"];
 
     LLNavigationController *nav = [[LLNavigationController alloc] initWithRootViewController:listsVC];
     nav.managedObjectContext = context;
-    
+
+    NSString *navViewFilename = @"nav_header.png";
+
     if([UINavigationBar respondsToSelector:@selector(appearance)]){
-        UIImage *image = [UIImage imageNamed:@"bg.png"];
+        UIImage *image = [UIImage imageNamed:navViewFilename];
         [[UINavigationBar appearance] setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
     }
         
