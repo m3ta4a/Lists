@@ -100,6 +100,19 @@
     
     //    [self.header deviceOrientationDidChange:screenWidth];
 }
+
+#pragma mark -------
+#pragma mark TableView Delegate Methods
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor colorWithRed:.84
+                                           green:.84
+                                            blue:.84
+                                           alpha:0.17];
+}
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleDelete;
+}
 #pragma mark ------------------
 #pragma mark UITableView Data Source Methods
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{

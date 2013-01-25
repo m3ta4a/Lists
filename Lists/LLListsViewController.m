@@ -12,7 +12,6 @@
 @interface LLListsViewController ()
 {
     bool configToggle;
-    NSIndexPath *_fromIndex;
 }
 
 @end
@@ -37,14 +36,26 @@
 //    [self.view addSubview:self.tableView];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.allowsSelectionDuringEditing = YES;
 
     // Table View must be loaded for reordering TVController
     [super viewDidLoad];
 
     self.title = @"Lists";
 
+    NSString *addRowImgFile = @"AddRow.png";
+    NSString *configIconImgFile = @"config_icon.png";
+    NSString *configIconONImgFile = @"config_icon_on.png";
+
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
+        ([UIScreen mainScreen].scale == 2.0)) {
+        addRowImgFile = @"AddRow@2x.png";
+        configIconImgFile = @"config_icon@2x.png";
+        configIconONImgFile = @"config_icon_on@2x.png";
+    }
+
     UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *addImage = [[UIImage imageNamed:@"AddRow.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
+    UIImage *addImage = [[UIImage imageNamed:addRowImgFile] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
     [addButton setBackgroundImage:addImage forState:UIControlStateNormal];
     [addButton addTarget:self action:@selector(insertNewList) forControlEvents:UIControlEventTouchUpInside];
     addButton.frame = CGRectMake(0, 0, 30, 30);
@@ -52,8 +63,8 @@
     self.navigationItem.rightBarButtonItem = addButtonItem;
     
     UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *editImage = [[UIImage imageNamed:@"config_icon.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
-    UIImage *editImageOn = [[UIImage imageNamed:@"config_icon_on.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
+    UIImage *editImage = [[UIImage imageNamed:configIconImgFile] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
+    UIImage *editImageOn = [[UIImage imageNamed:configIconONImgFile] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
     [editButton setBackgroundImage:editImage forState:UIControlStateNormal];
     [editButton setBackgroundImage:editImageOn forState:UIControlStateSelected];
     [editButton addTarget:self action:@selector(enterConfigListMode:) forControlEvents:UIControlEventTouchUpInside];
@@ -121,20 +132,21 @@
         [sender setSelected:NO];
         configToggle = NO;
         self.navigationItem.rightBarButtonItem.enabled = YES;
+        [self.tableView setEditing:NO animated:YES];
     } else {
         [sender setSelected:YES];
         configToggle = YES;
         self.navigationItem.rightBarButtonItem.enabled = NO;
+        [self.tableView setEditing:YES animated:YES];
     }
     [self.tableView reloadData];
 }
 - (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController didBeginDraggingAtRow:(NSIndexPath *)dragRow
 {
-    _fromIndex = dragRow;
 }
 - (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController willEndDraggingToRow:(NSIndexPath *)destinationIndexPath
 {
-    [self tableView:dragTableViewController.tableView moveRowAtIndexPath:_fromIndex toIndexPath:destinationIndexPath];
+
 }
 - (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController didEndDraggingToRow:(NSIndexPath *)destinationIndexPath
 {
@@ -142,7 +154,7 @@
 }
 - (BOOL)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController shouldHideDraggableIndicatorForDraggingToRow:(NSIndexPath *)destinationIndexPath
 {
-    return YES;
+    return NO;
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -158,52 +170,54 @@
     
     if (fromIndex == toIndex) return;
     
-    NSUInteger count = [self.fetchedResultsController.fetchedObjects count];
+    //    NSUInteger count = [self.fetchedResultsController.fetchedObjects count];
     
     NSManagedObject *movingObject = [self.fetchedResultsController.fetchedObjects objectAtIndex:fromIndex];
-    
     NSManagedObject *toObject  = [self.fetchedResultsController.fetchedObjects objectAtIndex:toIndex];
-    double toObjectDisplayOrder =  [[toObject valueForKey:@"listID"] doubleValue];
+
+    int toObjectDisplayOrder =  [[toObject valueForKey:@"listID"] integerValue];
+    int fromObjectDisplayOrder =  [[movingObject valueForKey:@"listID"] integerValue];
     
-    double newIndex;
-    if ( fromIndex < toIndex ) {
-        // moving up
-        if (toIndex == count-1) {
-            // toObject == last object
-            newIndex = toObjectDisplayOrder + 1.0;
-        } else  {
-            NSManagedObject *object = [self.fetchedResultsController.fetchedObjects objectAtIndex:toIndex+1];
-            double objectDisplayOrder = [[object valueForKey:@"listID"] doubleValue];
-            
-            newIndex = toObjectDisplayOrder + (objectDisplayOrder - toObjectDisplayOrder) / 2.0;
-        }
-        
-    } else {
-        // moving down
-        
-        if ( toIndex == 0) {
-            // toObject == last object
-            newIndex = toObjectDisplayOrder - 1.0;
-            
-        } else {
-            
-            NSManagedObject *object = [self.fetchedResultsController.fetchedObjects objectAtIndex:toIndex-1];
-            double objectDisplayOrder = [[object valueForKey:@"listID"] doubleValue];
-            
-            newIndex = objectDisplayOrder + (toObjectDisplayOrder - objectDisplayOrder) / 2.0;
-            
-        }
-    }
+//    double newIndex;
+//
+//    if ( fromIndex > toIndex ) { // Moving up
+//        if ( toIndex == count - 1 ) {
+//            newIndex = toObjectDisplayOrder + 1.0;
+//        } else  {
+//            NSManagedObject *object = [self.fetchedResultsController.fetchedObjects objectAtIndex:toIndex+1];
+//            double objectDisplayOrder = [[object valueForKey:@"listID"] doubleValue];
+//            
+//            newIndex = toObjectDisplayOrder + (objectDisplayOrder - toObjectDisplayOrder) / 2.0;
+//        }
+//        
+//    } else {
+//        // moving down
+//        
+//        if ( toIndex == 0) {
+//            // toObject == last object
+//            newIndex = toObjectDisplayOrder - 1.0;
+//            
+//        } else {
+//            
+//            NSManagedObject *object = [self.fetchedResultsController.fetchedObjects objectAtIndex:toIndex-1];
+//            double objectDisplayOrder = [[object valueForKey:@"listID"] doubleValue];
+//            
+//            newIndex = objectDisplayOrder + (toObjectDisplayOrder - objectDisplayOrder) / 2.0;
+//            
+//        }
+//    }
+
+    [movingObject setValue:[NSNumber numberWithInteger:toObjectDisplayOrder] forKey:@"listID"];
+    [toObject setValue:[NSNumber numberWithInteger:fromObjectDisplayOrder] forKey:@"listID"];
     
-    [movingObject setValue:[NSNumber numberWithDouble:newIndex] forKey:@"listID"];
-    
-    _userDrivenDataModelChange = YES;
+    //    _userDrivenDataModelChange = YES;
     
     [self saveContext];
     
-    _userDrivenDataModelChange = NO;
-    
+//    _userDrivenDataModelChange = NO;
+
     // update with a short delay the moved cell
+    [self performSelector:(@selector(configureCellAtIndexPath:)) withObject:(sourceIndexPath) afterDelay:0.2];
     [self performSelector:(@selector(configureCellAtIndexPath:)) withObject:(destinationIndexPath) afterDelay:0.2];
 }
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
@@ -317,12 +331,6 @@
 #pragma mark TableView Delegate Methods
 // Display customization
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = [UIColor colorWithRed:.7
-                                           green:.7
-                                            blue:.7
-                                           alpha:0.0];
-}
 // Accessories (disclosures).
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
@@ -375,13 +383,6 @@
         [self.navigationController pushViewController:vc animated:YES];
 
     }
-}
-
-// Editing
-
-// Allows customization of the editingStyle for a particular cell located at 'indexPath'. If not implemented, all editable cells will have UITableViewCellEditingStyleDelete set for them when the table has editing property set to YES.
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return UITableViewCellEditingStyleDelete;
 }
 
 // The willBegin/didEnd methods are called whenever the 'editing' property is automatically changed by the table (allowing insert/delete/move). This is done by a swipe activating a single row

@@ -21,7 +21,15 @@
     if (!self)
         return nil;
 
-    background = [UIImage imageNamed:@"tableViewBG.png"];
+
+    NSString * backgroundFileName = @"background.png";
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
+        ([UIScreen mainScreen].scale == 2.0)) {
+        backgroundFileName = @"background@2x.png";
+    }
+
+    background = [UIImage imageNamed:backgroundFileName];
+
 
     if (style == UITableViewStyleGrouped)
         self.backgroundView = [[UIImageView alloc] initWithImage:background];

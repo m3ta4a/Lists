@@ -36,7 +36,7 @@
 
     [super viewDidLoad];
 
-    //    _pullToInsertItemView = [[LLPullToInsertItemView alloc] initWithFrame: CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,
+//    _pullToInsertItemView = [[LLPullToInsertItemView alloc] initWithFrame: CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,
 //                                                                                      320.0f, self.view.bounds.size.height)];
 //	[self.tableView addSubview:self.pullToInsertItemView];
 
@@ -48,8 +48,17 @@
 //                                               object:nil];
 
 
+    NSString *addRowImgFile = @"AddRow.png";
+    NSString *listsIconImgFile = @"lists_icon.png";
+
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
+        ([UIScreen mainScreen].scale == 2.0)) {
+        addRowImgFile = @"AddRow@2x.png";
+        listsIconImgFile = @"lists_icon@2x.png";
+    }
+
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *butImage = [[UIImage imageNamed:@"lists_icon.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    UIImage *butImage = [[UIImage imageNamed:listsIconImgFile] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
     [button setBackgroundImage:butImage forState:UIControlStateNormal];
     [button addTarget:self action:@selector(gotoBack:) forControlEvents:UIControlEventTouchUpInside];
     button.frame = CGRectMake(0, 0, 30, 30);
@@ -57,7 +66,7 @@
     self.navigationItem.leftBarButtonItem = backButton;
 
     UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *addImage = [[UIImage imageNamed:@"AddRow.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    UIImage *addImage = [[UIImage imageNamed:addRowImgFile] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
     [addButton setBackgroundImage:addImage forState:UIControlStateNormal];
     [addButton addTarget:self action:@selector(insertNewListItem) forControlEvents:UIControlEventTouchUpInside];
     addButton.frame = CGRectMake(0, 0, 30, 30);
@@ -293,16 +302,6 @@
     return _fetchedResultsController;
 }
 
-#pragma mark -------
-#pragma mark TableView Delegate Methods
-// Display customization
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = [UIColor colorWithRed:.7
-                                           green:.7
-                                            blue:.7
-                                           alpha:0.0];
-}
 // Accessories (disclosures).
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
