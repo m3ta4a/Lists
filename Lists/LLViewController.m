@@ -52,19 +52,18 @@
     [self.view addSubview:self.tableView];
 
     CATransition* transition = [CATransition animation];
-    transition.duration = .15;
-    transition.type = kCATransitionPush;
+    transition.duration = .21;
+    transition.type = kCATransitionReveal;
     transition.subtype = kCATransitionFromBottom;
 
-    //        [self.view.layer
-    //         addAnimation:transition forKey:kCATransition];
+    [self.view.layer
+       addAnimation:transition forKey:kCATransition];
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
 
     [self.tableView removeFromSuperview];
-
 }
 - (void)refreshData:(NSNotification *)notif {
     [[self.fetchedResultsController managedObjectContext] mergeChangesFromContextDidSaveNotification:notif];

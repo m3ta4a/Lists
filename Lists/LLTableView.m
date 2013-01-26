@@ -33,12 +33,13 @@
 {
     [super drawRect:rect];
     //    [background drawInRect:rect];
-    // Create a gradient from white to red
-    float f = 139.0/255.0;
-    float t = 229.0/255.0;
+
+    float t = 229.0/255.0; // top
+    float b = 139.0/255.0; // bottom
+    float a = 1.0; // alpha
     CGFloat colors [] = {
-        t, t, t, 1.0,
-        f, f, f, 1.0
+        t, t, t, a,
+        b, b, b, a
     };
 
     CGColorSpaceRef baseSpace = CGColorSpaceCreateDeviceRGB();

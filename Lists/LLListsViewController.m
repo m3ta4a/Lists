@@ -18,6 +18,8 @@
 
 @implementation LLListsViewController
 
+@synthesize headerView = _headerView;
+
 - (id)init
 {
     self = [super init];
@@ -26,12 +28,32 @@
 
     self.dragDelegate = self;
 
+    UITableViewCell *header_view = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"app_config_identifier"];
+    CGRect frame = header_view.frame;
+    frame.size.height = 0; // hi
+    header_view.frame = frame;
+    header_view.textLabel.text = @"App Settings";
+    header_view.textLabel.font = [UIFont boldSystemFontOfSize:15.0];
+    header_view.backgroundColor = [UIColor whiteColor];
+    header_view.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(configureAppSettings)];
+    tap.numberOfTapsRequired = 1;
+    [header_view addGestureRecognizer:tap];
+
+    self.headerView = header_view;
+    
+    [self.view addSubview:self.headerView];
+
+
     configToggle = NO;
     
     return self;
 }
 - (void)viewDidLoad
 {
+    
+
     self.tableView = [[LLTableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
 //    [self.view addSubview:self.tableView];
     self.tableView.dataSource = self;
@@ -83,7 +105,15 @@
         [self insertNewList];
     }
 }
+-(void)configureAppSettings
+{
+    LLListConfigureViewController *vc = [[LLListConfigureViewController alloc] init];
 
+    vc.managedObjectContext = self.managedObjectContext;
+
+    [self.navigationController pushViewController:vc animated:YES];
+
+}
 -(void)insertNewList
 {
     [self insertNewListNamed:@""];
@@ -125,11 +155,43 @@
         [sender setSelected:NO];
         configToggle = NO;
         self.navigationItem.rightBarButtonItem.enabled = YES;
-    } else {
+
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.headerView cache:YES];
+        [UIView setAnimationDuration:.3];
+
+        CGRect frame = [self.headerView frame];
+        frame.size.height = 0;
+        [self.headerView setFrame:frame];
+
+        frame = self.tableView.frame;
+        frame.origin.y = frame.origin.y - 48;
+        frame.size.height = frame.size.height + 48;
+        self.tableView.frame = frame;
+
+        [UIView commitAnimations];
+    }
+    else {
         [sender setSelected:YES];
         configToggle = YES;
         self.navigationItem.rightBarButtonItem.enabled = NO;
+
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.headerView cache:YES];
+        [UIView setAnimationDuration:.3];
+
+        CGRect frame = [self.headerView frame];
+        frame.size.height = 48;
+        [self.headerView setFrame:frame];
+
+        frame = self.tableView.frame;
+        frame.origin.y = frame.origin.y + 48;
+        frame.size.height = frame.size.height - 48;
+        self.tableView.frame = frame;
+
+        [UIView commitAnimations];  
     }
+       
     [self.tableView reloadData];
 }
 - (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController didBeginDraggingAtRow:(NSIndexPath *)dragRow
@@ -192,14 +254,15 @@
 - (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
     [super configureCell:cell atIndexPath:indexPath];
-    
-    List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    cell.textField.text = [NSString stringWithFormat:@"%@", list.text];
+
+    // Italics for config mode
     if (configToggle)
         cell.textField.font = [UIFont italicSystemFontOfSize:[UIFont systemFontSize]];
     else
-        cell.textField.font = [UIFont fontWithName:@"Helvetica" size:[UIFont systemFontSize]];
+        cell.textField.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+
+    List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textField.text = [NSString stringWithFormat:@"%@", list.text];
 
     [cell resizeToFitTextExactly];
 
@@ -297,6 +360,10 @@
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 48;
 }
 
 // Selection

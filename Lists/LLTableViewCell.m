@@ -27,6 +27,12 @@
     [self addSubview:self.textField];
 
 
+
+    //    if (configToggle)
+    //  cell.textField.font = [UIFont italicSystemFontOfSize:[UIFont systemFontSize]];
+    //    else
+    self.textField.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+
     // Don't use textLabel, use textField (editable)
     self.textLabel.hidden = YES;
     self.textLabel.enabled = NO;
@@ -51,11 +57,12 @@
 
 -(void)drawRect:(CGRect)rect
 {
-    float f = 199.0/255.0;
-    float t = 215.0/255.0;
+    float t = 215.0/255.0; // top
+    float b = 199.0/255.0; // bottom
+    float a = 0.35; // alpha
     CGFloat colors [] = {
-        t, t, t, 1.0,
-        f, f, f, 1.0
+        t, t, t, a,
+        b, b, b, a
     };
 
     CGColorSpaceRef baseSpace = CGColorSpaceCreateDeviceRGB();

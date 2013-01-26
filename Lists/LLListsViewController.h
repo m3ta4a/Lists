@@ -14,11 +14,14 @@
 
 @interface LLListsViewController : LLViewController <LLReorderingTableViewControllerDelegate>
 {
-
+    UIView* _headerView;
 }
+
+@property (nonatomic, strong) UIView* headerView;
 
 -(void)insertNewList;
 -(void)insertNewListNamed:(NSString*)name;
 -(void)enterConfigListMode:(UIButton*)sender;
+-(void)configureAppSettings;
 
 @end

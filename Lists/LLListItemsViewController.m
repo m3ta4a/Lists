@@ -228,13 +228,11 @@
     [super configureCell:cell atIndexPath:indexPath];
 
     ListItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
     cell.textField.text = [NSString stringWithFormat:@"%@", item.text];
  
     [cell resizeToFitTextExactly];
     
     cell.textField.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
-
     cell.textField.delegate = self;
 }
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
