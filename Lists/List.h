@@ -16,6 +16,7 @@
 }
 
 @property (nonatomic, retain) NSNumber * listID;
+@property (nonatomic, retain) NSNumber * type;
 @property (nonatomic, retain) NSString * text;
 @property (nonatomic, retain) NSMutableSet *items;
 

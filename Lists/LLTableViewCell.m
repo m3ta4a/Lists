@@ -26,11 +26,6 @@
 
     [self addSubview:self.textField];
 
-
-
-    //    if (configToggle)
-    //  cell.textField.font = [UIFont italicSystemFontOfSize:[UIFont systemFontSize]];
-    //    else
     self.textField.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
 
     // Don't use textLabel, use textField (editable)

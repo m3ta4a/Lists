@@ -22,7 +22,9 @@
     if (!self)
         return nil;
 
-        return self;
+
+
+    return self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -122,19 +124,21 @@
         case ListTypeConfig: // List Type
 
             cell.accessoryType = UITableViewCellAccessoryNone;
-
             switch (indexPath.row) {
                 case SimpleList:
                     cell.textLabel.text = @"Simple List";
-                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                    if([self.currentList.type intValue]==SimpleList)
+                        cell.accessoryType = UITableViewCellAccessoryCheckmark;
                     break;
                 case ToDoList:
                     cell.textLabel.text = @"To Do List";
-                    cell.accessoryType = UITableViewCellAccessoryNone;
+                    if([self.currentList.type intValue]==ToDoList)
+                        cell.accessoryType = UITableViewCellAccessoryCheckmark;
                     break;
                 case OutlineList:
                     cell.textLabel.text = @"Outline List";
-                    cell.accessoryType = UITableViewCellAccessoryNone;
+                    if([self.currentList.type intValue]==OutlineList)
+                        cell.accessoryType = UITableViewCellAccessoryCheckmark;
                     break;
                 default:
                     break;
@@ -184,14 +188,17 @@
                 case SimpleList:
                     [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section]].accessoryType = UITableViewCellAccessoryNone;
                     [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+2 inSection:indexPath.section]].accessoryType = UITableViewCellAccessoryNone;
+                    self.currentList.type=[NSNumber numberWithInt: SimpleList];
                     break;
                 case ToDoList:
                     [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section]].accessoryType = UITableViewCellAccessoryNone;
                     [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section]].accessoryType = UITableViewCellAccessoryNone;
+                    self.currentList.type=[NSNumber numberWithInt: ToDoList];
                     break;
                 case OutlineList:
                     [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row-2 inSection:indexPath.section]].accessoryType = UITableViewCellAccessoryNone;
                     [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section]].accessoryType = UITableViewCellAccessoryNone;
+                    self.currentList.type=[NSNumber numberWithInt: OutlineList];
                     break;
                 default:
                     break;

@@ -19,6 +19,8 @@
 		2342D78116B22AE600897991 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2342D77F16B22AE600897991 /* background@2x.png */; };
 		23496BBD168B9AEA0082E3DF /* LLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23496BBC168B9AEA0082E3DF /* LLTableViewCell.m */; };
 		23496BBE168B9AEA0082E3DF /* LLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23496BBC168B9AEA0082E3DF /* LLTableViewCell.m */; };
+		2354A55A16B391FE009DCB52 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23788B5E16ABA62F00C21460 /* QuartzCore.framework */; };
+		2354A55C16B39201009DCB52 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FEBBB5168B87A600872565 /* CoreGraphics.framework */; };
 		23589DBC1696099400003F50 /* ListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 23589DBB1696099400003F50 /* ListItem.m */; };
 		23589DBF16960A3D00003F50 /* List.m in Sources */ = {isa = PBXBuildFile; fileRef = 23589DBE16960A3D00003F50 /* List.m */; };
 		2369394C168D6F1C00FA576F /* ListItemTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2369394B168D6F1C00FA576F /* ListItemTests.m */; };
@@ -155,6 +157,8 @@
 			files = (
 				23378F3F1690ED0F00EDE48D /* CoreData.framework in Frameworks */,
 				23FEBBD9168B87A600872565 /* SenTestingKit.framework in Frameworks */,
+				2354A55C16B39201009DCB52 /* CoreGraphics.framework in Frameworks */,
+				2354A55A16B391FE009DCB52 /* QuartzCore.framework in Frameworks */,
 				23FEBBDA168B87A600872565 /* UIKit.framework in Frameworks */,
 				23FEBBDB168B87A600872565 /* Foundation.framework in Frameworks */,
 			);
@@ -168,12 +172,6 @@
 			children = (
 				23FEBBC0168B87A600872565 /* LLAppDelegate.h */,
 				23FEBBC1168B87A600872565 /* LLAppDelegate.m */,
-				23589DBD16960A3D00003F50 /* List.h */,
-				23589DBE16960A3D00003F50 /* List.m */,
-				23589DBA1696099400003F50 /* ListItem.h */,
-				23589DBB1696099400003F50 /* ListItem.m */,
-				23378F43169111F500EDE48D /* CoreDataHelper.h */,
-				23378F44169111F500EDE48D /* CoreDataHelper.m */,
 				23F681EB1693CE12006FA9C4 /* LLTableViewKeyboardDismisser.h */,
 				23F681EC1693CE12006FA9C4 /* LLTableViewKeyboardDismisser.m */,
 				23788B4C16A9C9A400C21460 /* Models */,
@@ -218,6 +216,12 @@
 		23788B4C16A9C9A400C21460 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				23378F43169111F500EDE48D /* CoreDataHelper.h */,
+				23378F44169111F500EDE48D /* CoreDataHelper.m */,
+				23589DBD16960A3D00003F50 /* List.h */,
+				23589DBE16960A3D00003F50 /* List.m */,
+				23589DBA1696099400003F50 /* ListItem.h */,
+				23589DBB1696099400003F50 /* ListItem.m */,
 				23788B4316A8F84E00C21460 /* DataModel.xcdatamodeld */,
 			);
 			name = Models;

@@ -34,7 +34,10 @@
     header_view.frame = frame;
     header_view.textLabel.text = @"App Settings";
     header_view.textLabel.font = [UIFont boldSystemFontOfSize:15.0];
-    header_view.backgroundColor = [UIColor whiteColor];
+    header_view.backgroundColor = UIColorFromRGB(0xc0c0c0);
+    header_view.textLabel.textColor = UIColorFromRGB(0x525252);
+    header_view.textLabel.shadowColor = UIColorFromRGB(0xdEdEdE);
+    header_view.textLabel.shadowOffset = CGSizeMake(1, 1);
     header_view.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
 
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(configureAppSettings)];
@@ -52,8 +55,6 @@
 }
 - (void)viewDidLoad
 {
-    
-
     self.tableView = [[LLTableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
 //    [self.view addSubview:self.tableView];
     self.tableView.dataSource = self;
@@ -125,6 +126,7 @@
                          inManagedObjectContext:self.managedObjectContext];
     newList.text= name;
     newList.listID = [NSNumber numberWithInt:0];
+    newList.type = SimpleList; // Default is a Simple List
     
     NSMutableArray* relationship = [[self.fetchedResultsController fetchedObjects] mutableCopy];
     
@@ -138,8 +140,7 @@
     int maxID = 0;
     for (List* item in relationship)
         maxID = maxID > [item.listID intValue] ? maxID : [item.listID intValue];
-    
-    // if maxID is set to zero, we don't want to increment, it's the first item so ID should be 0.
+
     newList.listID = [NSNumber numberWithInt:maxID+1];    
     
     [self saveContext];
@@ -256,10 +257,14 @@
     [super configureCell:cell atIndexPath:indexPath];
 
     // Italics for config mode
-    if (configToggle)
+    if (configToggle){
         cell.textField.font = [UIFont italicSystemFontOfSize:[UIFont systemFontSize]];
-    else
+        cell.textField.textColor = UIColorFromRGB(0x1b1b1b);
+    }
+    else{
         cell.textField.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+        cell.textField.textColor = [UIColor blackColor];
+    }
 
     List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textField.text = [NSString stringWithFormat:@"%@", list.text];
@@ -272,6 +277,27 @@
     
     cell.textField.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
     cell.textField.delegate = self;
+
+
+    CGRect tfframe = cell.textField.frame;
+    switch ([list.type intValue]) {
+        case SimpleList:
+            cell.textField.text = [NSString stringWithFormat:@"%@", list.text];
+            tfframe.origin.x = 15;
+            break;
+        case ToDoList:
+            cell.textField.text = [NSString stringWithFormat:@"%@", list.text];
+            tfframe.origin.x = 50;
+            break;
+        case OutlineList:
+            cell.textField.text = [NSString stringWithFormat:@"%@", list.text];
+            tfframe.origin.x = 50;
+            break;
+        default:
+            break;
+    }
+
+    cell.textField.frame = tfframe;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -291,7 +317,6 @@
 
     [self configureCell:cell atIndexPath:indexPath];
 
-    
     return cell;
 }
 - (UITableViewCell *)cellIdenticalToCellAtIndexPath:(NSIndexPath *)indexPath forDragTableViewController:(LLReorderingTableViewController *)dragTableViewController

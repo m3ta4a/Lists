@@ -15,6 +15,7 @@
 @dynamic listID;
 @dynamic text;
 @dynamic items;
+@dynamic type;
 
 static NSString *const kItemsKey = @"items";
 
