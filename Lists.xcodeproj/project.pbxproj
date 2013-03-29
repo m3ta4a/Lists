@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		231CF1BC8E8628EF40C6C753 /* Outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 231CF5594FD1EDD1BBD141CF /* Outline.png */; };
 		231CF7888BD4E44E2C22D3C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 231CF392E816FFBBCE3E4D42 /* Localizable.strings */; };
+		231CF9C35C076398B5599D13 /* Outline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 231CFFDEB37D14940C8FC846 /* Outline@2x.png */; };
+		231CFA6AF16EA8D0E8C22C45 /* Outline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 231CFFDEB37D14940C8FC846 /* Outline@2x.png */; };
+		231CFB8BA1915A87B6AEBBEF /* Outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 231CF5594FD1EDD1BBD141CF /* Outline.png */; };
 		232FD7E716B221EA0030AED5 /* AddRow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 232FD7E616B221EA0030AED5 /* AddRow@2x.png */; };
 		232FD7EB16B2229E0030AED5 /* config_icon_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 232FD7E916B2229E0030AED5 /* config_icon_on@2x.png */; };
 		232FD7EC16B2229E0030AED5 /* config_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 232FD7EA16B2229E0030AED5 /* config_icon@2x.png */; };
@@ -38,6 +42,8 @@
 		239C61E116AE000E00E5880A /* config_icon_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 239C61E016AE000E00E5880A /* config_icon_on.png */; };
 		239C61E416AE057900E5880A /* LLListConfigureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 239C61E316AE057900E5880A /* LLListConfigureViewController.m */; };
 		23A4F562168D5C38003D7DCC /* AddRow.png in Resources */ = {isa = PBXBuildFile; fileRef = 23A4F561168D5C38003D7DCC /* AddRow.png */; };
+		23CC73C0170534C800F0AB59 /* Check.png in Resources */ = {isa = PBXBuildFile; fileRef = 23CC73BE170534C800F0AB59 /* Check.png */; };
+		23CC73C1170534C800F0AB59 /* Check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23CC73BF170534C800F0AB59 /* Check@2x.png */; };
 		23EA30F116B24E3200EA9158 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23EA30F016B24E3200EA9158 /* AudioToolbox.framework */; };
 		23EA30F716B257FD00EA9158 /* nav_header.png in Resources */ = {isa = PBXBuildFile; fileRef = 23EA30F516B257FD00EA9158 /* nav_header.png */; };
 		23EA30F816B257FD00EA9158 /* nav_header@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23EA30F616B257FD00EA9158 /* nav_header@2x.png */; };
@@ -71,6 +77,8 @@
 
 /* Begin PBXFileReference section */
 		231CF392E816FFBBCE3E4D42 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		231CF5594FD1EDD1BBD141CF /* Outline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Outline.png; sourceTree = "<group>"; };
+		231CFFDEB37D14940C8FC846 /* Outline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Outline@2x.png"; sourceTree = "<group>"; };
 		232FD7E616B221EA0030AED5 /* AddRow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddRow@2x.png"; sourceTree = "<group>"; };
 		232FD7E916B2229E0030AED5 /* config_icon_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "config_icon_on@2x.png"; sourceTree = "<group>"; };
 		232FD7EA16B2229E0030AED5 /* config_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "config_icon@2x.png"; sourceTree = "<group>"; };
@@ -110,6 +118,8 @@
 		239C61E216AE057800E5880A /* LLListConfigureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLListConfigureViewController.h; sourceTree = "<group>"; };
 		239C61E316AE057900E5880A /* LLListConfigureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLListConfigureViewController.m; sourceTree = "<group>"; };
 		23A4F561168D5C38003D7DCC /* AddRow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddRow.png; sourceTree = "<group>"; };
+		23CC73BE170534C800F0AB59 /* Check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Check.png; sourceTree = "<group>"; };
+		23CC73BF170534C800F0AB59 /* Check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Check@2x.png"; sourceTree = "<group>"; };
 		23EA30F016B24E3200EA9158 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		23EA30F516B257FD00EA9158 /* nav_header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_header.png; sourceTree = "<group>"; };
 		23EA30F616B257FD00EA9158 /* nav_header@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_header@2x.png"; sourceTree = "<group>"; };
@@ -276,6 +286,8 @@
 				232FD7E916B2229E0030AED5 /* config_icon_on@2x.png */,
 				239C61DE16ADFDD300E5880A /* config_icon.png */,
 				232FD7EA16B2229E0030AED5 /* config_icon@2x.png */,
+				23CC73BE170534C800F0AB59 /* Check.png */,
+				23CC73BF170534C800F0AB59 /* Check@2x.png */,
 				23A4F561168D5C38003D7DCC /* AddRow.png */,
 				232FD7E616B221EA0030AED5 /* AddRow@2x.png */,
 				239C61D616AD03B100E5880A /* lists_icon.png */,
@@ -293,6 +305,8 @@
 				23FEBBC3168B87A600872565 /* Default.png */,
 				23FEBBC5168B87A600872565 /* Default@2x.png */,
 				23FEBBC7168B87A600872565 /* Default-568h@2x.png */,
+				231CF5594FD1EDD1BBD141CF /* Outline.png */,
+				231CFFDEB37D14940C8FC846 /* Outline@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -408,6 +422,10 @@
 				23EA30F716B257FD00EA9158 /* nav_header.png in Resources */,
 				23EA30F816B257FD00EA9158 /* nav_header@2x.png in Resources */,
 				23EA30FA16B25F4700EA9158 /* dark_background@2x.png in Resources */,
+				23CC73C0170534C800F0AB59 /* Check.png in Resources */,
+				23CC73C1170534C800F0AB59 /* Check@2x.png in Resources */,
+				231CF1BC8E8628EF40C6C753 /* Outline.png in Resources */,
+				231CF9C35C076398B5599D13 /* Outline@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +434,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				23FEBBE3168B87A600872565 /* InfoPlist.strings in Resources */,
+				231CFB8BA1915A87B6AEBBEF /* Outline.png in Resources */,
+				231CFA6AF16EA8D0E8C22C45 /* Outline@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -48,7 +48,6 @@
     
     [self.view addSubview:self.headerView];
 
-
     configToggle = NO;
     
     return self;
@@ -121,12 +120,12 @@
 }
 -(void)insertNewListNamed:(NSString*)name
 {
-    List *newList = [NSEntityDescription
+    List *newList  = [NSEntityDescription
                          insertNewObjectForEntityForName:@"List"
                          inManagedObjectContext:self.managedObjectContext];
-    newList.text= name;
+    newList.text   = name;
     newList.listID = [NSNumber numberWithInt:0];
-    newList.type = SimpleList; // Default is a Simple List
+    newList.type   = [NSNumber numberWithInt:SimpleList]; // Default is a Simple List
     
     NSMutableArray* relationship = [[self.fetchedResultsController fetchedObjects] mutableCopy];
     
@@ -278,8 +277,17 @@
     cell.textField.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
     cell.textField.delegate = self;
 
-
     CGRect tfframe = cell.textField.frame;
+
+    [[cell viewWithTag:1111] removeFromSuperview];
+    [[cell viewWithTag:2222] removeFromSuperview];
+
+    UIView * newchkmrk = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Check"]];
+    newchkmrk.tag = 1111;
+    newchkmrk.frame = CGRectMake(3, 3, 15, 15);
+    UIView * newoutline = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Outline"]];
+    newoutline.tag = 2222;
+    newoutline.frame = CGRectMake(5, 5, 7, 7);
     switch ([list.type intValue]) {
         case SimpleList:
             cell.textField.text = [NSString stringWithFormat:@"%@", list.text];
@@ -287,11 +295,13 @@
             break;
         case ToDoList:
             cell.textField.text = [NSString stringWithFormat:@"%@", list.text];
-            tfframe.origin.x = 50;
+            [cell addSubview: newchkmrk];
+            tfframe.origin.x = 20;
             break;
         case OutlineList:
             cell.textField.text = [NSString stringWithFormat:@"%@", list.text];
-            tfframe.origin.x = 50;
+            [cell addSubview: newoutline];
+            tfframe.origin.x = 20;
             break;
         default:
             break;
