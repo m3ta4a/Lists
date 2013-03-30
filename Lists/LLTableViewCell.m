@@ -55,10 +55,14 @@
     float fudgeFactor = 16.0;
 
     NSString *testString = @" ";
-    if ([text length] > 0) {
+    if ([text length] > 0)
         testString = text;
-    }
+
     CGSize stringSize = [testString sizeWithFont:TEXT_INPUT_FONT constrainedToSize:CGSizeMake(TEXT_VIEW_WIDTH-fudgeFactor, 9999) lineBreakMode:NSLineBreakByWordWrapping];
+
+    if ([text hasSuffix:@"\n"])
+        stringSize.height+=19;
+
     return stringSize;
 }
 -(void)drawRect:(CGRect)rect
