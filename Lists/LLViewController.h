@@ -42,6 +42,7 @@ typedef enum{
 
 - (id)init;
 - (NSString*)sortKey;
+- (NSString*)entityName;
 - (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 - (void)refreshData:(NSNotification *)notif;
 - (void)saveContext;

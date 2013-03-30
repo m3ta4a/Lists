@@ -18,7 +18,10 @@
 @implementation LLListItemsViewController
 
 @synthesize currentList = m_currentList;
-
+-(NSString*)sortKey
+{
+    return @"itemID";
+}
 - (id)init
 {
     self = [super init];
@@ -159,10 +162,7 @@
 {
     return YES;
 }
--(NSString*)sortKey
-{
-    return @"itemID";
-}
+
 - (UITableViewCell *)cellIdenticalToCellAtIndexPath:(NSIndexPath *)indexPath forDragTableViewController:(LLReorderingTableViewController *)dragTableViewController
 {
     LLTableViewCell *cell = [[LLTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
@@ -310,9 +310,10 @@
 // Display customization
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 
+    int width = tableView.frame.size.width*5/6;
     ListItem *listitem = [self.fetchedResultsController objectAtIndexPath:indexPath];
     NSString *text = listitem.text;
-    CGSize stringSize = [LLTableViewCell textViewSize:text];
+    CGSize stringSize = [LLTableViewCell textViewSize:text forWidth:width];
     return MAX(44,stringSize.height+12);
 }
 

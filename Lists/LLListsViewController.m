@@ -20,6 +20,14 @@
 
 @synthesize headerView = _headerView;
 
+-(NSString*)sortKey
+{
+    return @"listID";
+}
+-(NSString*)entityName
+{
+    return @"List";
+}
 - (id)init
 {
     self = [super init];
@@ -223,10 +231,6 @@
 
     return numberOfObjects;
 }
--(NSString*)sortKey
-{
-    return @"listID";
-}
 - (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
     [super configureCell:cell atIndexPath:indexPath];
@@ -326,40 +330,6 @@
     }
 }
 
-#pragma mark ----------
-#pragma mark Fetched Results Controller
-- (NSFetchedResultsController *)fetchedResultsController {
-    
-    if (_fetchedResultsController != nil) {
-        return _fetchedResultsController;
-    }
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"List"
-                                                        inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"listID" ascending:NO];
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
-    [fetchRequest setFetchBatchSize:20];
-    
-    NSFetchedResultsController *theFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                                                                  managedObjectContext:self.managedObjectContext
-                                                                                                    sectionNameKeyPath:nil
-                                                                                                             cacheName:nil];
-    _fetchedResultsController = theFetchedResultsController;
-    _fetchedResultsController.delegate = self;
-    
-    NSError *error = nil;
-    if (![_fetchedResultsController performFetch:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-        return nil;
-    }
-    
-    return _fetchedResultsController;
-}
-
 
 #pragma mark -------
 #pragma mark TableView Delegate Methods
@@ -375,7 +345,7 @@
 
     List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
     NSString *text = list.text;
-    CGSize stringSize = [LLTableViewCell textViewSize:text];
+    CGSize stringSize = [LLTableViewCell textViewSize:text forWidth:tableView.frame.size.width*5/6];
     return MAX(44,stringSize.height+12);
 }
 

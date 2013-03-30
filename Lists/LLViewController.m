@@ -228,8 +228,6 @@
             break;
     }
 }
-
-
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id )sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
     
     if (_userDrivenDataModelChange)
@@ -287,4 +285,37 @@
     [self saveContext];
 }
 
+#pragma mark ----------
+#pragma mark Fetched Results Controller
+- (NSFetchedResultsController *)fetchedResultsController {
+
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
+    }
+
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:[self entityName]
+                                              inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:[self sortKey] ascending:NO];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
+    [fetchRequest setFetchBatchSize:20];
+
+    NSFetchedResultsController *theFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                                                  managedObjectContext:self.managedObjectContext
+                                                                                                    sectionNameKeyPath:nil
+                                                                                                             cacheName:nil];
+    _fetchedResultsController = theFetchedResultsController;
+    _fetchedResultsController.delegate = self;
+
+    NSError *error = nil;
+    if (![_fetchedResultsController performFetch:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+        return nil;
+    }
+
+    return _fetchedResultsController;
+}
 @end

@@ -20,7 +20,8 @@ enum styles{
 
 @property (nonatomic, strong) UITextView *textView;
 
-+ (CGSize)textViewSize:(NSString*)text;
+-(int)textViewWidth;
++ (CGSize)textViewSize:(NSString*)text forWidth:(NSInteger)width;
 - (void) adjustTextInputHeightForText:(NSString*)text;
 //- (void)resizeToFitTextExactly;
 
