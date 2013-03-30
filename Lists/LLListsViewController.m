@@ -147,7 +147,7 @@
     // give the new tableview cell textfield firstresponder status
     NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
     LLTableViewCell *cell = (LLTableViewCell*)[self.tableView cellForRowAtIndexPath:path];
-    [cell.textField becomeFirstResponder];
+    [cell.textView becomeFirstResponder];
 }
 -(void)enterConfigListMode:(UIButton*)sender
 {
@@ -257,27 +257,28 @@
 
     // Italics for config mode
     if (configToggle){
-        cell.textField.font = [UIFont italicSystemFontOfSize:[UIFont systemFontSize]];
-        cell.textField.textColor = UIColorFromRGB(0x1b1b1b);
+        cell.textView.font = [UIFont italicSystemFontOfSize:15];
+        cell.textView.textColor = UIColorFromRGB(0x1b1b1b);
     }
     else{
-        cell.textField.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-        cell.textField.textColor = [UIColor blackColor];
+        cell.textView.font = TEXT_INPUT_FONT;
+        cell.textView.textColor = [UIColor blackColor];
     }
 
     List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textField.text = [NSString stringWithFormat:@"%@", list.text];
 
-    [cell resizeToFitTextExactly];
+    cell.textView.text = [NSString stringWithFormat:@"%@", list.text];
+    cell.textView.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
+
+    if (!cell.textView.delegate)
+        cell.textView.delegate = self;
 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
-    cell.textField.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
-    cell.textField.delegate = self;
 
-    CGRect tfframe = cell.textField.frame;
+    [cell adjustTextInputHeightForText:list.text];
+
+    CGRect tfframe = cell.textView.frame;
 
     [[cell viewWithTag:1111] removeFromSuperview];
     [[cell viewWithTag:2222] removeFromSuperview];
@@ -290,16 +291,13 @@
     newoutline.frame = CGRectMake(5, 5, 7, 7);
     switch ([list.type intValue]) {
         case SimpleList:
-            cell.textField.text = [NSString stringWithFormat:@"%@", list.text];
             tfframe.origin.x = 15;
             break;
         case ToDoList:
-            cell.textField.text = [NSString stringWithFormat:@"%@", list.text];
             [cell addSubview: newchkmrk];
             tfframe.origin.x = 20;
             break;
         case OutlineList:
-            cell.textField.text = [NSString stringWithFormat:@"%@", list.text];
             [cell addSubview: newoutline];
             tfframe.origin.x = 20;
             break;
@@ -307,7 +305,7 @@
             break;
     }
 
-    cell.textField.frame = tfframe;
+    cell.textView.frame = tfframe;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -334,7 +332,7 @@
     LLTableViewCell *cell = [[LLTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
-    cell.textField.text = [NSString stringWithFormat:@"%@", list.text];
+    cell.textView.text = [NSString stringWithFormat:@"%@", list.text];
 
     return cell;
 }
@@ -398,7 +396,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 48;
+
+    List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSString *text = list.text;
+    CGSize stringSize = [LLTableViewCell textViewSize:text];
+    return MAX(44,stringSize.height+12);
 }
 
 // Selection
@@ -484,27 +486,47 @@
     return true;
 }
 #pragma mark -----------------
-#pragma mark Textfield delegate
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+#pragma mark TextView delegate
+-(void)textViewEditDone:(id)sender
 {
-    NSIndexPath* path = [self.tableView indexPathForCell:(LLTableViewCell*) [textField superview]];
-    List* list = (List*)[self.fetchedResultsController objectAtIndexPath:path];
-    
-    NSString *newStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    
-    list.text = newStr;
-    
-    return true;
+    UITextView*view = (UITextView*)sender;
+    [view resignFirstResponder];
 }
-- (BOOL)textFieldShouldClear:(UITextField *)textField
-{
-    NSIndexPath* path = [self.tableView indexPathForCell:(LLTableViewCell*) [[textField superview] superview]];
-    List* item = (List*)[self.fetchedResultsController objectAtIndexPath:path];
-    
-    item.text = @"";
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+
+    // Just don't get to have new lines in titles
+    if ([text isEqualToString:@"\n"])
+    {
+        [self performSelector:@selector(textViewEditDone:) withObject:textView afterDelay:.01];
+        return NO;
+    }
+
+    LLTableViewCell *cell = (LLTableViewCell*) [textView superview];
+
+    NSIndexPath* path = [self.tableView indexPathForCell:cell];
+    List* list = (List*)[self.fetchedResultsController objectAtIndexPath:path];
+
+    NSString *newStr = [textView.text stringByReplacingCharactersInRange:range withString:text];
+
+    list.text = newStr;
+
+    [self.tableView setNeedsDisplay];
+
+    return YES;
+}
+- (void) textViewDidBeginEditing:(UITextView*)textView {
+    LLTableViewCell *cell = (LLTableViewCell*)[textView superview];
+    [cell adjustTextInputHeightForText:textView.text];
+}
+
+- (void) textViewDidEndEditing:(UITextView*)textView {
+    LLTableViewCell *cell = (LLTableViewCell*)[textView superview];
+    [cell adjustTextInputHeightForText:textView.text];
 
     [self saveContext];
-
-    return true;
+}
+- (void) textViewDidChange:(UITextView*)textView {
+    LLTableViewCell *cell = (LLTableViewCell*)[textView superview];
+    [cell adjustTextInputHeightForText:textView.text];
 }
 @end

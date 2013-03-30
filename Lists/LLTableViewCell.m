@@ -11,45 +11,56 @@
 
 @implementation LLTableViewCell
 
-@synthesize textField = _textField;
+@synthesize textView = _textView;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self == nil)
         return nil;
+
+    // Text field
+    _textView = [[UITextView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, 0.0f)];
+    _textView.backgroundColor = [UIColor clearColor];
+    _textView.scrollEnabled = NO;
+    _textView.font = TEXT_INPUT_FONT;
+    [self addSubview:_textView];
     
-    self.textField = [[UITextField alloc] initWithFrame:CGRectMake(15,0,self.frame.size.width-50, self.frame.size.height)];
-    self.textField.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    self.textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    self.textField.textColor = [UIColor blackColor];
-
-    [self addSubview:self.textField];
-
-    self.textField.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-
-    // Don't use textLabel, use textField (editable)
+    // Don't use textLabel, use textView (editable)
     self.textLabel.hidden = YES;
     self.textLabel.enabled = NO;
     
     return self;
 }
+- (void) adjustTextInputHeightForText:(NSString*)text {
 
-- (void)resizeToFitTextExactly {
-    CGFloat width;
-    width = [self.textField.text sizeWithFont:self.textField.font].width;
-    CGRect frame = self.textField.frame;
-    float _width = MAX(width+2*ITEM_TEXT_MARGIN, 50);
-    
-    self.textField.frame = CGRectMake(frame.origin.x, frame.origin.y,
-                              _width, frame.size.height);
+    [_textView sizeToFit];
+
+    int h1 = [text sizeWithFont:TEXT_INPUT_FONT].height;
+    int h2 = [LLTableViewCell textViewSize:text].height+10; //magic value to keep it big enough
+
+    [UIView animateWithDuration:.1f animations:^
+     {
+         CGSize fits = [_textView sizeThatFits:CGSizeMake(TEXT_VIEW_WIDTH, MAX(19,h2))];
+         CGRect frame = _textView.frame;
+         frame.size.height = fits.height;
+         frame.size.width = fits.width;
+         _textView.frame = frame;
+     } completion:^(BOOL finished)
+     {
+
+     }];
 }
++ (CGSize)textViewSize:(NSString*)text {
+    float fudgeFactor = 16.0;
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return NO;
+    NSString *testString = @" ";
+    if ([text length] > 0) {
+        testString = text;
+    }
+    CGSize stringSize = [testString sizeWithFont:TEXT_INPUT_FONT constrainedToSize:CGSizeMake(TEXT_VIEW_WIDTH-fudgeFactor, 9999) lineBreakMode:NSLineBreakByWordWrapping];
+    return stringSize;
 }
-
 -(void)drawRect:(CGRect)rect
 {
     float t = 215.0/255.0; // top

@@ -229,25 +229,4 @@
     // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
     [self.tableView endUpdates];
 }
-#pragma mark -----------------
-#pragma mark Textfield delegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return NO;
-}
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    CGRect rect = textField.frame;
-    rect.size.width = 200;
-    textField.frame = rect;
-}
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    LLTableViewCell *field = (LLTableViewCell*)[textField superview];
-    
-    [field resizeToFitTextExactly];
-    [textField setNeedsDisplay];
-
-    [self saveContext];
-}
 @end

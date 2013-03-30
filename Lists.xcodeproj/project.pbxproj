@@ -32,7 +32,6 @@
 		23788B4816A9051000C21460 /* LLTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B4716A9051000C21460 /* LLTableView.m */; };
 		23788B4F16AA2C1000C21460 /* LLMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B4E16AA2C1000C21460 /* LLMainView.m */; };
 		23788B5216AA2F7D00C21460 /* LLListItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B5116AA2F7D00C21460 /* LLListItemsViewController.m */; };
-		23788B6016ABA65300C21460 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23788B5E16ABA62F00C21460 /* QuartzCore.framework */; };
 		23788B6C16ABAB9900C21460 /* LLReorderingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B6B16ABAB9800C21460 /* LLReorderingTableViewController.m */; };
 		23788B6F16AC5BA200C21460 /* LLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B6E16AC5BA200C21460 /* LLNavigationController.m */; };
 		23788B7216AC5CCE00C21460 /* LLListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B7116AC5CCD00C21460 /* LLListsViewController.m */; };
@@ -63,6 +62,7 @@
 		23FEBBDB168B87A600872565 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FEBBB3168B87A600872565 /* Foundation.framework */; };
 		23FEBBE3168B87A600872565 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 23FEBBE1168B87A600872565 /* InfoPlist.strings */; };
 		23FEBBE6168B87A600872565 /* ListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FEBBE5168B87A600872565 /* ListTests.m */; };
+		320AF8492C47A4D819F7C451 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 320AF8492C47A4D819F7C450 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +145,7 @@
 		23FEBBE2168B87A600872565 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		23FEBBE4168B87A600872565 /* ListTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListTests.h; sourceTree = "<group>"; };
 		23FEBBE5168B87A600872565 /* ListTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListTests.m; sourceTree = "<group>"; };
+		320AF8492C47A4D819F7C450 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.frameworks; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,10 +153,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				320AF8492C47A4D819F7C451 /* QuartzCore.framework in Frameworks */,
 				23EA30F116B24E3200EA9158 /* AudioToolbox.framework in Frameworks */,
 				23378F3D1690ECB400EDE48D /* CoreData.framework in Frameworks */,
 				23FEBBB2168B87A600872565 /* UIKit.framework in Frameworks */,
-				23788B6016ABA65300C21460 /* QuartzCore.framework in Frameworks */,
 				23FEBBB4168B87A600872565 /* Foundation.framework in Frameworks */,
 				23FEBBB6168B87A600872565 /* CoreGraphics.framework in Frameworks */,
 			);
@@ -259,6 +260,7 @@
 		23FEBBB0168B87A600872565 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				320AF8492C47A4D819F7C450 /* QuartzCore.framework */,
 				23EA30F016B24E3200EA9158 /* AudioToolbox.framework */,
 				23788B5E16ABA62F00C21460 /* QuartzCore.framework */,
 				23378F3C1690ECB400EDE48D /* CoreData.framework */,
@@ -378,7 +380,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = LL;
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = EggDevil;
 			};
 			buildConfigurationList = 23FEBBA7168B87A600872565 /* Build configuration list for PBXProject "Lists" */;
@@ -544,8 +546,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -569,8 +573,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -583,6 +589,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Lists/Lists-Prefix.pch";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Lists/Lists-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -595,6 +602,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Lists/Lists-Prefix.pch";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Lists/Lists-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;

@@ -18,7 +18,7 @@
 
 #define BORDER_WIDTH 0
 
-@interface LLViewController : LLReorderingTableViewController <UIScrollViewDelegate, UITextFieldDelegate, NSFetchedResultsControllerDelegate>
+@interface LLViewController : LLReorderingTableViewController <UIScrollViewDelegate, UITextViewDelegate, NSFetchedResultsControllerDelegate>
 {
     BOOL _userDrivenDataModelChange;
     NSManagedObjectContext *_managedObjectContext;

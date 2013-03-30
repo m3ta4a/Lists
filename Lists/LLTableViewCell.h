@@ -10,16 +10,18 @@
 #import <CoreGraphics/CoreGraphics.h>
 
 #define ITEM_TEXT_MARGIN 5
-
-@interface LLTableViewCell : UITableViewCell <UITextFieldDelegate>
+#define TEXT_VIEW_WIDTH 200
+#define TEXT_INPUT_FONT [UIFont systemFontOfSize:15]
+@interface LLTableViewCell : UITableViewCell
 enum styles{
     CustomStyleHeader
 };
 
-@property (nonatomic, strong) UITextField *textField;
+@property (nonatomic, strong) UITextView *textView;
 
-
-- (void)resizeToFitTextExactly;
++ (CGSize)textViewSize:(NSString*)text;
+- (void) adjustTextInputHeightForText:(NSString*)text;
+//- (void)resizeToFitTextExactly;
 
 
 @end

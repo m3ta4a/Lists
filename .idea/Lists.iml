@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="CIDR_MODULE" version="4">
   <component name="NewModuleRootManager">
+    <content url="file://$USER_HOME$/Developer/Open Source/three20/src/Three20">
+      <sourceFolder url="file://$USER_HOME$/Developer/Open Source/three20/src/Three20" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/Developer/Open Source/three20/src/Three20.bundle">
+      <sourceFolder url="file://$USER_HOME$/Developer/Open Source/three20/src/Three20.bundle" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/Developer/Open Source/three20/src/Three20/Three20.xcodeproj">
+      <sourceFolder url="file://$USER_HOME$/Developer/Open Source/three20/src/Three20/Three20.xcodeproj" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/Developer/Open Source/three20/src/Three20Core">
+      <sourceFolder url="file://$USER_HOME$/Developer/Open Source/three20/src/Three20Core" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/Developer/Open Source/three20/src/Three20Network">
+      <sourceFolder url="file://$USER_HOME$/Developer/Open Source/three20/src/Three20Network" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/Developer/Open Source/three20/src/Three20Style">
+      <sourceFolder url="file://$USER_HOME$/Developer/Open Source/three20/src/Three20Style" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/Developer/Open Source/three20/src/Three20UI">
+      <sourceFolder url="file://$USER_HOME$/Developer/Open Source/three20/src/Three20UI" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/Developer/Open Source/three20/src/Three20UICommon">
+      <sourceFolder url="file://$USER_HOME$/Developer/Open Source/three20/src/Three20UICommon" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/Developer/Open Source/three20/src/Three20UINavigator">
+      <sourceFolder url="file://$USER_HOME$/Developer/Open Source/three20/src/Three20UINavigator" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/Developer/Open Source/three20/src/scripts/Protect.command">
+      <sourceFolder url="file://$USER_HOME$/Developer/Open Source/three20/src/scripts/Protect.command" isTestSource="false" />
+    </content>
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
     </content>

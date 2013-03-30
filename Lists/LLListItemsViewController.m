@@ -125,7 +125,7 @@
     // give the new tableview cell textfield firstresponder status
     NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
     LLTableViewCell *cell = (LLTableViewCell*)[self.tableView cellForRowAtIndexPath:path];
-    [cell.textField becomeFirstResponder];
+    [cell.textView becomeFirstResponder];
 }
 -(void)gotoBack:(id)sender
 {
@@ -218,7 +218,7 @@
     LLTableViewCell *cell = [[LLTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     ListItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
-    cell.textField.text = [NSString stringWithFormat:@"%@", item.text];
+    cell.textView.text = [NSString stringWithFormat:@"%@", item.text];
 
     return cell;
 }
@@ -228,12 +228,12 @@
     [super configureCell:cell atIndexPath:indexPath];
 
     ListItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textField.text = [NSString stringWithFormat:@"%@", item.text];
+    cell.textView.text = [NSString stringWithFormat:@"%@", item.text];
  
-    [cell resizeToFitTextExactly];
+    [cell adjustTextInputHeightForText:item.text];
     
-    cell.textField.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
-    cell.textField.delegate = self;
+    cell.textView.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
+    cell.textView.delegate = self;
 }
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LLTableViewCell *cell;
