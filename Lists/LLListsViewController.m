@@ -34,11 +34,11 @@
     header_view.frame = frame;
     header_view.textLabel.text = @"App Settings";
     header_view.textLabel.font = [UIFont boldSystemFontOfSize:15.0];
-    header_view.backgroundColor = UIColorFromRGB(0xc0c0c0);
-    header_view.textLabel.textColor = UIColorFromRGB(0x525252);
-    header_view.textLabel.shadowColor = UIColorFromRGB(0xdEdEdE);
+    header_view.textLabel.textAlignment = NSTextAlignmentCenter;
+    header_view.backgroundColor = UIColorFromRGB(0x7d7d7d);
+    header_view.textLabel.textColor = UIColorFromRGB(0x343434);
+    header_view.textLabel.shadowColor = UIColorFromRGB(0xbcbcbc);
     header_view.textLabel.shadowOffset = CGSizeMake(1, 1);
-    header_view.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
 
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(configureAppSettings)];
     tap.numberOfTapsRequired = 1;
@@ -217,40 +217,16 @@
 {
     return YES;
 }
--(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-    NSUInteger fromIndex = sourceIndexPath.row;
-    NSUInteger toIndex = destinationIndexPath.row;
-    
-    if (fromIndex == toIndex) return;
-    
-    //    NSUInteger count = [self.fetchedResultsController.fetchedObjects count];
-    
-    NSManagedObject *movingObject = [self.fetchedResultsController.fetchedObjects objectAtIndex:fromIndex];
-    NSManagedObject *toObject  = [self.fetchedResultsController.fetchedObjects objectAtIndex:toIndex];
-
-    int toObjectDisplayOrder =  [[toObject valueForKey:@"listID"] integerValue];
-    int fromObjectDisplayOrder =  [[movingObject valueForKey:@"listID"] integerValue];
-
-    [movingObject setValue:[NSNumber numberWithInteger:toObjectDisplayOrder] forKey:@"listID"];
-    [toObject setValue:[NSNumber numberWithInteger:fromObjectDisplayOrder] forKey:@"listID"];
-
-    _userDrivenDataModelChange = YES;
-
-    [self saveContext];
-    
-    _userDrivenDataModelChange = NO;
-
-    // update with a short delay the moved cell
-    [self performSelector:(@selector(configureCellAtIndexPath:)) withObject:(sourceIndexPath) afterDelay:0.2];
-    [self performSelector:(@selector(configureCellAtIndexPath:)) withObject:(destinationIndexPath) afterDelay:0.2];
-}
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSUInteger numberOfObjects = [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
 
     return numberOfObjects;
 }
-
+-(NSString*)sortKey
+{
+    return @"listID";
+}
 - (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
     [super configureCell:cell atIndexPath:indexPath];
@@ -485,48 +461,5 @@
 - (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
     return true;
 }
-#pragma mark -----------------
-#pragma mark TextView delegate
--(void)textViewEditDone:(id)sender
-{
-    UITextView*view = (UITextView*)sender;
-    [view resignFirstResponder];
-}
--(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
 
-    // Just don't get to have new lines in titles
-    if ([text isEqualToString:@"\n"])
-    {
-        [self performSelector:@selector(textViewEditDone:) withObject:textView afterDelay:.01];
-        return NO;
-    }
-
-    LLTableViewCell *cell = (LLTableViewCell*) [textView superview];
-
-    NSIndexPath* path = [self.tableView indexPathForCell:cell];
-    List* list = (List*)[self.fetchedResultsController objectAtIndexPath:path];
-
-    NSString *newStr = [textView.text stringByReplacingCharactersInRange:range withString:text];
-
-    list.text = newStr;
-
-    [self.tableView setNeedsDisplay];
-
-    return YES;
-}
-- (void) textViewDidBeginEditing:(UITextView*)textView {
-    LLTableViewCell *cell = (LLTableViewCell*)[textView superview];
-    [cell adjustTextInputHeightForText:textView.text];
-}
-
-- (void) textViewDidEndEditing:(UITextView*)textView {
-    LLTableViewCell *cell = (LLTableViewCell*)[textView superview];
-    [cell adjustTextInputHeightForText:textView.text];
-
-    [self saveContext];
-}
-- (void) textViewDidChange:(UITextView*)textView {
-    LLTableViewCell *cell = (LLTableViewCell*)[textView superview];
-    [cell adjustTextInputHeightForText:textView.text];
-}
 @end

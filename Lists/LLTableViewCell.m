@@ -36,7 +36,7 @@
 
     [_textView sizeToFit];
 
-    int h1 = [text sizeWithFont:TEXT_INPUT_FONT].height;
+//    int h1 = [text sizeWithFont:TEXT_INPUT_FONT].height;
     int h2 = [LLTableViewCell textViewSize:text].height+10; //magic value to keep it big enough
 
     [UIView animateWithDuration:.1f animations:^

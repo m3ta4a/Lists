@@ -33,7 +33,7 @@
 //    [self.view addSubview:self.tableView];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-
+    self.tableView.allowsSelectionDuringEditing = YES;
     [super viewDidLoad];
 
 //    _pullToInsertItemView = [[LLPullToInsertItemView alloc] initWithFrame: CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,
@@ -159,59 +159,9 @@
 {
     return YES;
 }
--(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-    NSUInteger fromIndex = sourceIndexPath.row;
-    NSUInteger toIndex = destinationIndexPath.row;
-    
-    if (fromIndex == toIndex) return;
-    
-    NSUInteger count = [self.fetchedResultsController.fetchedObjects count];
-    
-    NSManagedObject *movingObject = [self.fetchedResultsController.fetchedObjects objectAtIndex:fromIndex];
-    
-    NSManagedObject *toObject  = [self.fetchedResultsController.fetchedObjects objectAtIndex:toIndex];
-    double toObjectDisplayOrder =  [[toObject valueForKey:@"itemID"] doubleValue];
-    
-    double newIndex;
-    if ( fromIndex < toIndex ) {
-        // moving up
-        if (toIndex == count-1) {
-            // toObject == last object
-            newIndex = toObjectDisplayOrder + 1.0;
-        } else  {
-            NSManagedObject *object = [self.fetchedResultsController.fetchedObjects objectAtIndex:toIndex+1];
-            double objectDisplayOrder = [[object valueForKey:@"itemID"] doubleValue];
-            
-            newIndex = toObjectDisplayOrder + (objectDisplayOrder - toObjectDisplayOrder) / 2.0;
-        }
-        
-    } else {
-        // moving down
-        
-        if ( toIndex == 0) {
-            // toObject == last object
-            newIndex = toObjectDisplayOrder - 1.0;
-            
-        } else {
-            
-            NSManagedObject *object = [self.fetchedResultsController.fetchedObjects objectAtIndex:toIndex-1];
-            double objectDisplayOrder = [[object valueForKey:@"itemID"] doubleValue];
-            
-            newIndex = objectDisplayOrder + (toObjectDisplayOrder - objectDisplayOrder) / 2.0;
-            
-        }
-    }
-    
-    [movingObject setValue:[NSNumber numberWithDouble:newIndex] forKey:@"itemID"];
-    
-    _userDrivenDataModelChange = YES;
-    
-    [self saveContext];
-    
-    _userDrivenDataModelChange = NO;
-    
-    // update with a short delay the moved cell
-    [self performSelector:(@selector(configureCellAtIndexPath:)) withObject:(destinationIndexPath) afterDelay:0.2];
+-(NSString*)sortKey
+{
+    return @"itemID";
 }
 - (UITableViewCell *)cellIdenticalToCellAtIndexPath:(NSIndexPath *)indexPath forDragTableViewController:(LLReorderingTableViewController *)dragTableViewController
 {
@@ -355,29 +305,15 @@
 - (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
     return true;
 }
-#pragma mark -----------------
-#pragma mark Textfield delegate
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    NSIndexPath* path = [self.tableView indexPathForCell:(LLTableViewCell*) [textField superview]];
-    ListItem* item = (ListItem*)[self.fetchedResultsController objectAtIndexPath:path];
-    
-    NSString *newStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    
-    item.text = newStr;
+#pragma mark -------
+#pragma mark TableView Delegate Methods
+// Display customization
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    return true;
-}
-- (BOOL)textFieldShouldClear:(UITextField *)textField
-{
-    NSIndexPath* path = [self.tableView indexPathForCell:(LLTableViewCell*) [[textField superview] superview] ];
-    ListItem* item = (ListItem*)[self.fetchedResultsController objectAtIndexPath:path];
-    
-    item.text = @"";
-
-    [self saveContext];
-    
-    return true;
+    ListItem *listitem = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSString *text = listitem.text;
+    CGSize stringSize = [LLTableViewCell textViewSize:text];
+    return MAX(44,stringSize.height+12);
 }
 
 @end

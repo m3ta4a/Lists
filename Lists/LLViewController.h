@@ -41,6 +41,7 @@ typedef enum{
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 - (id)init;
+- (NSString*)sortKey;
 - (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 - (void)refreshData:(NSNotification *)notif;
 - (void)saveContext;

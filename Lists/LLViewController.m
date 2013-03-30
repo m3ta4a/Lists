@@ -107,6 +107,31 @@
 
 #pragma mark -------
 #pragma mark TableView Delegate Methods
+-(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    NSUInteger fromIndex = sourceIndexPath.row;
+    NSUInteger toIndex = destinationIndexPath.row;
+
+    if (fromIndex == toIndex) return;
+
+    NSManagedObject *movingObject = [self.fetchedResultsController.fetchedObjects objectAtIndex:fromIndex];
+    NSManagedObject *toObject  = [self.fetchedResultsController.fetchedObjects objectAtIndex:toIndex];
+
+    int toObjectDisplayOrder =  [[toObject valueForKey:[self sortKey]] integerValue];
+    int fromObjectDisplayOrder =  [[movingObject valueForKey:[self sortKey]] integerValue];
+
+    [movingObject setValue:[NSNumber numberWithInteger:toObjectDisplayOrder] forKey:[self sortKey]];
+    [toObject setValue:[NSNumber numberWithInteger:fromObjectDisplayOrder] forKey:[self sortKey]];
+
+    _userDrivenDataModelChange = YES;
+
+    [self saveContext];
+
+    _userDrivenDataModelChange = NO;
+
+    // update with a short delay the moved cell
+    [self performSelector:(@selector(configureCellAtIndexPath:)) withObject:(sourceIndexPath) afterDelay:0.2];
+    [self performSelector:(@selector(configureCellAtIndexPath:)) withObject:(destinationIndexPath) afterDelay:0.2];
+}
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -229,4 +254,37 @@
     // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
     [self.tableView endUpdates];
 }
+#pragma mark -----------------
+#pragma mark TextView delegate
+-(void)textViewEditDone:(id)sender
+{
+    UITextView*view = (UITextView*)sender;
+    [view resignFirstResponder];
+}
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+
+//    // Just don't get to have new lines in titles
+//    if ([text isEqualToString:@"\n"])
+//    {
+//        [self performSelector:@selector(textViewEditDone:) withObject:textView afterDelay:.01];
+//        return NO;
+//    }
+
+    LLTableViewCell *cell = (LLTableViewCell*) [textView superview];
+
+    NSIndexPath* path = [self.tableView indexPathForCell:cell];
+    List* list = (List*)[self.fetchedResultsController objectAtIndexPath:path];
+
+    NSString *newStr = [textView.text stringByReplacingCharactersInRange:range withString:text];
+
+    list.text = newStr;
+
+    [self.tableView setNeedsDisplay];
+
+    return YES;
+}
+- (void) textViewDidEndEditing:(UITextView*)textView {
+    [self saveContext];
+}
+
 @end
