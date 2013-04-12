@@ -14,10 +14,14 @@
 #define TEXT_INPUT_FONT [UIFont systemFontOfSize:15]
 
 @interface LLTableViewCell : UITableViewCell
+{
+    bool _justCreated;
+}
 enum styles{
     CustomStyleHeader
 };
 
+@property (nonatomic, assign) bool justCreated;
 @property (nonatomic, strong) UITextView *textView;
 
 -(int)textViewWidth;

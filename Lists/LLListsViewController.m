@@ -143,7 +143,7 @@
         [self saveContext];
         return;
     }
-    
+
     int maxID = 0;
     for (List* item in relationship)
         maxID = maxID > [item.listID intValue] ? maxID : [item.listID intValue];
@@ -155,6 +155,8 @@
     // give the new tableview cell textfield firstresponder status
     NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
     LLTableViewCell *cell = (LLTableViewCell*)[self.tableView cellForRowAtIndexPath:path];
+    cell.justCreated = YES;
+    [cell.textView setUserInteractionEnabled:YES];
     [cell.textView becomeFirstResponder];
 }
 -(void)enterConfigListMode:(UIButton*)sender
@@ -239,10 +241,12 @@
     if (configToggle){
         cell.textView.font = [UIFont italicSystemFontOfSize:15];
         cell.textView.textColor = UIColorFromRGB(0x1b1b1b);
+        [cell.textView setUserInteractionEnabled:YES];
     }
     else{
         cell.textView.font = TEXT_INPUT_FONT;
         cell.textView.textColor = [UIColor blackColor];
+        [cell.textView setUserInteractionEnabled:cell.justCreated];
     }
 
     List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -324,7 +328,12 @@
     }
 }
 
+- (void) textViewDidEndEditing:(UITextView*)textView{
+    [super textViewDidEndEditing:textView];
 
+    LLTableViewCell *cell = (LLTableViewCell*)[textView superview];
+    cell.justCreated = NO;
+}
 #pragma mark -------
 #pragma mark TableView Delegate Methods
 // Display customization
