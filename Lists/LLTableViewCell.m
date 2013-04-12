@@ -20,7 +20,7 @@
         return nil;
 
     // Text field
-    _textView = [[UITextView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, 0.0f)];
+    _textView = [[UITextView alloc] initWithFrame:CGRectMake(0.0f, 3.0f, 0.0f, 0.0f)];
     _textView.backgroundColor = [UIColor clearColor];
     _textView.scrollEnabled = NO;
     _textView.font = TEXT_INPUT_FONT;

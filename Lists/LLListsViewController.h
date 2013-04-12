@@ -22,7 +22,7 @@
 @property (nonatomic, strong) UIView* headerView;
 
 -(void)insertNewList;
--(void)textViewEditDone:(id)sender;
+//-(void)textViewEditDone:(id)sender;
 -(void)insertNewListNamed:(NSString*)name;
 -(void)enterConfigListMode:(UIButton*)sender;
 -(void)configureAppSettings;

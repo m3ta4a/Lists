@@ -256,9 +256,8 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
+    // 
     [cell adjustTextInputHeightForText:list.text];
-
-    CGRect tfframe = cell.textView.frame;
 
     [[cell viewWithTag:1111] removeFromSuperview];
     [[cell viewWithTag:2222] removeFromSuperview];
@@ -271,21 +270,16 @@
     newoutline.frame = CGRectMake(5, 5, 7, 7);
     switch ([list.type intValue]) {
         case SimpleList:
-            tfframe.origin.x = 15;
             break;
         case ToDoList:
             [cell addSubview: newchkmrk];
-            tfframe.origin.x = 20;
             break;
         case OutlineList:
             [cell addSubview: newoutline];
-            tfframe.origin.x = 20;
             break;
         default:
             break;
     }
-
-    cell.textView.frame = tfframe;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -346,7 +340,7 @@
     List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
     NSString *text = list.text;
     CGSize stringSize = [LLTableViewCell textViewSize:text forWidth:tableView.frame.size.width*5/6];
-    return MAX(44,stringSize.height+12);
+    return MAX(44,stringSize.height+19); //Magic Numbers MAKE ME ANGRY
 }
 
 // Selection
