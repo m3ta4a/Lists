@@ -8,6 +8,9 @@
 
 #import "LLListsViewController.h"
 
+#define CHECKMARK_ICN_TAG 1111
+#define OUTLINE_ICN_TAG 2222
+
 
 @interface LLListsViewController ()
 {
@@ -235,6 +238,12 @@
 }
 - (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
+
+    // =============================
+    //
+    // Common to All TableViewCells
+    //
+    // =============================
     [super configureCell:cell atIndexPath:indexPath];
 
     // Italics for config mode
@@ -260,17 +269,26 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
-    // 
     [cell adjustTextInputHeightForText:list.text];
 
-    [[cell viewWithTag:1111] removeFromSuperview];
-    [[cell viewWithTag:2222] removeFromSuperview];
+    // ==============================
+    //
+    // Customize:
+    //      Simple
+    //      Todo
+    //      Outline
+    // @"There is a temptation to subclass, but resist!
+    // For that is the point of reuseIdentifier";
+    // ==============================
+
+    [[cell viewWithTag:CHECKMARK_ICN_TAG] removeFromSuperview];
+    [[cell viewWithTag:OUTLINE_ICN_TAG] removeFromSuperview];
 
     UIView * newchkmrk = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Check"]];
-    newchkmrk.tag = 1111;
+    newchkmrk.tag = CHECKMARK_ICN_TAG;
     newchkmrk.frame = CGRectMake(3, 3, 15, 15);
     UIView * newoutline = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Outline"]];
-    newoutline.tag = 2222;
+    newoutline.tag = OUTLINE_ICN_TAG;
     newoutline.frame = CGRectMake(5, 5, 7, 7);
     switch ([list.type intValue]) {
         case SimpleList:
@@ -291,8 +309,24 @@
     
     assert(tv == self.tableView);
     assert(indexPath != nil);
+
+    List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
+    NSString *identifier = @"SimpleListCell";
     
-    NSString *identifier = @"ListCell";
+    switch ([list.type intValue]) {
+        case SimpleList:
+            // already set
+            break;
+        case ToDoList:
+            identifier = @"ToDoListCell";
+            break;
+        case OutlineList:
+            identifier = @"OutlineListCell";
+            break;
+        default:
+            break;
+    }
 
     cell = [self.tableView dequeueReusableCellWithIdentifier:identifier];
     
