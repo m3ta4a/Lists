@@ -284,12 +284,16 @@
     [[cell viewWithTag:CHECKMARK_ICN_TAG] removeFromSuperview];
     [[cell viewWithTag:OUTLINE_ICN_TAG] removeFromSuperview];
 
+    int height = [self.tableView rectForRowAtIndexPath:indexPath].size.height;
+
     UIView * newchkmrk = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Check"]];
     newchkmrk.tag = CHECKMARK_ICN_TAG;
-    newchkmrk.frame = CGRectMake(3, 3, 15, 15);
+    newchkmrk.frame = CGRectMake(281, height/2-9, 18, 18);
+
     UIView * newoutline = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Outline"]];
     newoutline.tag = OUTLINE_ICN_TAG;
-    newoutline.frame = CGRectMake(5, 5, 7, 7);
+    newoutline.frame = CGRectMake(285, height/2-4, 8, 8);
+
     switch ([list.type intValue]) {
         case SimpleList:
             break;
@@ -312,21 +316,7 @@
 
     List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
-    NSString *identifier = @"SimpleListCell";
-    
-    switch ([list.type intValue]) {
-        case SimpleList:
-            // already set
-            break;
-        case ToDoList:
-            identifier = @"ToDoListCell";
-            break;
-        case OutlineList:
-            identifier = @"OutlineListCell";
-            break;
-        default:
-            break;
-    }
+    NSString *identifier = @"ListCell";
 
     cell = [self.tableView dequeueReusableCellWithIdentifier:identifier];
     
