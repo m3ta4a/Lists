@@ -175,7 +175,20 @@
 {
 }
 
-
+//- (void)saveContext
+//{
+//    // Save the context.
+//    NSError *error = nil;
+//    if (![_managedObjectContext save:&error]) {
+//        /*
+//         TODO: Replace this implementation with code to handle the error appropriately.
+//
+//         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//         */
+//        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+//        abort();
+//    }
+//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
@@ -189,16 +202,19 @@
                     [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section]].accessoryType = UITableViewCellAccessoryNone;
                     [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+2 inSection:indexPath.section]].accessoryType = UITableViewCellAccessoryNone;
                     self.currentList.type=[NSNumber numberWithInt: SimpleList];
+                    [self saveContext];
                     break;
                 case ToDoList:
                     [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section]].accessoryType = UITableViewCellAccessoryNone;
                     [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section]].accessoryType = UITableViewCellAccessoryNone;
                     self.currentList.type=[NSNumber numberWithInt: ToDoList];
+                    [self saveContext];
                     break;
                 case OutlineList:
                     [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row-2 inSection:indexPath.section]].accessoryType = UITableViewCellAccessoryNone;
                     [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section]].accessoryType = UITableViewCellAccessoryNone;
                     self.currentList.type=[NSNumber numberWithInt: OutlineList];
+                    [self saveContext];
                     break;
                 default:
                     break;

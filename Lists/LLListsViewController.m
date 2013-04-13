@@ -277,8 +277,8 @@
     //      Simple
     //      Todo
     //      Outline
-    // @"There is a temptation to subclass, but resist!
-    // For that is the point of reuseIdentifier";
+    // There is a temptation to subclass, but resist!
+    // For that is the point of reuseIdentifier
     // ==============================
 
     [[cell viewWithTag:CHECKMARK_ICN_TAG] removeFromSuperview];
@@ -314,7 +314,7 @@
     assert(tv == self.tableView);
     assert(indexPath != nil);
 
-    List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
+//    List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
     NSString *identifier = @"ListCell";
 
