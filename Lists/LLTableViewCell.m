@@ -37,11 +37,10 @@
     
     return self;
 }
-- (void) adjustTextInputHeightForText:(NSString*)text {
+- (void) adjustTextInputHeightForText:(NSString*)text andWidth:(NSInteger)width{
 
     [_textView sizeToFit];
 
-    int width = (int)self.frame.size.width * 5/6;
     int height = [LLTableViewCell textViewSize:text forWidth:width].height+10; //magic value to keep it big enough
 
     [UIView animateWithDuration:.1f animations:^
@@ -56,25 +55,9 @@
 
      }];
 }
--(int)textViewWidth{
-    return (int)self.frame.size.width*5/6;
-}
 - (CGSize)textViewSize{
-    float fudgeFactor = 16.0;
 
-    NSString *testString = @" ";
-    if ([self.textView.text length] > 0)
-        testString = self.textView.text;
-
-    CGSize stringSize = [testString
-                         sizeWithFont:TEXT_INPUT_FONT
-                         constrainedToSize: CGSizeMake([self textViewWidth]-fudgeFactor, 9999)
-                         lineBreakMode:NSLineBreakByWordWrapping];
-
-    if ([self.textView.text hasSuffix:@"\n"])
-        stringSize.height+=19;
-
-    return stringSize;
+    return [LLTableViewCell textViewSize:self.textView.text forWidth:self.textView.frame.size.width];
 }
 + (CGSize)textViewSize:(NSString*)text forWidth:(NSInteger)width{
     float fudgeFactor = 16.0;

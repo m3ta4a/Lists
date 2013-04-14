@@ -36,6 +36,8 @@
 		23788B6F16AC5BA200C21460 /* LLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B6E16AC5BA200C21460 /* LLNavigationController.m */; };
 		23788B7216AC5CCE00C21460 /* LLListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B7116AC5CCD00C21460 /* LLListsViewController.m */; };
 		23788B7516AC698400C21460 /* LLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23788B7416AC698400C21460 /* LLViewController.m */; };
+		23837B7A171A114100E79242 /* LLListToDoItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23837B79171A114100E79242 /* LLListToDoItemsViewController.m */; };
+		23837B7D171A11B100E79242 /* LLListOutlineItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23837B7C171A11B100E79242 /* LLListOutlineItemsViewController.m */; };
 		239C61D716AD03B100E5880A /* lists_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 239C61D616AD03B100E5880A /* lists_icon.png */; };
 		239C61DF16ADFDD300E5880A /* config_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 239C61DE16ADFDD300E5880A /* config_icon.png */; };
 		239C61E116AE000E00E5880A /* config_icon_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 239C61E016AE000E00E5880A /* config_icon_on.png */; };
@@ -112,6 +114,10 @@
 		23788B7116AC5CCD00C21460 /* LLListsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLListsViewController.m; sourceTree = "<group>"; };
 		23788B7316AC698300C21460 /* LLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLViewController.h; sourceTree = "<group>"; };
 		23788B7416AC698400C21460 /* LLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLViewController.m; sourceTree = "<group>"; };
+		23837B78171A114100E79242 /* LLListToDoItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLListToDoItemsViewController.h; sourceTree = "<group>"; };
+		23837B79171A114100E79242 /* LLListToDoItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLListToDoItemsViewController.m; sourceTree = "<group>"; };
+		23837B7B171A11B100E79242 /* LLListOutlineItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLListOutlineItemsViewController.h; sourceTree = "<group>"; };
+		23837B7C171A11B100E79242 /* LLListOutlineItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLListOutlineItemsViewController.m; sourceTree = "<group>"; };
 		239C61D616AD03B100E5880A /* lists_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lists_icon.png; sourceTree = "<group>"; };
 		239C61DE16ADFDD300E5880A /* config_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = config_icon.png; sourceTree = "<group>"; };
 		239C61E016AE000E00E5880A /* config_icon_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = config_icon_on.png; sourceTree = "<group>"; };
@@ -205,6 +211,10 @@
 				23788B7116AC5CCD00C21460 /* LLListsViewController.m */,
 				23788B5016AA2F7D00C21460 /* LLListItemsViewController.h */,
 				23788B5116AA2F7D00C21460 /* LLListItemsViewController.m */,
+				23837B78171A114100E79242 /* LLListToDoItemsViewController.h */,
+				23837B79171A114100E79242 /* LLListToDoItemsViewController.m */,
+				23837B7B171A11B100E79242 /* LLListOutlineItemsViewController.h */,
+				23837B7C171A11B100E79242 /* LLListOutlineItemsViewController.m */,
 				239C61E216AE057800E5880A /* LLListConfigureViewController.h */,
 				239C61E316AE057900E5880A /* LLListConfigureViewController.m */,
 			);
@@ -480,6 +490,8 @@
 				23788B7216AC5CCE00C21460 /* LLListsViewController.m in Sources */,
 				23788B7516AC698400C21460 /* LLViewController.m in Sources */,
 				239C61E416AE057900E5880A /* LLListConfigureViewController.m in Sources */,
+				23837B7A171A114100E79242 /* LLListToDoItemsViewController.m in Sources */,
+				23837B7D171A11B100E79242 /* LLListOutlineItemsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

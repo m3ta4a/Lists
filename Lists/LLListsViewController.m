@@ -66,7 +66,6 @@
 - (void)viewDidLoad
 {
     self.tableView = [[LLTableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
-//    [self.view addSubview:self.tableView];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.allowsSelectionDuringEditing = YES;
@@ -101,14 +100,11 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
-    [self.tableView reloadData];
 
     NSArray* relationship = [self.fetchedResultsController fetchedObjects];
     if ([relationship count] == 0)
@@ -118,6 +114,7 @@
 }
 -(void)configureAppSettings
 {
+    // TODO: Need an App Settings View Controller
     LLListConfigureViewController *vc = [[LLListConfigureViewController alloc] init];
 
     vc.managedObjectContext = self.managedObjectContext;
@@ -135,7 +132,6 @@
                          insertNewObjectForEntityForName:@"List"
                          inManagedObjectContext:self.managedObjectContext];
     newList.text   = name;
-    newList.listID = [NSNumber numberWithInt:0];
     newList.type   = [NSNumber numberWithInt:SimpleList]; // Default is a Simple List
     
     NSMutableArray* relationship = [[self.fetchedResultsController fetchedObjects] mutableCopy];
@@ -269,7 +265,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
-    [cell adjustTextInputHeightForText:list.text];
+    [cell adjustTextInputHeightForText:list.text andWidth:[self widthOfTextViewAtIndexPath:indexPath]];
 
     // ==============================
     //
@@ -288,11 +284,11 @@
 
     UIView * newchkmrk = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Check"]];
     newchkmrk.tag = CHECKMARK_ICN_TAG;
-    newchkmrk.frame = CGRectMake(281, height/2-9, 18, 18);
+    newchkmrk.frame = CGRectMake(281, height/2-12, 24, 24);
 
     UIView * newoutline = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Outline"]];
     newoutline.tag = OUTLINE_ICN_TAG;
-    newoutline.frame = CGRectMake(285, height/2-4, 8, 8);
+    newoutline.frame = CGRectMake(285, height/2-6, 12, 12);
 
     switch ([list.type intValue]) {
         case SimpleList:
@@ -360,20 +356,19 @@
 }
 #pragma mark -------
 #pragma mark TableView Delegate Methods
-// Display customization
+// used by parent class in heightForRowAtIndexPath:
+- (NSString*)textForIndexPath:(NSIndexPath*)indexPath{
+    List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    return list.text;
+}
+- (NSInteger)widthOfTextViewAtIndexPath:(NSIndexPath*)indexPath{
+    return self.tableView.frame.size.width * 5/6;
+}
 
 // Accessories (disclosures).
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-
-    List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    NSString *text = list.text;
-    CGSize stringSize = [LLTableViewCell textViewSize:text forWidth:tableView.frame.size.width*5/6];
-    return MAX(44,stringSize.height+19); //Magic Numbers MAKE ME ANGRY
 }
 
 // Selection
@@ -417,10 +412,25 @@
 
     if (!configToggle)
     {
-        LLListItemsViewController *vc = [[LLListItemsViewController alloc] init];
-        vc.managedObjectContext = self.managedObjectContext;
-    
         List* list = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
+        LLListItemsViewController *vc;
+
+        switch ([list.type intValue]) {
+            case SimpleList:
+                vc = [[LLListItemsViewController alloc] init];
+                break;
+            case ToDoList:
+                vc = [[LLListToDoItemsViewController alloc] init];
+                break;
+            case OutlineList:
+                vc = [[LLListOutlineItemsViewController alloc] init];
+                break;
+            default:
+                break;
+        }
+
+        vc.managedObjectContext = self.managedObjectContext;
         vc.currentList = list;
         vc.title = list.text;
 

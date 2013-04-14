@@ -49,6 +49,8 @@
 {
     [super viewDidAppear:animated];
 
+    [self.tableView reloadData];
+
     [self.view addSubview:self.tableView];
 
     CATransition* transition = [CATransition animation];
@@ -104,9 +106,77 @@
     
     //    [self.header deviceOrientationDidChange:screenWidth];
 }
+#pragma mark -----------------
+#pragma mark TextView delegate
+-(BOOL)textViewShouldBeginEditing:(UITextView *)textView{
 
+    return YES;
+}
+-(void)textViewDidBeginEditing:(UITextView *)textView{
+
+    CGPoint point = [textView.superview convertPoint:textView.frame.origin toView:self.tableView];
+    self.tableView.contentInset =  UIEdgeInsetsMake(0, 0, point.y, 0);
+
+    [self.tableView scrollToRowAtIndexPath:[self indexPathForTextView:textView]
+                          atScrollPosition:UITableViewScrollPositionTop
+                                  animated:NO];
+}
+-(BOOL)textViewShouldEndEditing:(UITextView *)textView{
+    return YES;
+}
+-(void)textViewDidEndEditing:(UITextView *)textView{
+
+    self.tableView.contentInset = UIEdgeInsetsZero;
+
+    _last_range = NSMakeRange(0, 0);
+
+    [self saveContext];
+}
+- (NSIndexPath*)indexPathForTextView:(UITextView*)textView{
+    return [self.tableView indexPathForCell:(LLTableViewCell*) [textView superview]];
+}
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+
+    // Uncomment this and use the method enclosed to relinquish focus with return key
+    //    // Just don't get to have new lines in titles
+    //    if ([text isEqualToString:@"\n"])
+    //    {
+    //        [self performSelector:@selector(textViewEditDone:) withObject:textView afterDelay:.01];
+    //        return NO;
+    //    }
+    //-(void)textViewEditDone:(id)sender
+    //{
+    //    UITextView*view = (UITextView*)sender;
+    //    [view resignFirstResponder];
+    //}
+
+//    _userDrivenDataModelChange = YES;
+
+    List* list = (List*)[self.fetchedResultsController objectAtIndexPath:[self indexPathForTextView:textView]];
+
+    NSString *newStr = [textView.text stringByReplacingCharactersInRange:range withString:text];
+
+    list.text = newStr;
+
+//    _userDrivenDataModelChange = NO; // TODO:unless there's a change in number of lines
+
+    _last_range = range;
+    _was_delete = ( [text compare:@""] == 0 );
+
+    return YES;
+}
+-(void)textViewDidChange:(UITextView *)textView{
+
+}
 #pragma mark -------
-#pragma mark TableView Delegate Methods
+#pragma mark UITableView Delegate Methods
+// Display customization
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    CGSize stringSize = [LLTableViewCell textViewSize:[self textForIndexPath:indexPath]
+                                             forWidth:[self widthOfTextViewAtIndexPath:indexPath]];
+    return MAX(44,stringSize.height+19);
+}
 -(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     NSUInteger fromIndex = sourceIndexPath.row;
     NSUInteger toIndex = destinationIndexPath.row;
@@ -122,6 +192,7 @@
     [movingObject setValue:[NSNumber numberWithInteger:toObjectDisplayOrder] forKey:[self sortKey]];
     [toObject setValue:[NSNumber numberWithInteger:fromObjectDisplayOrder] forKey:[self sortKey]];
 
+    // This allows us to animate moving the cells
     _userDrivenDataModelChange = YES;
 
     [self saveContext];
@@ -218,6 +289,11 @@
         {
             cell = (LLTableViewCell *) [tableView cellForRowAtIndexPath:indexPath];
             [self configureCell:cell atIndexPath:indexPath];
+
+            // The range needs to be set, or else the cursor just goes to the end
+            if (_last_range.length !=0 || _last_range.location != 0)
+                cell.textView.selectedRange = _was_delete ? NSMakeRange(_last_range.location, 0) : NSMakeRange(_last_range.location+1, 0);
+
             break;
         }
         case NSFetchedResultsChangeMove:
@@ -251,38 +327,6 @@
 
     // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
     [self.tableView endUpdates];
-}
-#pragma mark -----------------
-#pragma mark TextView delegate
--(void)textViewEditDone:(id)sender
-{
-    UITextView*view = (UITextView*)sender;
-    [view resignFirstResponder];
-}
--(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-
-//    // Just don't get to have new lines in titles
-//    if ([text isEqualToString:@"\n"])
-//    {
-//        [self performSelector:@selector(textViewEditDone:) withObject:textView afterDelay:.01];
-//        return NO;
-//    }
-
-    LLTableViewCell *cell = (LLTableViewCell*) [textView superview];
-
-    NSIndexPath* path = [self.tableView indexPathForCell:cell];
-    List* list = (List*)[self.fetchedResultsController objectAtIndexPath:path];
-
-    NSString *newStr = [textView.text stringByReplacingCharactersInRange:range withString:text];
-
-    list.text = newStr;
-
-    [self.tableView setNeedsDisplay];
-
-    return YES;
-}
-- (void) textViewDidEndEditing:(UITextView*)textView {
-    [self saveContext];
 }
 
 #pragma mark ----------

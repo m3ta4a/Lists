@@ -23,8 +23,10 @@
     BOOL _userDrivenDataModelChange;
     NSManagedObjectContext *_managedObjectContext;
     NSFetchedResultsController *_fetchedResultsController;
+
+    // these values are used in reestablishing cursor location in the textview after a table refresh (after an edit causes a table refresh)
     NSRange _last_range;
-    //    LLTableView *_tableView;
+    bool _was_delete;
 }
 
 typedef enum{
@@ -36,17 +38,21 @@ typedef enum{
     OutlineList
 } ListType;
 
-//@property (nonatomic, strong) LLTableView *tableView;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 - (id)init;
-- (NSString*)sortKey;
-- (NSString*)entityName;
+
 - (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 - (void)refreshData:(NSNotification *)notif;
 - (void)saveContext;
-
+- (NSIndexPath*)indexPathForTextView:(UITextView*)textView;
 + (bool)deviceHasRetinaDisplay;
+
+// abstract, children must implement (unenforced)
+- (NSString*)sortKey;
+- (NSString*)entityName;
+- (NSString*)textForIndexPath:(NSIndexPath*)indexPath;
+- (NSInteger)widthOfTextViewAtIndexPath:(NSIndexPath*)indexPath;
 
 @end

@@ -174,22 +174,15 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 }
-
-//- (void)saveContext
-//{
-//    // Save the context.
-//    NSError *error = nil;
-//    if (![_managedObjectContext save:&error]) {
-//        /*
-//         TODO: Replace this implementation with code to handle the error appropriately.
-//
-//         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-//         */
-//        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-//        abort();
-//    }
-//}
-
+// Configure view is only used to modify list type
+-(NSString*)sortKey
+{
+    return @"listID";
+}
+-(NSString*)entityName
+{
+    return @"List";
+}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];

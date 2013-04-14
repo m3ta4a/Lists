@@ -78,8 +78,6 @@
 {
     [super viewDidAppear:animated];
 
-    [self.tableView reloadData];
-
     NSArray* relationship = [self.fetchedResultsController fetchedObjects];
     if ([relationship count] == 0)
     {
@@ -179,10 +177,16 @@
 
     ListItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textView.text = [NSString stringWithFormat:@"%@", item.text];
- 
-    [cell adjustTextInputHeightForText:item.text];
-    
     cell.textView.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
+    cell.textView.font = TEXT_INPUT_FONT;
+    cell.textView.textColor = [UIColor blackColor];
+    [cell.textView setUserInteractionEnabled:YES];
+
+    // don't use textView's frame for the width...
+    // adjustTextInputHeightForText sets that frame.
+    // view controller should know width of cells textview
+    [cell adjustTextInputHeightForText:item.text andWidth:[self widthOfTextViewAtIndexPath:indexPath]];
+
     cell.textView.delegate = self;
 }
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -206,6 +210,16 @@
     return cell;
 }
 
+#pragma mark -------
+#pragma mark TableView Delegate Methods
+// used by parent class in heightForRowAtIndexPath:
+- (NSString*)textForIndexPath:(NSIndexPath*)indexPath{
+    ListItem *listitem = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    return listitem.text;
+}
+- (NSInteger)widthOfTextViewAtIndexPath:(NSIndexPath*)indexPath{
+    return self.tableView.frame.size.width;
+}
 
 #pragma mark ----------
 #pragma mark Fetched Results Controller
@@ -304,17 +318,6 @@
 
 - (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
     return true;
-}
-#pragma mark -------
-#pragma mark TableView Delegate Methods
-// Display customization
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-
-    int width = tableView.frame.size.width*5/6;
-    ListItem *listitem = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    NSString *text = listitem.text;
-    CGSize stringSize = [LLTableViewCell textViewSize:text forWidth:width];
-    return MAX(44,stringSize.height+12);
 }
 
 @end
