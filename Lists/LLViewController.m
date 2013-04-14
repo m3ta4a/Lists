@@ -359,4 +359,30 @@
 
     return _fetchedResultsController;
 }
+#pragma mark ------------
+#pragma mark Abstract methods (optionally implemented in subclasses, or must handle situation another way)
+- (NSString*)sortKey{
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:[NSString stringWithFormat:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)]
+                                 userInfo:nil];
+}
+- (NSString*)entityName{
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:[NSString stringWithFormat:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)]
+                                 userInfo:nil];
+}
+- (NSString*)textForIndexPath:(NSIndexPath*)indexPath{
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:[NSString stringWithFormat:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)]
+                                 userInfo:nil];
+}
+- (void)setText:(NSString*)text forIndexPath:(NSIndexPath*)indexPath{
+    [NSException raise:NSInternalInconsistencyException
+                format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
+}
+- (NSInteger)widthOfTextViewAtIndexPath:(NSIndexPath*)indexPath{
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:[NSString stringWithFormat:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)]
+                                 userInfo:nil];
+}
 @end

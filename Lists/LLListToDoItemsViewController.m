@@ -42,7 +42,7 @@
     cell.textView.text = [NSString stringWithFormat:@"%@", item.text];
 
     [cell adjustTextInputHeightForText:item.text
-                              andWidth:self.tableView.frame.size.width * 5/6];
+                              andWidth:[self widthOfTextViewAtIndexPath:indexPath]];
 
     cell.textView.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
     cell.textView.delegate = self;
