@@ -149,15 +149,12 @@
     //    [view resignFirstResponder];
     //}
 
-//    _userDrivenDataModelChange = YES;
-
-    List* list = (List*)[self.fetchedResultsController objectAtIndexPath:[self indexPathForTextView:textView]];
+    _userDrivenDataModelChange = YES;
 
     NSString *newStr = [textView.text stringByReplacingCharactersInRange:range withString:text];
+    [self setText:newStr forIndexPath:[self indexPathForTextView:textView]];
 
-    list.text = newStr;
-
-//    _userDrivenDataModelChange = NO; // TODO:unless there's a change in number of lines
+    _userDrivenDataModelChange = NO; // TODO:unless there's a change in number of lines
 
     _last_range = range;
     _was_delete = ( [text compare:@""] == 0 );
@@ -246,7 +243,9 @@
     UIGraphicsEndImageContext();
 
     cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:image];
-    
+
+    // should prevent losing the cursor in the textview
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 }
 - (void)configureCellAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -305,8 +304,7 @@
 }
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id )sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
     
-    if (_userDrivenDataModelChange)
-        return;
+    if (_userDrivenDataModelChange) return;
     
     NSLog(@"Changed section");
     switch(type) {

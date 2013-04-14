@@ -53,6 +53,7 @@ typedef enum{
 - (NSString*)sortKey;
 - (NSString*)entityName;
 - (NSString*)textForIndexPath:(NSIndexPath*)indexPath;
+- (void)setText:(NSString*)text forIndexPath:(NSIndexPath*)indexPath;
 - (NSInteger)widthOfTextViewAtIndexPath:(NSIndexPath*)indexPath;
 
 @end

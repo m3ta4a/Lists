@@ -357,6 +357,10 @@
 #pragma mark -------
 #pragma mark TableView Delegate Methods
 // used by parent class in heightForRowAtIndexPath:
+- (void)setText:(NSString*)text forIndexPath:(NSIndexPath*)indexPath{
+    List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    list.text = text;
+}
 - (NSString*)textForIndexPath:(NSIndexPath*)indexPath{
     List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
     return list.text;
