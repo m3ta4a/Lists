@@ -33,10 +33,12 @@
 -(void)viewDidLoad
 {
     self.tableView = [[LLTableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
-//    [self.view addSubview:self.tableView];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.allowsSelectionDuringEditing = YES;
+    self.tableView.contentInset = DEFAULT_TABLE_INSETS;
+    [self.view addSubview:self.tableView];
+
     [super viewDidLoad];
 
 //    _pullToInsertItemView = [[LLPullToInsertItemView alloc] initWithFrame: CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,
@@ -160,13 +162,13 @@
 {
     return YES;
 }
-
 - (UITableViewCell *)cellIdenticalToCellAtIndexPath:(NSIndexPath *)indexPath forDragTableViewController:(LLReorderingTableViewController *)dragTableViewController
 {
     LLTableViewCell *cell = [[LLTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    ListItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
+//    ListItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
-    cell.textView.text = [NSString stringWithFormat:@"%@", item.text];
+    [self configureCell:cell atIndexPath:indexPath];
+//    cell.textView.text = [NSString stringWithFormat:@"%@", item.text];
 
     return cell;
 }
@@ -184,7 +186,7 @@
 
     // don't use textView's frame for the width...
     // adjustTextInputHeightForText sets that frame.
-    // view controller should know width of cells textview
+    // view controller should dictate width of cells textview
     [cell adjustTextInputHeightForText:item.text andWidth:[self widthOfTextViewAtIndexPath:indexPath]];
 
     cell.textView.delegate = self;

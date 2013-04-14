@@ -41,11 +41,17 @@
 
     [_textView sizeToFit];
 
-    int height = [LLTableViewCell textViewSize:text forWidth:width].height+10; //magic value to keep it big enough
+    int height = [LLTableViewCell textViewSize:text forWidth:width].height;
+
+    // This tests if text is only a single line,
+    // if so the textView width shouldn't be wider than that line
+    int shouldBeHeightOfSingleLine = [LLTableViewCell textViewSize:@"-" forWidth:[text sizeWithFont:TEXT_INPUT_FONT].width].height;
+    if (height == shouldBeHeightOfSingleLine)
+        width = [text sizeWithFont:TEXT_INPUT_FONT].width+17; //magic value. Seems to work.
 
     [UIView animateWithDuration:.1f animations:^
      {
-         CGSize fits = [_textView sizeThatFits:CGSizeMake(width, MAX(19,height))];
+         CGSize fits = [_textView sizeThatFits:CGSizeMake(width, MAX(19,height+10))]; //magic values. Seem to work.
          CGRect frame = _textView.frame;
          frame.size.height = fits.height;
          frame.size.width = fits.width;

@@ -11,7 +11,8 @@
 
 #define ITEM_TEXT_MARGIN 5
 #define TEXT_VIEW_WIDTH [[UIScreen mainScreen] bounds].size.width*5/6
-#define TEXT_INPUT_FONT [UIFont systemFontOfSize:15]
+#define TEXT_INPUT_FONT_SIZE 15
+#define TEXT_INPUT_FONT [UIFont systemFontOfSize:TEXT_INPUT_FONT_SIZE]
 
 @interface LLTableViewCell : UITableViewCell
 {

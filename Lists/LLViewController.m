@@ -26,14 +26,21 @@
     if (!self)
         return nil;
     
-    _userDrivenDataModelChange = NO;
-    
+//    _userDrivenDataModelChange = NO;
+//    _should_reset_contentinset = true;
+//    _still_editing_textview = false;
+
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(refreshData:)
                                                  name:NSManagedObjectContextDidSaveNotification
                                                object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
     return self;
 }
 - (void)didReceiveMemoryWarning
@@ -106,27 +113,51 @@
     
     //    [self.header deviceOrientationDidChange:screenWidth];
 }
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    kbSize.height += TABLE_BOTTOM_INSET;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0); //magic value.. this takes care of editing cells below the ;
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+
+    // If active text field is hidden by keyboard, scroll it so it's visible
+    // Your application might not need or want this behavior.
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbSize.height;
+    CGPoint pt = [_activeTextView convertPoint:_activeTextView.frame.origin toView:self.view];
+    pt.y += _activeTextView.frame.size.height;
+    if (!CGRectContainsPoint(aRect, pt) ) {
+        int offset = pt.y - kbSize.height;
+        CGPoint scrollPoint = CGPointMake(0.0, offset);
+        [self.tableView setContentOffset:scrollPoint animated:YES];
+    }
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    UIEdgeInsets contentInsets = DEFAULT_TABLE_INSETS;
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+}
 #pragma mark -----------------
 #pragma mark TextView delegate
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView{
-
     return YES;
 }
 -(void)textViewDidBeginEditing:(UITextView *)textView{
-
-    CGPoint point = [textView.superview convertPoint:textView.frame.origin toView:self.tableView];
-    self.tableView.contentInset =  UIEdgeInsetsMake(0, 0, point.y, 0);
-
-    [self.tableView scrollToRowAtIndexPath:[self indexPathForTextView:textView]
-                          atScrollPosition:UITableViewScrollPositionTop
-                                  animated:NO];
+    _activeTextView = textView;
+//    [self.tableView scrollToRowAtIndexPath:[self indexPathForTextView:textView] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 -(BOOL)textViewShouldEndEditing:(UITextView *)textView{
     return YES;
 }
 -(void)textViewDidEndEditing:(UITextView *)textView{
 
-    self.tableView.contentInset = UIEdgeInsetsZero;
+    _activeTextView = nil;
     _last_range = NSMakeRange(0, 0);
 
     [self saveContext];

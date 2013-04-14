@@ -14,12 +14,12 @@
 
 @implementation LLListToDoItemsViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
+    self = [super init];
+    if (!self)
+        return nil;
+
     return self;
 }
 
@@ -38,13 +38,8 @@
 
     [super configureCell:cell atIndexPath:indexPath];
 
-    ListItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textView.text = [NSString stringWithFormat:@"%@", item.text];
+//    ListItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
-    [cell adjustTextInputHeightForText:item.text
-                              andWidth:[self widthOfTextViewAtIndexPath:indexPath]];
-
-    cell.textView.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
-    cell.textView.delegate = self;
+    // do extra configuring special to ToDo items
 }
 @end

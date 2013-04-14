@@ -43,7 +43,7 @@
     CGRect frame = header_view.frame;
     frame.size.height = 0; // hi
     header_view.frame = frame;
-    header_view.textLabel.text = @"App Settings";
+    header_view.textLabel.text = @"Rename / Configure Lists";
     header_view.textLabel.font = [UIFont boldSystemFontOfSize:15.0];
     header_view.textLabel.textAlignment = NSTextAlignmentCenter;
     header_view.backgroundColor = UIColorFromRGB(0x7d7d7d);
@@ -51,9 +51,9 @@
     header_view.textLabel.shadowColor = UIColorFromRGB(0xbcbcbc);
     header_view.textLabel.shadowOffset = CGSizeMake(1, 1);
 
-    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(configureAppSettings)];
-    tap.numberOfTapsRequired = 1;
-    [header_view addGestureRecognizer:tap];
+//    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(configureAppSettings)];
+//    tap.numberOfTapsRequired = 1;
+//    [header_view addGestureRecognizer:tap];
 
     self.headerView = header_view;
     
@@ -65,12 +65,14 @@
 }
 - (void)viewDidLoad
 {
+    // Table View must be loaded for reordering TVController
     self.tableView = [[LLTableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.allowsSelectionDuringEditing = YES;
+    self.tableView.contentInset = DEFAULT_TABLE_INSETS;
+    [self.view addSubview:self.tableView];
 
-    // Table View must be loaded for reordering TVController
     [super viewDidLoad];
 
     self.title = @"Lists";
@@ -112,16 +114,16 @@
         [self insertNewList];
     }
 }
--(void)configureAppSettings
-{
-    // TODO: Need an App Settings View Controller
-    LLListConfigureViewController *vc = [[LLListConfigureViewController alloc] init];
-
-    vc.managedObjectContext = self.managedObjectContext;
-
-    [self.navigationController pushViewController:vc animated:YES];
-
-}
+//-(void)configureAppSettings
+//{
+//    // TODO: Need an App Settings View Controller
+//    LLListConfigureViewController *vc = [[LLListConfigureViewController alloc] init];
+//
+//    vc.managedObjectContext = self.managedObjectContext;
+//
+//    [self.navigationController pushViewController:vc animated:YES];
+//
+//}
 -(void)insertNewList
 {
     [self insertNewListNamed:@""];
@@ -174,8 +176,8 @@
         [self.headerView setFrame:frame];
 
         frame = self.tableView.frame;
-        frame.origin.y = frame.origin.y - 48;
-        frame.size.height = frame.size.height + 48;
+        frame.origin.y = frame.origin.y - HEADER_VIEW_HEIGHT;
+        frame.size.height = frame.size.height + HEADER_VIEW_HEIGHT;
         self.tableView.frame = frame;
 
         [UIView commitAnimations];
@@ -190,12 +192,12 @@
         [UIView setAnimationDuration:.3];
 
         CGRect frame = [self.headerView frame];
-        frame.size.height = 48;
+        frame.size.height = HEADER_VIEW_HEIGHT;
         [self.headerView setFrame:frame];
 
         frame = self.tableView.frame;
-        frame.origin.y = frame.origin.y + 48;
-        frame.size.height = frame.size.height - 48;
+        frame.origin.y = frame.origin.y + HEADER_VIEW_HEIGHT;
+        frame.size.height = frame.size.height - HEADER_VIEW_HEIGHT;
         self.tableView.frame = frame;
 
         [UIView commitAnimations];  
@@ -234,17 +236,17 @@
 }
 - (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
+    [super configureCell:cell atIndexPath:indexPath];
 
     // =============================
     //
     // Common to All TableViewCells
     //
     // =============================
-    [super configureCell:cell atIndexPath:indexPath];
 
     // Italics for config mode
     if (configToggle){
-        cell.textView.font = [UIFont italicSystemFontOfSize:15];
+        cell.textView.font = [UIFont italicSystemFontOfSize:TEXT_INPUT_FONT_SIZE];
         cell.textView.textColor = UIColorFromRGB(0x1b1b1b);
         [cell.textView setUserInteractionEnabled:YES];
     }
@@ -262,7 +264,6 @@
     if (!cell.textView.delegate)
         cell.textView.delegate = self;
 
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
     [cell adjustTextInputHeightForText:list.text andWidth:[self widthOfTextViewAtIndexPath:indexPath]];
@@ -354,6 +355,7 @@
     LLTableViewCell *cell = (LLTableViewCell*)[textView superview];
     cell.justCreated = NO;
 }
+
 #pragma mark -------
 #pragma mark TableView Delegate Methods
 // used by parent class in heightForRowAtIndexPath:
@@ -367,34 +369,6 @@
 }
 - (NSInteger)widthOfTextViewAtIndexPath:(NSIndexPath*)indexPath{
     return self.tableView.frame.size.width * 5/6;
-}
-
-// Accessories (disclosures).
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
-
-// Selection
-
-// -tableView:shouldHighlightRowAtIndexPath: is called when a touch comes down on a row.
-// Returning NO to that message halts the selection process and does not cause the currently selected row to lose its selected look while the touch is down.
-- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath{
-    return true;
-}
-- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-}
-- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-}
-
-// Called before the user changes the selection. Return a new indexPath, or nil, to change the proposed selection.
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    return indexPath;
-}
-- (NSIndexPath *)tableView:(UITableView *)tableView willDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
-    return indexPath;
 }
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -452,25 +426,4 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
-
-// The willBegin/didEnd methods are called whenever the 'editing' property is automatically changed by the table (allowing insert/delete/move). This is done by a swipe activating a single row
-- (void)tableView:(UITableView*)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-}
-- (void)tableView:(UITableView*)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-}
-
-// Indentation
-
-- (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath{ // return 'depth' of row for hierarchies
-    return 0;
-}
-
-// Copy/Paste.  All three methods must be implemented by the delegate.
-
-- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return true;
-}
-
 @end

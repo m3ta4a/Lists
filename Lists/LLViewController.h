@@ -15,8 +15,8 @@
 #import "LLTableViewCell.h"
 #import "LLTableView.h"
 
-
-#define BORDER_WIDTH 0
+#define TABLE_BOTTOM_INSET 21
+#define DEFAULT_TABLE_INSETS UIEdgeInsetsMake(0.0, 0.0, TABLE_BOTTOM_INSET, 0.0);
 
 @interface LLViewController : LLReorderingTableViewController <UIScrollViewDelegate, UITextViewDelegate, NSFetchedResultsControllerDelegate>
 {
@@ -27,6 +27,8 @@
     // these values are used in reestablishing cursor location in the textview after a table refresh (after an edit causes a table refresh)
     NSRange _last_range;
     bool _was_delete;
+
+    UITextView *_activeTextView;
 }
 
 typedef enum{

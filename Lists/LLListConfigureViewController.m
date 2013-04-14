@@ -8,6 +8,8 @@
 
 #import "LLListConfigureViewController.h"
 
+#define BORDER_WIDTH 1
+
 @interface LLListConfigureViewController ()
 
 @end
@@ -114,9 +116,6 @@
 
     // and make sure we got a cell
     assert(cell != nil);
-
-    // no config cells need these settings
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
 
     // Now we've verified and set common settings, set unique ones
