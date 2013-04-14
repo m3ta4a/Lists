@@ -25,10 +25,6 @@
     self = [super init];
     if (!self)
         return nil;
-    
-//    _userDrivenDataModelChange = NO;
-//    _should_reset_contentinset = true;
-//    _still_editing_textview = false;
 
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -56,7 +52,7 @@
 {
     [super viewDidAppear:animated];
 
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 
     [self.view addSubview:self.tableView];
 
@@ -122,18 +118,20 @@
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0); //magic value.. this takes care of editing cells below the ;
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
+    [self.tableView scrollToRowAtIndexPath:[self indexPathForTextView:_activeTextView] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
 
     // If active text field is hidden by keyboard, scroll it so it's visible
     // Your application might not need or want this behavior.
-    CGRect aRect = self.view.frame;
-    aRect.size.height -= kbSize.height;
-    CGPoint pt = [_activeTextView convertPoint:_activeTextView.frame.origin toView:self.view];
-    pt.y += _activeTextView.frame.size.height;
-    if (!CGRectContainsPoint(aRect, pt) ) {
-        int offset = pt.y - kbSize.height;
-        CGPoint scrollPoint = CGPointMake(0.0, offset);
-        [self.tableView setContentOffset:scrollPoint animated:YES];
-    }
+//    CGRect aRect = self.view.frame;
+//    aRect.size.height -= kbSize.height;
+//    CGPoint pt = [_activeTextView convertPoint:_activeTextView.frame.origin toView:self.view];
+//    pt.y += _activeTextView.frame.size.height;
+//    if (!CGRectContainsPoint(aRect, pt) ) {
+//        [self.tableView scrollToRowAtIndexPath:[self indexPathForTextView:_activeTextView] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+////        int offset = pt.y - kbSize.height +100;
+////        CGPoint scrollPoint = CGPointMake(0.0, offset);
+////        [self.tableView setContentOffset:scrollPoint animated:YES];
+//    }
 }
 
 // Called when the UIKeyboardWillHideNotification is sent
@@ -150,7 +148,6 @@
 }
 -(void)textViewDidBeginEditing:(UITextView *)textView{
     _activeTextView = textView;
-//    [self.tableView scrollToRowAtIndexPath:[self indexPathForTextView:textView] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 -(BOOL)textViewShouldEndEditing:(UITextView *)textView{
     return YES;
@@ -236,6 +233,18 @@
 {
     return UITableViewCellEditingStyleDelete;
 }
+- (UITableViewCell *)cellIdenticalToCellAtIndexPath:(NSIndexPath *)indexPath forDragTableViewController:(LLReorderingTableViewController *)dragTableViewController
+{
+    assert(indexPath!=nil);
+
+    LLTableViewCell *cell = [[LLTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+
+    [self configureCell:cell atIndexPath:indexPath];
+
+    assert(cell!=nil);
+
+    return cell;
+}
 #pragma mark ------------------
 #pragma mark UITableView Data Source Methods
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
@@ -263,6 +272,9 @@
     }
 }
 - (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    assert(cell!=nil);
+    assert(indexPath!=nil);
+
     CGRect rect = cell.frame;
     UIGraphicsBeginImageContext(rect.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -280,6 +292,7 @@
 }
 - (void)configureCellAtIndexPath:(NSIndexPath *)indexPath
 {
+    assert(indexPath!=nil);
     [self configureCell:(LLTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section

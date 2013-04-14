@@ -11,7 +11,6 @@
 @interface LLListItemsViewController ()
 {
 
-    NSIndexPath *_fromIndex;
 }
 @end
 
@@ -40,18 +39,6 @@
     [self.view addSubview:self.tableView];
 
     [super viewDidLoad];
-
-//    _pullToInsertItemView = [[LLPullToInsertItemView alloc] initWithFrame: CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,
-//                                                                                      320.0f, self.view.bounds.size.height)];
-//	[self.tableView addSubview:self.pullToInsertItemView];
-
-
-
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(insertNewListItem)
-//                                                 name:@"LLTableViewHitOutsideCell"
-//                                               object:nil];
-
 
     NSString *addRowImgFile = @"AddRow.png";
     NSString *listsIconImgFile = @"lists_icon.png";
@@ -134,25 +121,26 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
+#pragma mark ---------
+#pragma mark Reordering Table View delegate methods
+//- (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController didBeginDraggingAtRow:(NSIndexPath *)dragRow
+//{
+//    _fromIndex = dragRow;
+//}
+//- (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController willEndDraggingToRow:(NSIndexPath *)destinationIndexPath
+//{
+//    [self tableView:dragTableViewController.tableView moveRowAtIndexPath:_fromIndex toIndexPath:destinationIndexPath];
+//}
+//- (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController didEndDraggingToRow:(NSIndexPath *)destinationIndexPath
+//{
+//
+//}
+//- (BOOL)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController shouldHideDraggableIndicatorForDraggingToRow:(NSIndexPath *)destinationIndexPath
+//{
+//    return YES;
+//}
 #pragma mark ------------------
 #pragma mark UITableView Data Source Methods
-- (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController didBeginDraggingAtRow:(NSIndexPath *)dragRow
-{
-    _fromIndex = dragRow;
-}
-- (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController willEndDraggingToRow:(NSIndexPath *)destinationIndexPath
-{
-    [self tableView:dragTableViewController.tableView moveRowAtIndexPath:_fromIndex toIndexPath:destinationIndexPath];
-}
-- (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController didEndDraggingToRow:(NSIndexPath *)destinationIndexPath
-{
-
-}
-- (BOOL)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController shouldHideDraggableIndicatorForDraggingToRow:(NSIndexPath *)destinationIndexPath
-{
-    return YES;
-}
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -161,16 +149,6 @@
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
-}
-- (UITableViewCell *)cellIdenticalToCellAtIndexPath:(NSIndexPath *)indexPath forDragTableViewController:(LLReorderingTableViewController *)dragTableViewController
-{
-    LLTableViewCell *cell = [[LLTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-//    ListItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
-
-    [self configureCell:cell atIndexPath:indexPath];
-//    cell.textView.text = [NSString stringWithFormat:@"%@", item.text];
-
-    return cell;
 }
 
 - (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -262,68 +240,6 @@
     }
     
     return _fetchedResultsController;
-}
-
-// Accessories (disclosures).
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
-
-// Selection
-
-// -tableView:shouldHighlightRowAtIndexPath: is called when a touch comes down on a row.
-// Returning NO to that message halts the selection process and does not cause the currently selected row to lose its selected look while the touch is down.
-- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath{
-    return true;
-}
-- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-}
-- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-}
-
-// Called before the user changes the selection. Return a new indexPath, or nil, to change the proposed selection.
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    return indexPath;
-}
-- (NSIndexPath *)tableView:(UITableView *)tableView willDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
-    return indexPath;
-}
-// Called after the user changes the selection.
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-}
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-}
-
-// Editing
-
-// Allows customization of the editingStyle for a particular cell located at 'indexPath'. If not implemented, all editable cells will have UITableViewCellEditingStyleDelete set for them when the table has editing property set to YES.
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return UITableViewCellEditingStyleDelete;
-}
-
-// The willBegin/didEnd methods are called whenever the 'editing' property is automatically changed by the table (allowing insert/delete/move). This is done by a swipe activating a single row
-- (void)tableView:(UITableView*)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-}
-- (void)tableView:(UITableView*)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-}
-
-// Indentation
-
-- (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath{ // return 'depth' of row for hierarchies
-    return 0;
-}
-
-// Copy/Paste.  All three methods must be implemented by the delegate.
-
-- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return true;
 }
 
 @end

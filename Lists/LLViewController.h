@@ -29,6 +29,8 @@
     bool _was_delete;
 
     UITextView *_activeTextView;
+
+    NSIndexPath *_fromIndex;
 }
 
 typedef enum{

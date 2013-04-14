@@ -205,21 +205,24 @@
        
     [self.tableView reloadData];
 }
-- (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController didBeginDraggingAtRow:(NSIndexPath *)dragRow
-{
-}
-- (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController willEndDraggingToRow:(NSIndexPath *)destinationIndexPath
-{
-
-}
-- (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController didEndDraggingToRow:(NSIndexPath *)destinationIndexPath
-{
-
-}
-- (BOOL)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController shouldHideDraggableIndicatorForDraggingToRow:(NSIndexPath *)destinationIndexPath
-{
-    return NO;
-}
+#pragma mark ---------
+#pragma mark Reordering Table View delegate methods
+//- (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController didBeginDraggingAtRow:(NSIndexPath *)dragRow
+//{
+//    _fromIndex = dragRow;
+//}
+//- (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController willEndDraggingToRow:(NSIndexPath *)destinationIndexPath
+//{
+//    [self tableView:dragTableViewController.tableView moveRowAtIndexPath:_fromIndex toIndexPath:destinationIndexPath];
+//}
+//- (void)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController didEndDraggingToRow:(NSIndexPath *)destinationIndexPath
+//{
+//
+//}
+//- (BOOL)dragTableViewController:(LLReorderingTableViewController *)dragTableViewController shouldHideDraggableIndicatorForDraggingToRow:(NSIndexPath *)destinationIndexPath
+//{
+//    return YES;
+//}
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
@@ -235,6 +238,9 @@
     return numberOfObjects;
 }
 - (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+
+    assert(cell!=nil);
+    assert(indexPath!=nil);
 
     [super configureCell:cell atIndexPath:indexPath];
 
@@ -323,15 +329,6 @@
     assert(cell != nil);
 
     [self configureCell:cell atIndexPath:indexPath];
-
-    return cell;
-}
-- (UITableViewCell *)cellIdenticalToCellAtIndexPath:(NSIndexPath *)indexPath forDragTableViewController:(LLReorderingTableViewController *)dragTableViewController
-{
-    LLTableViewCell *cell = [[LLTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
-
-    cell.textView.text = [NSString stringWithFormat:@"%@", list.text];
 
     return cell;
 }
