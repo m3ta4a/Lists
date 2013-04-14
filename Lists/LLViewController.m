@@ -127,7 +127,6 @@
 -(void)textViewDidEndEditing:(UITextView *)textView{
 
     self.tableView.contentInset = UIEdgeInsetsZero;
-
     _last_range = NSMakeRange(0, 0);
 
     [self saveContext];
