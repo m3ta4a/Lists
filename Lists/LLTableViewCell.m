@@ -29,6 +29,9 @@
     _textView.font = TEXT_INPUT_FONT;
     _textView.contentInset = UIEdgeInsetsZero;
     _textView.userInteractionEnabled = NO;
+    _textView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    _textView.autocorrectionType = UITextAutocorrectionTypeYes;
+
     [self addSubview:_textView];
     
     // Don't use textLabel, use textView (editable)
