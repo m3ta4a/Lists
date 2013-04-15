@@ -31,9 +31,9 @@
 {
     return @"List";
 }
-- (id)init
+- (id)initWithContext:(NSManagedObjectContext*)context
 {
-    self = [super init];
+    self = [super initWithContext:context];
     if (!self)
         return nil;
 
@@ -81,6 +81,7 @@
     NSString *configIconImgFile = @"config_icon.png";
     NSString *configIconONImgFile = @"config_icon_on.png";
 
+    // Right nav item - Add a List
     UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *addImage = [[UIImage imageNamed:addRowImgFile] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
     [addButton setBackgroundImage:addImage forState:UIControlStateNormal];
@@ -88,16 +89,44 @@
     addButton.frame = CGRectMake(0, 0, 30, 30);
     UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
     self.navigationItem.rightBarButtonItem = addButtonItem;
+
+
+    // Left nav items -- Config mode -- spacer -- Edit mode (delete multiple)
+    NSMutableArray *mutableEditLeftButtonItems = [[NSMutableArray alloc] initWithCapacity:3];
+    NSMutableArray *mutableLeftButtonItems = [[NSMutableArray alloc] initWithCapacity:1];
+    UIButton *configButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *configImage = [[UIImage imageNamed:configIconImgFile] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
+    UIImage *configImageOn = [[UIImage imageNamed:configIconONImgFile] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
+    [configButton setBackgroundImage:configImage forState:UIControlStateNormal];
+    [configButton setBackgroundImage:configImageOn forState:UIControlStateSelected];
+    [configButton addTarget:self action:@selector(enterConfigListMode:) forControlEvents:UIControlEventTouchUpInside];
+    configButton.frame = CGRectMake(0, 0, 30, 30);
+
+    UIBarButtonItem *config = [[UIBarButtonItem alloc]
+                               initWithCustomView:configButton];
+
+    [mutableEditLeftButtonItems addObject:config];
+    [mutableLeftButtonItems addObject:config];
     
-    UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *editImage = [[UIImage imageNamed:configIconImgFile] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
-    UIImage *editImageOn = [[UIImage imageNamed:configIconONImgFile] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
-    [editButton setBackgroundImage:editImage forState:UIControlStateNormal];
-    [editButton setBackgroundImage:editImageOn forState:UIControlStateSelected];
-    [editButton addTarget:self action:@selector(enterConfigListMode:) forControlEvents:UIControlEventTouchUpInside];
-    editButton.frame = CGRectMake(0, 0, 30, 30);
-    UIBarButtonItem *editButtonItem = [[UIBarButtonItem alloc] initWithCustomView:editButton];
-    self.navigationItem.leftBarButtonItem = editButtonItem;
+    // create a spacer between the buttons
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc]
+                               initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                               target:nil
+                               action:nil];
+    [mutableEditLeftButtonItems addObject:spacer];
+
+    // create a standard edit
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]
+                                    initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                    target:self
+                                    action:@selector(editAction:)];
+    editButton.style = UIBarButtonItemStyleBordered;
+    [mutableEditLeftButtonItems addObject:editButton];
+
+    _leftButtonItems = [NSArray arrayWithArray:mutableLeftButtonItems];
+//    _editLeftButtonItems = [NSArray arrayWithArray:mutableEditLeftButtonItems];
+
+    self.navigationItem.leftBarButtonItems = _leftButtonItems;
 }
 - (void)didReceiveMemoryWarning
 {
@@ -166,6 +195,8 @@
         [sender setSelected:NO];
         configToggle = NO;
         self.navigationItem.rightBarButtonItem.enabled = YES;
+//        self.navigationItem.leftBarButtonItems = _leftButtonItems;
+        self.tableView.editing = false;
 
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.headerView cache:YES];
@@ -186,6 +217,7 @@
         [sender setSelected:YES];
         configToggle = YES;
         self.navigationItem.rightBarButtonItem.enabled = NO;
+//        self.navigationItem.leftBarButtonItems = _editLeftButtonItems;
 
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.headerView cache:YES];
@@ -204,6 +236,11 @@
     }
        
     [self.tableView reloadData];
+}
+-(void)editAction:(id)sender{
+
+    //edit mode forces their icons on us. we want to mass delete.
+//    self.tableView.editing = !self.tableView.editing; // set to false when we leave config mode
 }
 #pragma mark ---------
 #pragma mark Reordering Table View delegate methods
@@ -233,6 +270,9 @@
 }
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if ( section == 1 )
+        return 0;
+
     NSUInteger numberOfObjects = [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
 
     return numberOfObjects;
@@ -284,11 +324,11 @@
 
     UIView * newchkmrk = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Check"]];
     newchkmrk.tag = CHECKMARK_ICN_TAG;
-    newchkmrk.frame = CGRectMake(281, height/2-12, 24, 24);
+    newchkmrk.frame = CGRectMake(273, height/2-13, 26, 26);
 
     UIView * newoutline = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Outline"]];
     newoutline.tag = OUTLINE_ICN_TAG;
-    newoutline.frame = CGRectMake(285, height/2-6, 12, 12);
+    newoutline.frame = CGRectMake(278, height/2-7, 13, 13);
 
     switch ([list.type intValue]) {
         case SimpleList:

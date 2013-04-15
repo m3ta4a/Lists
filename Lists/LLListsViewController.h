@@ -21,12 +21,13 @@
 @interface LLListsViewController : LLViewController <LLReorderingTableViewControllerDelegate>
 {
     UIView* _headerView;
+    NSArray* _leftButtonItems; // will just have one item
+    NSArray* _editLeftButtonItems; //need it to hide and show
 }
 
 @property (nonatomic, strong) UIView* headerView;
 
 -(void)insertNewList;
-//-(void)textViewEditDone:(id)sender;
 -(void)insertNewListNamed:(NSString*)name;
 -(void)enterConfigListMode:(UIButton*)sender;
 //-(void)configureAppSettings;

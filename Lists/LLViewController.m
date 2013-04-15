@@ -20,11 +20,13 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize fetchedResultsController = _fetchedResultsController;
 
-- (id)init
+-(id)initWithContext:(NSManagedObjectContext*)context
 {
     self = [super init];
     if (!self)
         return nil;
+
+    self.managedObjectContext = context;
 
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -47,14 +49,14 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+
+    [self.view addSubview:self.tableView];
+
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
-//    [self.tableView reloadData];
-
-    [self.view addSubview:self.tableView];
 
     CATransition* transition = [CATransition animation];
     transition.duration = .21;
@@ -67,8 +69,6 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-
-    [self.tableView removeFromSuperview];
 }
 - (void)refreshData:(NSNotification *)notif {
     [[self.fetchedResultsController managedObjectContext] mergeChangesFromContextDidSaveNotification:notif];
@@ -118,20 +118,8 @@
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0); //magic value.. this takes care of editing cells below the ;
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
-    [self.tableView scrollToRowAtIndexPath:[self indexPathForTextView:_activeTextView] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
 
-    // If active text field is hidden by keyboard, scroll it so it's visible
-    // Your application might not need or want this behavior.
-//    CGRect aRect = self.view.frame;
-//    aRect.size.height -= kbSize.height;
-//    CGPoint pt = [_activeTextView convertPoint:_activeTextView.frame.origin toView:self.view];
-//    pt.y += _activeTextView.frame.size.height;
-//    if (!CGRectContainsPoint(aRect, pt) ) {
-//        [self.tableView scrollToRowAtIndexPath:[self indexPathForTextView:_activeTextView] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-////        int offset = pt.y - kbSize.height +100;
-////        CGPoint scrollPoint = CGPointMake(0.0, offset);
-////        [self.tableView setContentOffset:scrollPoint animated:YES];
-//    }
+    [self.tableView scrollToRowAtIndexPath:[self indexPathForTextView:_activeTextView] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
 }
 
 // Called when the UIKeyboardWillHideNotification is sent
@@ -144,6 +132,9 @@
 #pragma mark -----------------
 #pragma mark TextView delegate
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView{
+    if (self.tableView.isEditing)
+        return NO;
+
     return YES;
 }
 -(void)textViewDidBeginEditing:(UITextView *)textView{
@@ -164,25 +155,8 @@
 }
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
 
-    // Uncomment this and use the method enclosed to relinquish focus with return key
-    //    // Just don't get to have new lines in titles
-    //    if ([text isEqualToString:@"\n"])
-    //    {
-    //        [self performSelector:@selector(textViewEditDone:) withObject:textView afterDelay:.01];
-    //        return NO;
-    //    }
-    //-(void)textViewEditDone:(id)sender
-    //{
-    //    UITextView*view = (UITextView*)sender;
-    //    [view resignFirstResponder];
-    //}
-
-    _userDrivenDataModelChange = YES;
-
     NSString *newStr = [textView.text stringByReplacingCharactersInRange:range withString:text];
     [self setText:newStr forIndexPath:[self indexPathForTextView:textView]];
-
-    _userDrivenDataModelChange = NO; // TODO:unless there's a change in number of lines
 
     _last_range = range;
     _was_delete = ( [text compare:@""] == 0 );
@@ -231,7 +205,7 @@
 }
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return UITableViewCellEditingStyleDelete;
+    return UITableViewCellEditingStyleDelete; //all rows can be deleted
 }
 - (UITableViewCell *)cellIdenticalToCellAtIndexPath:(NSIndexPath *)indexPath forDragTableViewController:(LLReorderingTableViewController *)dragTableViewController
 {
@@ -247,16 +221,15 @@
 }
 #pragma mark ------------------
 #pragma mark UITableView Data Source Methods
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    NSString *name = [[[self.fetchedResultsController sections] objectAtIndex:section] name];
-    return name;
-}
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView {
-    NSUInteger count = [[self.fetchedResultsController sections] count];
-    return count;
+//    NSUInteger count = [[self.fetchedResultsController sections] count];
+    return 1;
 }
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (section == 1)
+        return 0;
+    
     NSUInteger numberOfObjects = [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
     return numberOfObjects;
 }
@@ -277,9 +250,10 @@
 
     // should prevent losing the cursor in the textview
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+
     cell.textView.font = TEXT_INPUT_FONT;
     cell.textView.textColor = [UIColor blackColor];
-    cell.textView.userInteractionEnabled = YES;
+    cell.textView.userInteractionEnabled = !self.tableView.isEditing;
     cell.textView.text = [self textForIndexPath:indexPath];
     if (!cell.textView.delegate)
         cell.textView.delegate = self;
@@ -289,10 +263,6 @@
 {
     assert(indexPath!=nil);
     [self configureCell:(LLTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-}
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    return [[UIView alloc] initWithFrame:CGRectZero]; // empty footer prevents empty cells from drawing
 }
 #pragma ------------
 #pragma NSFetchedResultsController Delegate Methods

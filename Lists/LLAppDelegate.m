@@ -28,8 +28,7 @@
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     _persistentStoreCoordinator = coordinator;
     
-    LLListsViewController *listsVC = [[LLListsViewController alloc] init];
-    listsVC.managedObjectContext = context;
+    LLListsViewController *listsVC = [[LLListsViewController alloc] initWithContext:context];
 
     LLNavigationController *nav = [[LLNavigationController alloc] initWithRootViewController:listsVC];
     nav.managedObjectContext = context;

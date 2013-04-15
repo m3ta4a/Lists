@@ -45,7 +45,7 @@ typedef enum{
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
-- (id)init;
+-(id)initWithContext:(NSManagedObjectContext*)context;
 
 - (void)configureCell:(LLTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 - (void)refreshData:(NSNotification *)notif;

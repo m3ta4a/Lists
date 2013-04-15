@@ -45,6 +45,7 @@
 		23A4F562168D5C38003D7DCC /* AddRow.png in Resources */ = {isa = PBXBuildFile; fileRef = 23A4F561168D5C38003D7DCC /* AddRow.png */; };
 		23CC73C0170534C800F0AB59 /* Check.png in Resources */ = {isa = PBXBuildFile; fileRef = 23CC73BE170534C800F0AB59 /* Check.png */; };
 		23CC73C1170534C800F0AB59 /* Check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23CC73BF170534C800F0AB59 /* Check@2x.png */; };
+		23E3F467171BB054007AE760 /* LLTransparentToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 23E3F466171BB054007AE760 /* LLTransparentToolbar.m */; };
 		23EA30F116B24E3200EA9158 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23EA30F016B24E3200EA9158 /* AudioToolbox.framework */; };
 		23EA30F716B257FD00EA9158 /* nav_header.png in Resources */ = {isa = PBXBuildFile; fileRef = 23EA30F516B257FD00EA9158 /* nav_header.png */; };
 		23EA30F816B257FD00EA9158 /* nav_header@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23EA30F616B257FD00EA9158 /* nav_header@2x.png */; };
@@ -126,6 +127,8 @@
 		23A4F561168D5C38003D7DCC /* AddRow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddRow.png; sourceTree = "<group>"; };
 		23CC73BE170534C800F0AB59 /* Check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Check.png; sourceTree = "<group>"; };
 		23CC73BF170534C800F0AB59 /* Check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Check@2x.png"; sourceTree = "<group>"; };
+		23E3F465171BB054007AE760 /* LLTransparentToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLTransparentToolbar.h; sourceTree = "<group>"; };
+		23E3F466171BB054007AE760 /* LLTransparentToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLTransparentToolbar.m; sourceTree = "<group>"; };
 		23EA30F016B24E3200EA9158 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		23EA30F516B257FD00EA9158 /* nav_header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_header.png; sourceTree = "<group>"; };
 		23EA30F616B257FD00EA9158 /* nav_header@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_header@2x.png"; sourceTree = "<group>"; };
@@ -230,6 +233,8 @@
 				23496BBC168B9AEA0082E3DF /* LLTableViewCell.m */,
 				23788B4D16AA2C1000C21460 /* LLMainView.h */,
 				23788B4E16AA2C1000C21460 /* LLMainView.m */,
+				23E3F465171BB054007AE760 /* LLTransparentToolbar.h */,
+				23E3F466171BB054007AE760 /* LLTransparentToolbar.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -492,6 +497,7 @@
 				239C61E416AE057900E5880A /* LLListConfigureViewController.m in Sources */,
 				23837B7A171A114100E79242 /* LLListToDoItemsViewController.m in Sources */,
 				23837B7D171A11B100E79242 /* LLListOutlineItemsViewController.m in Sources */,
+				23E3F467171BB054007AE760 /* LLTransparentToolbar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
