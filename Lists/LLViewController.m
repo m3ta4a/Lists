@@ -275,20 +275,15 @@
     assert(cell!=nil);
     assert(indexPath!=nil);
 
-    CGRect rect = cell.frame;
-    UIGraphicsBeginImageContext(rect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-
-    CGContextSetFillColorWithColor(context, [[UIColor grayColor] CGColor]);
-    CGContextFillRect(context, rect);
-
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:image];
-
     // should prevent losing the cursor in the textview
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    cell.textView.font = TEXT_INPUT_FONT;
+    cell.textView.textColor = [UIColor blackColor];
+    cell.textView.userInteractionEnabled = YES;
+    cell.textView.text = [self textForIndexPath:indexPath];
+    if (!cell.textView.delegate)
+        cell.textView.delegate = self;
+    cell.textView.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
 }
 - (void)configureCellAtIndexPath:(NSIndexPath *)indexPath
 {

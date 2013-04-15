@@ -156,12 +156,7 @@
     [super configureCell:cell atIndexPath:indexPath];
 
     ListItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textView.text = [NSString stringWithFormat:@"%@", item.text];
-    cell.textView.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
-    cell.textView.font = TEXT_INPUT_FONT;
-    cell.textView.textColor = [UIColor blackColor];
-    [cell.textView setUserInteractionEnabled:YES];
-
+    
     // don't use textView's frame for the width...
     // adjustTextInputHeightForText sets that frame.
     // view controller should dictate width of cells textview

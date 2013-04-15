@@ -246,7 +246,7 @@
 
     // =============================
     //
-    // Common to All TableViewCells
+    // Common to All these TableViewCells
     //
     // =============================
 
@@ -257,18 +257,11 @@
         [cell.textView setUserInteractionEnabled:YES];
     }
     else{
-        cell.textView.font = TEXT_INPUT_FONT;
-        cell.textView.textColor = [UIColor blackColor];
+        // font and text handled in super class
         [cell.textView setUserInteractionEnabled:cell.justCreated];
     }
 
     List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
-
-    cell.textView.text = [NSString stringWithFormat:@"%@", list.text];
-    cell.textView.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
-
-    if (!cell.textView.delegate)
-        cell.textView.delegate = self;
 
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
