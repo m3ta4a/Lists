@@ -23,6 +23,7 @@
     UIView* _headerView;
     NSArray* _leftButtonItems; // will just have one item
     NSArray* _editLeftButtonItems; //need it to hide and show
+    UIButton* _configButton;
 }
 
 @property (nonatomic, strong) UIView* headerView;

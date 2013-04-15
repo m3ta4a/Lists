@@ -69,8 +69,8 @@
     self.tableView = [[LLTableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    self.tableView.allowsSelectionDuringEditing = YES;
-    self.tableView.contentInset = DEFAULT_TABLE_INSETS;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero]; // removes empty rows
+
     [self.view addSubview:self.tableView];
 
     [super viewDidLoad];
@@ -126,7 +126,8 @@
     _leftButtonItems = [NSArray arrayWithArray:mutableLeftButtonItems];
 //    _editLeftButtonItems = [NSArray arrayWithArray:mutableEditLeftButtonItems];
 
-    self.navigationItem.leftBarButtonItems = _leftButtonItems;
+//    self.navigationItem.leftBarButtonItems = _leftButtonItems;
+    self.navigationItem.leftBarButtonItem = config;
 }
 - (void)didReceiveMemoryWarning
 {
@@ -191,11 +192,13 @@
 }
 -(void)enterConfigListMode:(UIButton*)sender
 {
+    if (!_configButton)
+        _configButton = sender;
+
     if([sender isSelected]){
         [sender setSelected:NO];
         configToggle = NO;
         self.navigationItem.rightBarButtonItem.enabled = YES;
-//        self.navigationItem.leftBarButtonItems = _leftButtonItems;
         self.tableView.editing = false;
 
         [UIView beginAnimations:nil context:nil];
@@ -217,7 +220,6 @@
         [sender setSelected:YES];
         configToggle = YES;
         self.navigationItem.rightBarButtonItem.enabled = NO;
-//        self.navigationItem.leftBarButtonItems = _editLeftButtonItems;
 
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.headerView cache:YES];
@@ -270,9 +272,6 @@
 }
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ( section == 1 )
-        return 0;
-
     NSUInteger numberOfObjects = [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
 
     return numberOfObjects;
@@ -294,16 +293,16 @@
     if (configToggle){
         cell.textView.font = [UIFont italicSystemFontOfSize:TEXT_INPUT_FONT_SIZE];
         cell.textView.textColor = UIColorFromRGB(0x1b1b1b);
+        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
         [cell.textView setUserInteractionEnabled:YES];
     }
     else{
         // font and text handled in super class
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         [cell.textView setUserInteractionEnabled:cell.justCreated];
     }
 
     List *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
-
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
     [cell adjustTextInputHeightForText:list.text andWidth:[self widthOfTextViewAtIndexPath:indexPath]];
 
@@ -324,11 +323,11 @@
 
     UIView * newchkmrk = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Check"]];
     newchkmrk.tag = CHECKMARK_ICN_TAG;
-    newchkmrk.frame = CGRectMake(273, height/2-13, 26, 26);
+    newchkmrk.frame = configToggle ? CGRectMake(265, height/2-13, 26, 26) : CGRectMake(273, height/2-13, 26, 26);
 
     UIView * newoutline = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Outline"]];
     newoutline.tag = OUTLINE_ICN_TAG;
-    newoutline.frame = CGRectMake(278, height/2-7, 13, 13);
+    newoutline.frame = configToggle ? CGRectMake(270, height/2-7, 13, 13) : CGRectMake(278, height/2-7, 13, 13);
 
     switch ([list.type intValue]) {
         case SimpleList:
@@ -426,34 +425,50 @@
 
         switch ([list.type intValue]) {
             case SimpleList:
-                vc = [[LLListItemsViewController alloc] init];
+                vc = [[LLListItemsViewController alloc] initWithList:list andContext:self.managedObjectContext];
                 break;
             case ToDoList:
-                vc = [[LLListToDoItemsViewController alloc] init];
+                vc = [[LLListToDoItemsViewController alloc] initWithList:list andContext:self.managedObjectContext];
                 break;
             case OutlineList:
-                vc = [[LLListOutlineItemsViewController alloc] init];
+                vc = [[LLListOutlineItemsViewController alloc] initWithList:list andContext:self.managedObjectContext];
                 break;
             default:
                 break;
         }
 
-        vc.managedObjectContext = self.managedObjectContext;
-        vc.currentList = list;
-        vc.title = list.text;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    LLListConfigureViewController *vc = [[LLListConfigureViewController alloc] init];
 
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-    else{
-        LLListConfigureViewController *vc = [[LLListConfigureViewController alloc] init];
-        
-        vc.managedObjectContext = self.managedObjectContext;
-        
-        List* list = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        vc.currentList = list;
-        vc.title = list.text;
-        
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+    vc.managedObjectContext = self.managedObjectContext;
+
+    List* list = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    vc.currentList = list;
+    vc.title = list.text;
+
+    [self.navigationController pushViewController:vc animated:YES];
+
+
+    // turn off config mode, after returning from configure view, returning
+    // to config mode is slightly disorienting somehow
+    configToggle = NO;
+    self.navigationItem.rightBarButtonItem.enabled = YES;
+
+    CGRect frame = [self.headerView frame];
+    frame.size.height = 0;
+    [self.headerView setFrame:frame];
+
+    frame = self.tableView.frame;
+    frame.origin.y = frame.origin.y - HEADER_VIEW_HEIGHT;
+    frame.size.height = frame.size.height + HEADER_VIEW_HEIGHT;
+    self.tableView.frame = frame;
+
+    [_configButton setSelected:NO];
+
+    [self.tableView reloadData]; // clear up accessory buttons
 }
 @end

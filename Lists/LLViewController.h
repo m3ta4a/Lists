@@ -15,8 +15,6 @@
 #import "LLTableViewCell.h"
 #import "LLTableView.h"
 
-#define TABLE_BOTTOM_INSET 21
-#define DEFAULT_TABLE_INSETS UIEdgeInsetsMake(0.0, 0.0, TABLE_BOTTOM_INSET, 0.0);
 
 @interface LLViewController : LLReorderingTableViewController <UIScrollViewDelegate, UITextViewDelegate, NSFetchedResultsControllerDelegate>
 {

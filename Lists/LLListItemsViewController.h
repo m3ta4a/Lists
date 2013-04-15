@@ -21,6 +21,7 @@
 
 @property (nonatomic, strong) List *currentList;
 
+- (id)initWithList:(List*)list andContext:(NSManagedObjectContext*)context;
 - (void) gotoBack:(id)sender;
 - (void) insertNewListItem;
 - (void) insertNewListItemNamed:(NSString*)name;

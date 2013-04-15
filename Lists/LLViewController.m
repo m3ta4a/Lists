@@ -49,10 +49,6 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-
-    [self.view addSubview:self.tableView];
-
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -65,6 +61,8 @@
 
     [self.view.layer
        addAnimation:transition forKey:kCATransition];
+
+    [self.tableView setFrame:self.view.frame];
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
@@ -92,49 +90,28 @@
     return ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
             ([UIScreen mainScreen].scale == 2.0));
 }
--(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    UIInterfaceOrientation orientation = toInterfaceOrientation;
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGFloat screenWidth = screenRect.size.width;
-    
-    if (UIDeviceOrientationIsPortrait(orientation))
-    {
-        screenWidth = screenRect.size.width;
-    }
-    else if (UIDeviceOrientationIsLandscape(orientation))
-    {
-        screenWidth = screenRect.size.height;
-    }
-    
-    //    [self.header deviceOrientationDidChange:screenWidth];
-}
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    kbSize.height += TABLE_BOTTOM_INSET;
     
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0); //magic value.. this takes care of editing cells below the ;
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
 
-    [self.tableView scrollToRowAtIndexPath:[self indexPathForTextView:_activeTextView] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    [self.tableView scrollToRowAtIndexPath:[self indexPathForTextView:_activeTextView] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
 }
 
 // Called when the UIKeyboardWillHideNotification is sent
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
-    UIEdgeInsets contentInsets = DEFAULT_TABLE_INSETS;
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
 }
 #pragma mark -----------------
 #pragma mark TextView delegate
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView{
-    if (self.tableView.isEditing)
-        return NO;
-
     return YES;
 }
 -(void)textViewDidBeginEditing:(UITextView *)textView{
@@ -144,7 +121,6 @@
     return YES;
 }
 -(void)textViewDidEndEditing:(UITextView *)textView{
-
     _activeTextView = nil;
     _last_range = NSMakeRange(0, 0);
 
@@ -156,7 +132,12 @@
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
 
     NSString *newStr = [textView.text stringByReplacingCharactersInRange:range withString:text];
+
+    _userDrivenDataModelChange = YES; // doing this allows the keyboard callback to set the tableview's contentInset
+
     [self setText:newStr forIndexPath:[self indexPathForTextView:textView]];
+
+    _userDrivenDataModelChange = NO;
 
     _last_range = range;
     _was_delete = ( [text compare:@""] == 0 );
@@ -201,8 +182,6 @@
     [self performSelector:(@selector(configureCellAtIndexPath:)) withObject:(sourceIndexPath) afterDelay:0.2];
     [self performSelector:(@selector(configureCellAtIndexPath:)) withObject:(destinationIndexPath) afterDelay:0.2];
 }
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-}
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return UITableViewCellEditingStyleDelete; //all rows can be deleted
@@ -227,9 +206,6 @@
 }
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 1)
-        return 0;
-    
     NSUInteger numberOfObjects = [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
     return numberOfObjects;
 }

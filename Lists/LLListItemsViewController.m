@@ -21,11 +21,18 @@
 {
     return @"itemID";
 }
-- (id)init
+-(NSString*)entityName
 {
-    self = [super init];
+    return @"ListItem";
+}
+- (id)initWithList:(List*)list andContext:(NSManagedObjectContext*)context
+{
+    self = [super initWithContext:context];
     if (!self)
         return nil;
+
+    self.currentList = list;
+    self.title = list.text;
 
     return self;
 }
@@ -34,8 +41,8 @@
     self.tableView = [[LLTableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    self.tableView.allowsSelectionDuringEditing = YES;
-    self.tableView.contentInset = DEFAULT_TABLE_INSETS;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero]; // removes empty rows
+
     [self.view addSubview:self.tableView];
 
     [super viewDidLoad];
@@ -162,7 +169,9 @@
     // view controller should dictate width of cells textview
     [cell adjustTextInputHeightForText:item.text andWidth:[self widthOfTextViewAtIndexPath:indexPath]];
 
-    cell.textView.delegate = self;
+    if (!cell.textView.delegate)
+        cell.textView.delegate = self;
+    cell.textView.inputAccessoryView = [[LLTableViewKeyboardDismisser alloc] initWithView:self.tableView];
 }
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LLTableViewCell *cell;
